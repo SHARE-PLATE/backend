@@ -1,6 +1,7 @@
 package louie.hanse.shareplate.domain;
 
 import louie.hanse.shareplate.type.AdvertisementType;
+import louie.hanse.shareplate.type.ShareType;
 
 import javax.persistence.*;
 
@@ -11,12 +12,10 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn
-    @OneToOne(fetch = FetchType.LAZY)
-    private Share share;
-
     @Enumerated(EnumType.STRING)
     private AdvertisementType type;
 
+    private ShareType shareType;
+    private String keyword;
     private String imageUrl;
 }
