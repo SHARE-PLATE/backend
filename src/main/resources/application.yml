@@ -15,6 +15,9 @@ spring:
     defer-datasource-initialization: true
     open-in-view: false
 
+  config:
+    import: oauth.yml
+
   sql:
     init:
       mode: always
