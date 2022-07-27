@@ -1,0 +1,10 @@
+oauth:
+  redirect_url: ${OAUTH_REDIRECT_URL}
+  client_id: ${OAUTH_CLIENT_ID}
+  access_token_api_url: https://kauth.kakao.com/oauth/token
+  login_form_url: ${OAUTH_LOGIN_FORM_URL}
+  user_api_url: https://kapi.kakao.com/v2/user/me
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret-key: ${JWT_SECRET_KEY}

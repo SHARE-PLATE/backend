@@ -1,20 +1,34 @@
 package louie.hanse.shareplate.domain;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Getter
 @Table(name = "members")
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String profileImageUrl;
+    private String thumbnailImageUrl;
     private String nickname;
     private String email;
     private String location;
     private double latitude;
     private double longitude;
+
+    public Member(Long id, String profileImageUrl, String thumbnailImageUrl, String nickname, String email) {
+        this.id = id;
+        this.profileImageUrl = profileImageUrl;
+        this.thumbnailImageUrl = thumbnailImageUrl;
+        this.nickname = nickname;
+        this.email = email;
+    }
 }
 
