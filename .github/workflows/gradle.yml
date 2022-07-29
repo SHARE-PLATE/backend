@@ -56,5 +56,5 @@ jobs:
             sudo docker ps -a -q --filter "name=share-plate" | grep -q . && docker stop share-plate && docker rm share-plate | true
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/share-plate:1.0
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/share-plate:1.0
-            sudo docker run -d -p 80:8080 --name share-plate -e OAUTH_REDIRECT_URL=${{ secrets.OAUTH_REDIRECT_URL }} -e OAUTH_CLIENT_ID=${{ secrets.OAUTH_CLIENT_ID }} -e JWT_ISSUER=${{ secrets.JWT_ISSUER }} -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} ${{ secrets.DOCKER_USERNAME }}/share-plate:1.0
+            sudo docker run -d -p 80:8080 --name share-plate -e OAUTH_REDIRECT_URL=${{ secrets.OAUTH_REDIRECT_URL }} -e OAUTH_CLIENT_ID=${{ secrets.OAUTH_CLIENT_ID }} -e JWT_ISSUER=${{ secrets.JWT_ISSUER }} -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} -e DATASOURCE_URL=${{ secrets.DATASOURCE_URL }} -e DATASOURCE_URL=${{ secrets.DATASOURCE_URL }}-e DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }} -e DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }} ${{ secrets.DOCKER_USERNAME }}/share-plate:1.0
             sudo docker rmi -f $(docker images -f "dangling=true" -q) || true
