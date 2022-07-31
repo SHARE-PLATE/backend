@@ -1,4 +1,4 @@
-package louie.hanse.shareplate.controller;
+package louie.hanse.shareplate.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

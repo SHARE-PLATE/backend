@@ -30,5 +30,17 @@ public class Member {
         this.nickname = nickname;
         this.email = email;
     }
+
+    public void changeLocation(String location) {
+        this.location = location;
+    }
+
+    public void changeLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void changeLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }
 
