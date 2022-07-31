@@ -37,4 +37,10 @@ public class JwtProvider {
 
                 .sign(Algorithm.HMAC256(jwtProperties.getSecretKey()));
     }
+
+    public Long decodeMemberId(String token) {
+        return JWT.decode(token)
+                .getClaim("memberId")
+                .asLong();
+    }
 }
