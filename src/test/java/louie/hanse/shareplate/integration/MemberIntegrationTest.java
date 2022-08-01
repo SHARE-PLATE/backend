@@ -62,13 +62,35 @@ class MemberIntegrationTest {
         requestParams.put("latitude", 37.6576769);
 
         given(documentationSpec)
-                .filter(document("test"))
+                .filter(document("change-location"))
                 .contentType(ContentType.JSON)
                 .header(AUTHORIZATION, accessToken)
                 .body(requestParams)
 
                 .when()
                 .patch("/members/location")
+
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 특정_회원의_정보를_변경한다() {
+        String accessToken = jwtProvider.createAccessToken(2363364736L);
+
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("profileImageUrl", "https:s3.com");
+        requestParams.put("nickname", "louie1se");
+        requestParams.put("email", "email_test.com");
+
+        given(documentationSpec)
+                .filter(document("change-user-info"))
+                .contentType(ContentType.JSON)
+                .header(AUTHORIZATION, accessToken)
+                .body(requestParams)
+
+                .when()
+                .patch("members")
 
                 .then()
                 .statusCode(HttpStatus.OK.value());
