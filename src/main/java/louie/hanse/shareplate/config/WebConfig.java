@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor(jwtProvider))
-                .order(1)
-                .addPathPatterns("/members", "/members/location");
+            .order(1)
+            .addPathPatterns("/members", "/members/location");
     }
 }

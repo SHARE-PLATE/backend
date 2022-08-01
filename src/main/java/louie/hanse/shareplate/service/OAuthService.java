@@ -28,9 +28,11 @@ public class OAuthService {
         param.add("code", code);
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        HttpEntity<MultiValueMap<String, String>> oAuthTokenRequestHttpEntity = new HttpEntity<>(param, httpHeaders);
+        HttpEntity<MultiValueMap<String, String>> oAuthTokenRequestHttpEntity = new HttpEntity<>(
+            param, httpHeaders);
 
-        return restTemplate.postForObject(oAuthProperties.getAccessTokenApiUrl(), oAuthTokenRequestHttpEntity, OAuthAccessToken.class).getAccessToken();
+        return restTemplate.postForObject(oAuthProperties.getAccessTokenApiUrl(),
+            oAuthTokenRequestHttpEntity, OAuthAccessToken.class).getAccessToken();
     }
 
     public OauthUserInfo getUserInfo(String accessToken) {
@@ -40,7 +42,8 @@ public class OAuthService {
         httpHeaders.setBearerAuth(accessToken);
         HttpEntity httpEntity = new HttpEntity<>(httpHeaders);
 
-        return restTemplate.postForObject(oAuthProperties.getUserApiUrl(), httpEntity, OauthUserInfo.class);
+        return restTemplate.postForObject(oAuthProperties.getUserApiUrl(), httpEntity,
+            OauthUserInfo.class);
     }
 
     private RestTemplate createRestTemplateWithFormHttpMessageConverter() {

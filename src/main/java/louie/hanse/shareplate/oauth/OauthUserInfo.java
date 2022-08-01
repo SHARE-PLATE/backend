@@ -10,6 +10,7 @@ import louie.hanse.shareplate.domain.Member;
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class OauthUserInfo {
+
     private Long id;
     private Properties properties;
     private KakaoAccount kakaoAccount;
@@ -17,6 +18,7 @@ public class OauthUserInfo {
     @Getter
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     public class Properties {
+
         private String nickname;
         private String profileImage;
         private String thumbnailImage;
@@ -24,10 +26,12 @@ public class OauthUserInfo {
 
     @Getter
     public class KakaoAccount {
+
         private String email;
     }
 
     public Member toMember() {
-        return new Member(id, properties.profileImage, properties.thumbnailImage, properties.nickname, kakaoAccount.email);
+        return new Member(id, properties.profileImage, properties.thumbnailImage,
+            properties.nickname, kakaoAccount.email);
     }
 }

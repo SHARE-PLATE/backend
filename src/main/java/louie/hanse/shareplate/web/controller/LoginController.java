@@ -34,7 +34,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> redirectLogin(@RequestBody Map<String, String> paramMap, HttpServletResponse response) {
+    public Map<String, String> redirectLogin(@RequestBody Map<String, String> paramMap,
+        HttpServletResponse response) {
 
         String code = paramMap.get("code");
         String oauthAccessToken = oAuthService.getAccessToken(code);
