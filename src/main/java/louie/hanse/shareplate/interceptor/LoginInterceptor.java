@@ -2,6 +2,7 @@ package louie.hanse.shareplate.interceptor;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
     private final JwtProvider jwtProvider;
@@ -33,7 +35,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         Long memberId = jwtProvider.decodeMemberId(accessToken);
-        request.setAttribute("memberId", memberId);
 
         return true;
     }

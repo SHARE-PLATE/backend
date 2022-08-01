@@ -31,6 +31,18 @@ public class Member {
         this.email = email;
     }
 
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void changeEmail(String email) {
+        this.email = email;
+    }
+
     public void changeLocation(String location) {
         this.location = location;
     }
