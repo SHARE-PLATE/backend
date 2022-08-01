@@ -1,6 +1,7 @@
 package louie.hanse.shareplate.integration;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.CONNECTION;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
@@ -58,6 +59,26 @@ class MemberIntegrationTest {
     }
 
     @Test
+    void 특정_회원의_정보를_조회한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        given(documentationSpec)
+            .filter(document("member-get-information"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+
+            .when()
+            .get("/members")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("profileImageUrl", equalTo(
+                "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"))
+            .body("nickname", equalTo("한승연"))
+            .body("email", equalTo("x_x_x@hanmail.net"));
+    }
+
+    @Test
     void 특정_회원의_주소를_변경한다() {
         String accessToken = jwtProvider.createAccessToken(2363364736L);
 
@@ -67,7 +88,7 @@ class MemberIntegrationTest {
         requestParams.put("latitude", 37.6576769);
 
         given(documentationSpec)
-            .filter(document("change-location"))
+            .filter(document("member-changed-location"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestParams)
@@ -89,7 +110,7 @@ class MemberIntegrationTest {
         requestParams.put("email", "email_test.com");
 
         given(documentationSpec)
-            .filter(document("change-user-info"))
+            .filter(document("member-changed-user-information"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestParams)
