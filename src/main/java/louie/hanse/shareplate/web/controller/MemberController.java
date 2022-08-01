@@ -19,7 +19,7 @@ public class MemberController {
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
 
-    @PatchMapping
+    @PatchMapping("/location")
     public void changeLocation(@RequestBody MemberChangeLocationRequest memberChangeLocationRequest, HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         memberService.changeLocation(memberChangeLocationRequest, memberId);

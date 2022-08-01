@@ -68,7 +68,7 @@ class MemberIntegrationTest {
                 .body(requestParams)
 
                 .when()
-                .patch("/members")
+                .patch("/members/location")
 
                 .then()
                 .statusCode(HttpStatus.OK.value());
