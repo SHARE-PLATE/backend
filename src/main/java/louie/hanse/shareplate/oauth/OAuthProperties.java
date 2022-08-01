@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "oauth")
 public class OAuthProperties {
+
     private final String clientId;
     private final String redirectUrl;
     private final String accessTokenApiUrl;

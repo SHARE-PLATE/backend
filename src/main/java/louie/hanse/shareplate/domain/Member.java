@@ -23,7 +23,8 @@ public class Member {
     private double latitude;
     private double longitude;
 
-    public Member(Long id, String profileImageUrl, String thumbnailImageUrl, String nickname, String email) {
+    public Member(Long id, String profileImageUrl, String thumbnailImageUrl, String nickname,
+        String email) {
         this.id = id;
         this.profileImageUrl = profileImageUrl;
         this.thumbnailImageUrl = thumbnailImageUrl;

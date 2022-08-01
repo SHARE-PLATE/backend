@@ -21,13 +21,15 @@ public class MemberController {
     private final MemberService memberService;
 
     @PatchMapping
-    public void changeUserInfo(@RequestBody MemberChangeUserInfoRequest memberChangeUserInfoRequest, HttpServletRequest request) {
+    public void changeUserInfo(@RequestBody MemberChangeUserInfoRequest memberChangeUserInfoRequest,
+        HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         memberService.changeUserInfo(memberChangeUserInfoRequest, memberId);
     }
 
     @PatchMapping("/location")
-    public void changeLocation(@RequestBody MemberChangeLocationRequest memberChangeLocationRequest, HttpServletRequest request) {
+    public void changeLocation(@RequestBody MemberChangeLocationRequest memberChangeLocationRequest,
+        HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         memberService.changeLocation(memberChangeLocationRequest, memberId);
     }

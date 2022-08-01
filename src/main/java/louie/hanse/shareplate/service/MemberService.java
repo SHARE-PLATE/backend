@@ -19,7 +19,7 @@ public class MemberService {
     public void changeLocation(MemberChangeLocationRequest request, Long id) {
 //        TODO 커스텀 Exception
         Member member = memberRepository.findById(id)
-                .orElseThrow();
+            .orElseThrow();
         member.changeLocation(request.getLocation());
         member.changeLongitude(request.getLongitude());
         member.changeLatitude(request.getLatitude());
@@ -29,7 +29,7 @@ public class MemberService {
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) {
         //        TODO 커스텀 Exception
         Member member = memberRepository.findById(id)
-                .orElseThrow();
+            .orElseThrow();
         member.changeProfileImageUrl(request.getProfileImageUrl());
         member.changeNickname(request.getNickname());
         member.changeEmail(request.getEmail());
