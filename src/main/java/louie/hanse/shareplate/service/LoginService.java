@@ -27,7 +27,22 @@ public class LoginService {
 
     @Transactional
     public void updateRefreshToken(String refreshToken, Long id) {
-        Member member = memberRepository.findById(id).orElseThrow();
+        Member member = findMember(id);
         member.changeRefreshToken(refreshToken);
+    }
+
+    @Transactional
+    public void deleteRefreshToken(Long id) {
+        Member member = findMember(id);
+        member.deleteRefreshToken();
+    }
+
+    public String findRefreshTokenById(Long id) {
+        return findMember(id).getRefreshToken();
+    }
+
+    private Member findMember(Long id) {
+        //        TODO 커스텀 Exception
+        return memberRepository.findById(id).orElseThrow();
     }
 }

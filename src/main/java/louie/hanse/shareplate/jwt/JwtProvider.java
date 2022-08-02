@@ -49,10 +49,18 @@ public class JwtProvider {
     }
 
     public void verifyAccessToken(String accessToken) {
+        verifyToken("Access-Token", accessToken);
+    }
+
+    public void verifyRefreshToken(String refreshToken) {
+        verifyToken("Refresh-Token", refreshToken);
+    }
+
+    private void verifyToken(String subject, String token) {
         JWT.require(algorithm)
-            .withIssuer(issuer)
-            .withSubject("Access-Token")
+            .withSubject(issuer)
+            .withSubject(subject)
             .build()
-            .verify(accessToken);
+            .verify(token);
     }
 }
