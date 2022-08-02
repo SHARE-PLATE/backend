@@ -22,6 +22,8 @@ public class Member {
     private String location;
     private double latitude;
     private double longitude;
+    private String refreshToken;
+
 
     public Member(Long id, String profileImageUrl, String thumbnailImageUrl, String nickname,
         String email) {
@@ -40,10 +42,6 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public void changeEmail(String email) {
-        this.email = email;
-    }
-
     public void changeLocation(String location) {
         this.location = location;
     }
@@ -54,6 +52,14 @@ public class Member {
 
     public void changeLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public void changeRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public void deleteRefreshToken() {
+        this.refreshToken = null;
     }
 }
 
