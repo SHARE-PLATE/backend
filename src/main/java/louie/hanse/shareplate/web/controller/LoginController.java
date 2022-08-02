@@ -47,6 +47,8 @@ public class LoginController {
         String accessToken = jwtProvider.createAccessToken(member.getId());
         String refreshToken = jwtProvider.createRefreshToken(member.getId());
 
+        loginService.updateRefreshToken(refreshToken, member.getId());
+
         response.setHeader("Access-Token", accessToken);
         response.setHeader("Refresh-Token", refreshToken);
 
