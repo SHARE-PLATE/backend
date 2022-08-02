@@ -17,7 +17,7 @@ spring:
     open-in-view: false
 
   config:
-    import: oauth.yml
+    import: classpath:oauth.yml,classpath:s3.yml
 
   sql:
     init:
@@ -31,3 +31,7 @@ spring:
 logging.level:
   org:
     hibernate.SQL: debug
+  com:
+    amazonaws:
+      util:
+        EC2MetadataUtils: error

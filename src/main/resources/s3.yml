@@ -1,0 +1,14 @@
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: share-plate-file-upload
+      mock.port: 8001
+    credentials:
+      access-key: ${S3_ACCESS_KEY}
+      secret-key: ${S3_SECRET_KEY}
+    stack:
+      auto: false
+
+file.upload.location: louie1se
