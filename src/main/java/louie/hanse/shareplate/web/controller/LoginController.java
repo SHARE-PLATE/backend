@@ -1,7 +1,5 @@
 package louie.hanse.shareplate.web.controller;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -15,7 +13,6 @@ import louie.hanse.shareplate.oauth.OAuthProperties;
 import louie.hanse.shareplate.oauth.OauthUserInfo;
 import louie.hanse.shareplate.service.LoginService;
 import louie.hanse.shareplate.service.OAuthService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,65 +51,19 @@ public class LoginController {
 
         response.setHeader("Access-Token", accessToken);
         response.setHeader("Refresh-Token", refreshToken);
-
         return Collections.singletonMap("thumbnailImageUrl", member.getThumbnailImageUrl());
     }
 
-    @PostMapping("/reissue/access-token")
+    @GetMapping("/reissue/access-token")
     public void reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
-        String accessToken = request.getHeader("Access-Token");
-        String refreshToken = request.getHeader("Refresh-Token");
-
-        try {
-            jwtProvider.verifyAccessToken(accessToken);
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-        } catch (TokenExpiredException e) {
-            jwtProvider.verifyRefreshToken(refreshToken);
-
-            Long accessTokenMemberId = jwtProvider.decodeMemberId(accessToken);
-            Long refreshTokenMemberId = jwtProvider.decodeMemberId(refreshToken);
-
-            if (!refreshTokenMemberId.equals(accessTokenMemberId)){
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return;
-            }
-            String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
-            if (findRefreshToken == null || findRefreshToken.equals(refreshToken)) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return;
-            }
-            String reissueAccessToken = jwtProvider.createAccessToken(refreshTokenMemberId);
+        Long refreshTokenMemberId = (Long) request.getAttribute("refreshTokenMemberId");
+        String reissueAccessToken = jwtProvider.createAccessToken(refreshTokenMemberId);
             response.setHeader("Access-Token", reissueAccessToken);
-        }
-
     }
 
     @PostMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        String accessToken = request.getHeader("Access-Token");
-        String refreshToken = request.getHeader("Refresh-Token");
-
-        Long accessTokenMemberId = jwtProvider.decodeMemberId(accessToken);
-        Long refreshTokenMemberId = jwtProvider.decodeMemberId(refreshToken);
-
-        if (!refreshTokenMemberId.equals(accessTokenMemberId)) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return;
-        }
-        String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
-        if (findRefreshToken == null || !findRefreshToken.equals(refreshToken)) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return;
-        }
-
-        try {
-            jwtProvider.verifyAccessToken(accessToken);
-            jwtProvider.verifyRefreshToken(refreshToken);
-        } catch (TokenExpiredException e) {
-        } catch (JWTVerificationException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return;
-        }
+    public void logout(HttpServletRequest request) {
+        Long refreshTokenMemberId = (Long) request.getAttribute("refreshTokenMemberId");
         loginService.deleteRefreshToken(refreshTokenMemberId);
     }
 
