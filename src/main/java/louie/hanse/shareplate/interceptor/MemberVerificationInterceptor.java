@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Slf4j
-public class LoginInterceptor implements HandlerInterceptor {
+public class MemberVerificationInterceptor implements HandlerInterceptor {
 
     private final JwtProvider jwtProvider;
 

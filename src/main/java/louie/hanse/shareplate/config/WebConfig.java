@@ -3,7 +3,7 @@ package louie.hanse.shareplate.config;
 import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.converter.StringToShareTypeConverter;
-import louie.hanse.shareplate.interceptor.LoginInterceptor;
+import louie.hanse.shareplate.interceptor.MemberVerificationInterceptor;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor(jwtProvider))
+        registry.addInterceptor(new MemberVerificationInterceptor(jwtProvider))
                 .order(1)
                 .addPathPatterns("/members", "/members/location", "/shares");
     }
