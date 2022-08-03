@@ -28,9 +28,15 @@ jobs:
 
       - name: Insert data source information into application.yml
         run: |
+          sed -i "s|\${DATASOURCE_URL}|$DATASOURCE_URL|g" ./src/main/resources/application.yml
+          sed -i "s|\${DATASOURCE_USERNAME}|$DATASOURCE_USERNAME|g" ./src/main/resources/application.yml
+          sed -i "s|\${DATASOURCE_PASSWORD}|$DATASOURCE_PASSWORD|g" ./src/main/resources/application.yml
           sed -i "s|\${OAUTH_LOGIN_FORM_URL}|$OAUTH_LOGIN_FORM_URL|g" ./src/main/resources/oauth.yml
         env:
           OAUTH_LOGIN_FORM_URL: ${{ secrets.OAUTH_LOGIN_FORM_URL }}
+          DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+          DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+          DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
