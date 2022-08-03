@@ -58,6 +58,35 @@ public class LoginController {
         return Collections.singletonMap("thumbnailImageUrl", member.getThumbnailImageUrl());
     }
 
+    @PostMapping("/reissue/access-token")
+    public void reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
+        String accessToken = request.getHeader("Access-Token");
+        String refreshToken = request.getHeader("Refresh-Token");
+
+        try {
+            jwtProvider.verifyAccessToken(accessToken);
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+        } catch (TokenExpiredException e) {
+            jwtProvider.verifyRefreshToken(refreshToken);
+
+            Long accessTokenMemberId = jwtProvider.decodeMemberId(accessToken);
+            Long refreshTokenMemberId = jwtProvider.decodeMemberId(refreshToken);
+
+            if (!refreshTokenMemberId.equals(accessTokenMemberId)){
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                return;
+            }
+            String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
+            if (findRefreshToken.equals(refreshToken) || findRefreshToken == null) {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                return;
+            }
+            String reissueAccessToken = jwtProvider.createAccessToken(refreshTokenMemberId);
+            response.setHeader("Access-Token", reissueAccessToken);
+        }
+
+    }
+
     @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         String accessToken = request.getHeader("Access-Token");
