@@ -77,7 +77,7 @@ public class LoginController {
                 return;
             }
             String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
-            if (findRefreshToken.equals(refreshToken) || findRefreshToken == null) {
+            if (findRefreshToken == null || findRefreshToken.equals(refreshToken)) {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 return;
             }
@@ -100,7 +100,7 @@ public class LoginController {
             return;
         }
         String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
-        if (!findRefreshToken.equals(refreshToken) || findRefreshToken == null) {
+        if (findRefreshToken == null || !findRefreshToken.equals(refreshToken)) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return;
         }
