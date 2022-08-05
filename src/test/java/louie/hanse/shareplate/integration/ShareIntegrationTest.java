@@ -66,7 +66,7 @@ class ShareIntegrationTest {
                         removeHeaders(HOST, CONTENT_LENGTH))
                     .withResponseDefaults(
                         prettyPrint(),
-                        removeHeaders(CONTENT_LENGTH, CONNECTION, DATE, TRANSFER_ENCODING))
+                        removeHeaders(CONTENT_LENGTH, CONNECTION, DATE, TRANSFER_ENCODING, "Keep-Alive"))
             )
             .build();
     }

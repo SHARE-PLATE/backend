@@ -1,0 +1,42 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+= Share Plate API
+
+== 쉐어 등록
+
+=== Request
+include::{snippets}/share-register/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-register/http-response.adoc[]
+
+== 사용자 정보 조회
+
+=== Request
+include::{snippets}/member-get-information/http-request.adoc[]
+
+=== Response
+include::{snippets}/member-get-information/http-response.adoc[]
+
+== 사용자 정보 편집
+
+=== Request
+include::{snippets}/member-changed-user-information/http-request.adoc[]
+
+=== Response
+include::{snippets}/member-changed-user-information/http-response.adoc[]
+
+== 사용자 위치정보 편집
+
+=== Request
+include::{snippets}/member-changed-location/http-request.adoc[]
+
+=== Response
+include::{snippets}/member-changed-location/http-response.adoc[]
