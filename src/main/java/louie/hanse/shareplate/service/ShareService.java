@@ -29,14 +29,14 @@ public class ShareService {
     @Value("${file.upload.location}")
     private String fileUploadLocation;
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final ShareRepository shareRepository;
     private final AmazonS3 amazonS3Client;
 
     @Transactional
     public void register(ShareRegisterRequest request, Long memberId) throws IOException {
 //        TODO : 커스텀 Exception 처리
-        Member member = findOrElseThrow(memberId);
+        Member member = memberService.findMember(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
             String uploadedImageUrl = uploadImage(image);
@@ -62,10 +62,5 @@ public class ShareService {
         }
 
         return amazonS3Client.getUrl(bucket, key).toString();
-    }
-
-    private Member findOrElseThrow(Long memberId) {
-        return memberRepository.findById(memberId)
-            .orElseThrow(IllegalStateException::new);
     }
 }

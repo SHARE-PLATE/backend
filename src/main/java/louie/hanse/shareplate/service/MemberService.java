@@ -39,7 +39,7 @@ public class MemberService {
         return new MemberUserInfoResponse(member);
     }
 
-    private Member findMember(Long id) {
+    public Member findMember(Long id) {
         return memberRepository.findById(id).orElseThrow();
     }
 }
