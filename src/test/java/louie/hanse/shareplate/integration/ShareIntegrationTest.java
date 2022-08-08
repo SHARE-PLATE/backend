@@ -77,13 +77,14 @@ class ShareIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(member.getId());
 
         given(documentationSpec)
-            .filter(document("share-register"))
+            .filter(document("share-register-post"))
             .multiPart("images", "test.txt", "abc".getBytes(), MediaType.TEXT_PLAIN_VALUE)
             .multiPart("images", "test.txt", "def".getBytes(), MediaType.TEXT_PLAIN_VALUE)
             .formParam("type", "delivery")
             .formParam("title", "제목")
             .formParam("price", 10000)
-            .formParam("originalPrice", 20000)
+            .formParam("originalPrice", 30000)
+            .formParam("recruitment", 3)
             .formParam("location", "강남역")
             .formParam("latitude", 37.498095)
             .formParam("longitude", 127.027610)

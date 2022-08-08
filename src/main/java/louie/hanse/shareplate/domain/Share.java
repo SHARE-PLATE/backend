@@ -18,7 +18,7 @@ public class Share {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private Member writer;
 
     @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShareImage> shareImages = new ArrayList<>();
@@ -29,21 +29,23 @@ public class Share {
     private String title;
     private int price;
     private int originalPrice;
+    private int recruitment;
     private String location;
     private double latitude;
     private double longitude;
     private String description;
     private LocalDateTime appointmentDateTime;
-    private LocalDateTime createDateTime = LocalDateTime.now();
+    private LocalDateTime createdDateTime = LocalDateTime.now();
 
-    public Share(Member member, ShareType type, String title, int price, int originalPrice,
-        String location, double latitude, double longitude, String description,
+    public Share(Member writer, ShareType type, String title, int price, int originalPrice,
+        int recruitment, String location, double latitude, double longitude, String description,
         LocalDateTime appointmentDateTime) {
-        this.member = member;
+        this.writer = writer;
         this.type = type;
         this.title = title;
         this.price = price;
         this.originalPrice = originalPrice;
+        this.recruitment = recruitment;
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
