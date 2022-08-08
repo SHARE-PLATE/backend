@@ -12,10 +12,18 @@ endif::[]
 == 쉐어 등록
 
 === Request
-include::{snippets}/share-register/http-request.adoc[]
+include::{snippets}/share-register-post/http-request.adoc[]
 
 === Response
-include::{snippets}/share-register/http-response.adoc[]
+include::{snippets}/share-register-post/http-response.adoc[]
+
+== 쉐어 검색
+
+=== Request
+include::{snippets}/share-search-get/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-search-get/http-response.adoc[]
 
 == 사용자 정보 조회
 
