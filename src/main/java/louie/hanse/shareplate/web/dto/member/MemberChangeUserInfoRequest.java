@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class MemberChangeUserInfoRequest {
 
-    private String profileImageUrl;
+    private String profileImage;
     private String nickname;
 }
