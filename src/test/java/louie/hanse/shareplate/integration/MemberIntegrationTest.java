@@ -80,7 +80,7 @@ class MemberIntegrationTest {
 
     @Test
     void 특정_회원의_주소를_변경한다() {
-        String accessToken = jwtProvider.createAccessToken(2363364736L);
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("location", "화도읍");
@@ -102,7 +102,7 @@ class MemberIntegrationTest {
 
     @Test
     void 특정_회원의_정보를_변경한다() {
-        String accessToken = jwtProvider.createAccessToken(2363364736L);
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("profileImageUrl", "https:s3.com");
