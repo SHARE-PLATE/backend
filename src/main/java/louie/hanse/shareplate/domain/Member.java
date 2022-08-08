@@ -12,6 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
+    private static final int SEARCH_RANGE = 2;
+
     @Id
     private Long id;
 
@@ -60,6 +62,22 @@ public class Member {
 
     public void deleteRefreshToken() {
         this.refreshToken = null;
+    }
+
+    public double calculateStartLatitude() {
+        return latitude - SEARCH_RANGE;
+    }
+
+    public double calculateEndLatitude() {
+        return latitude + SEARCH_RANGE;
+    }
+
+    public double calculateStartLongitude() {
+        return longitude - SEARCH_RANGE;
+    }
+
+    public double calculateEndLongitude() {
+        return longitude + SEARCH_RANGE;
     }
 }
 

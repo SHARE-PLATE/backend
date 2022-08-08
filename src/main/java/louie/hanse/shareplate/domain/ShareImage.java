@@ -22,4 +22,8 @@ public class ShareImage {
         this.share = share;
         this.imageUrl = imageUrl;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 }
