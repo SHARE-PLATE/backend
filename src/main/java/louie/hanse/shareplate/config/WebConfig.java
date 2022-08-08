@@ -10,6 +10,7 @@ import louie.hanse.shareplate.service.LoginService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -38,5 +39,13 @@ public class WebConfig implements WebMvcConfigurer {
         registrar.registerFormatters(registry);
 
         registry.addConverter(new StringToShareTypeConverter());
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("*")
+            .allowedMethods("GET", "POST", "PUT", "PATCH", "OPTIONS")
+            .allowedHeaders("Access-Token", "Refresh-Token");
     }
 }
