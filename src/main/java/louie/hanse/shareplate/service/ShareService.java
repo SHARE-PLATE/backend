@@ -6,13 +6,16 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
-import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
+import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
+import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +48,16 @@ public class ShareService {
         shareRepository.save(share);
     }
 
-    public String uploadImage(MultipartFile image) throws IOException {
+    public List<ShareSearchResponse> searchAroundMember(
+        ShareSearchRequest shareSearchRequest, Long memberId) {
+        Member member = memberService.findMember(memberId);
+        List<Share> shares = shareRepository.searchAroundMember(member, shareSearchRequest);
+        return shares.stream()
+            .map(ShareSearchResponse::new)
+            .collect(Collectors.toList());
+    }
+
+    private String uploadImage(MultipartFile image) throws IOException {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(image.getContentType());
         objectMetadata.setContentLength(image.getSize());

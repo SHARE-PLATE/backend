@@ -1,6 +1,7 @@
 package louie.hanse.shareplate.domain;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.type.ShareType;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Share {
@@ -22,6 +24,9 @@ public class Share {
 
     @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShareImage> shareImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "share")
+    private List<Entry> entries = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private ShareType type;
@@ -59,4 +64,9 @@ public class Share {
         ShareImage shareImage = new ShareImage(this, shareImageUrl);
         shareImages.add(shareImage);
     }
+
+    public int getCurrentRecruitment() {
+        return entries.size() + 1;
+    }
+
 }
