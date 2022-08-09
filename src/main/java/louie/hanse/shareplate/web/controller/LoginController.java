@@ -13,10 +13,12 @@ import louie.hanse.shareplate.oauth.OAuthProperties;
 import louie.hanse.shareplate.oauth.OauthUserInfo;
 import louie.hanse.shareplate.service.LoginService;
 import louie.hanse.shareplate.service.OAuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @Slf4j
@@ -38,7 +40,14 @@ public class LoginController {
         HttpServletResponse response) {
 
         String code = paramMap.get("code");
-        String oauthAccessToken = oAuthService.getAccessToken(code);
+        String oauthAccessToken;
+
+        try {
+            oauthAccessToken = oAuthService.getAccessToken(code);
+        } catch (HttpClientErrorException e) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            return null;
+        }
 
         OauthUserInfo userInfo = oAuthService.getUserInfo(oauthAccessToken);
 
