@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.converter.StringToShareTypeConverter;
 import louie.hanse.shareplate.interceptor.LogoutInterceptor;
 import louie.hanse.shareplate.interceptor.MemberVerificationInterceptor;
+import louie.hanse.shareplate.interceptor.ReissueAccessTokenInterceptor;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.LoginService;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -34,7 +35,10 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new LogoutInterceptor(jwtProvider, loginService))
             .order(2)
-            .addPathPatterns("/logout", "/reissue/access-token");
+            .addPathPatterns("/logout");
+        registry.addInterceptor(new ReissueAccessTokenInterceptor(jwtProvider, loginService))
+            .order(3)
+            .addPathPatterns("/reissue/access-token");
     }
 
     @Bean
