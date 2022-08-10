@@ -11,6 +11,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
 import static org.springframework.http.HttpHeaders.DATE;
 import static org.springframework.http.HttpHeaders.HOST;
 import static org.springframework.http.HttpHeaders.TRANSFER_ENCODING;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.removeHeaders;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -117,7 +118,7 @@ class ShareIntegrationTest {
 
         given(documentationSpec)
             .filter(document("share-search-get"))
-            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("type", "delivery")
             .param("keyword", "떡볶이")
@@ -150,7 +151,7 @@ class ShareIntegrationTest {
 
         given(documentationSpec)
             .filter(document("share-search-mine-entry-get"))
-            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "entry")
             .param("shareType", "delivery")
@@ -183,7 +184,7 @@ class ShareIntegrationTest {
 
         given(documentationSpec)
             .filter(document("share-search-mine-writer-get"))
-            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "writer")
             .param("shareType", "delivery")
@@ -216,7 +217,7 @@ class ShareIntegrationTest {
 
         given(documentationSpec)
             .filter(document("share-search-mine-wish-get"))
-            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "wish")
             .param("shareType", "delivery")
@@ -238,5 +239,39 @@ class ShareIntegrationTest {
             .body("[0].recruitmentLimit", equalTo(true))
             .body("[0].createdDateTime", equalTo("2022-07-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-07-03 16:00"));
+    }
+
+    @Test
+    void 특정_쉐어의_상세정보를_조회한다() {
+        given(documentationSpec)
+            .filter(document("share-detail-get"))
+            .accept(APPLICATION_JSON_VALUE)
+            .pathParam("id", 1)
+
+            .when()
+            .get("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("id", equalTo(1))
+            .body("imageUrls", containsString("https://"))
+            .body("writer", equalTo("정현석"))
+            .body("writerThumbnailImageUrl", equalTo("http://k.kakaocdn.net/dn/Zdpi8/btrGgJKuvQW/XckLpycXe5zC7iUwEhFilk/img_110x110.jpg"))
+            .body("title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
+            .body("location", equalTo("강남역"))
+            .body("latitude", equalTo(36.6576769))
+            .body("longitude", equalTo(128.3007637))
+            .body("description", equalTo("떡볶이 쉐어 설명"))
+            .body("price", equalTo(10000))
+            .body("originalPrice", equalTo(30000))
+            .body("currentRecruitment", equalTo(2))
+            .body("finalRecruitment", equalTo(3))
+            .body("recruitmentMemberThumbnailImageUrls", hasSize(2))
+            .body("recruitmentMemberThumbnailImageUrls.[0]", equalTo("http://k.kakaocdn.net/dn/Zdpi8/btrGgJKuvQW/XckLpycXe5zC7iUwEhFilk/img_110x110.jpg"))
+            .body("recruitmentMemberThumbnailImageUrls.[1]", equalTo("http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg"))
+            .body("createdDateTime", equalTo("2022-08-03 16:00"))
+            .body("appointmentDateTime", equalTo("2023-08-03 16:00"))
+            .body("wish", equalTo(false))
+            .body("entry", equalTo(false));
     }
 }
