@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.domain.Member;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.oauth.OAuthProperties;
 import louie.hanse.shareplate.oauth.OauthUserInfo;
 import louie.hanse.shareplate.service.LoginService;
 import louie.hanse.shareplate.service.OAuthService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,8 +46,7 @@ public class LoginController {
         try {
             oauthAccessToken = oAuthService.getAccessToken(code);
         } catch (HttpClientErrorException e) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return null;
+            throw new GlobalException(AuthExceptionType.INCORRECT_AUTHORIZATION_CODE);
         }
 
         OauthUserInfo userInfo = oAuthService.getUserInfo(oauthAccessToken);

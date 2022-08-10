@@ -6,9 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.LoginService;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,8 +28,7 @@ public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
         String refreshToken = request.getHeader("Refresh-Token");
 
         if (!StringUtils.hasText(accessToken) || !StringUtils.hasText(refreshToken)) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return false;
+            throw new GlobalException(AuthExceptionType.EMPTY_TOKEN);
         }
 
         Long accessTokenMemberId = jwtProvider.decodeMemberId(accessToken);
@@ -36,33 +36,27 @@ public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
 
         try {
             jwtProvider.verifyAccessToken(accessToken);
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return false;
+            throw new GlobalException(AuthExceptionType.NOT_EXPIRED_ACCESS_TOKEN);
         } catch (TokenExpiredException e) {
 
             try {
                 jwtProvider.verifyRefreshToken(refreshToken);
             }catch (TokenExpiredException exception) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return false;
+                throw new GlobalException(AuthExceptionType.EXPIRED_REFRESH_TOKEN);
             } catch (JWTVerificationException exception) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return false;
+                throw new GlobalException(AuthExceptionType.TAMPERING_REFRESH_TOKEN);
             }
 
             if (!refreshTokenMemberId.equals(accessTokenMemberId)) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return false;
+                throw new GlobalException(AuthExceptionType.NOT_EQUAL_MEMBER_ID_IN_TOKEN);
             }
 
-            String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
+            String findRefreshToken = loginService.findRefreshTokenByMemberId(refreshTokenMemberId);
             if (findRefreshToken == null || !findRefreshToken.equals(refreshToken)) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return false;
+                throw new GlobalException(AuthExceptionType.INVALID_REFRESH_TOKEN);
             }
         } catch (JWTVerificationException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
+            throw new GlobalException(AuthExceptionType.TAMPERING_ACCESS_TOKEN);
         }
         request.setAttribute("refreshTokenMemberId", refreshTokenMemberId);
         return true;

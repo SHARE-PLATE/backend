@@ -2,6 +2,8 @@ package louie.hanse.shareplate.service;
 
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Member;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.web.dto.member.MemberChangeLocationRequest;
 import louie.hanse.shareplate.web.dto.member.MemberChangeUserInfoRequest;
@@ -27,19 +29,18 @@ public class MemberService {
 
     @Transactional
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) {
-        //        TODO 커스텀 Exception
         Member member = findMember(id);
         member.changeProfileImageUrl(request.getProfileImage());
         member.changeNickname(request.getNickname());
     }
 
     public MemberUserInfoResponse getUserInfo(Long id) {
-        //        TODO 커스텀 Exception
         Member member = findMember(id);
         return new MemberUserInfoResponse(member);
     }
 
     public Member findMember(Long id) {
-        return memberRepository.findById(id).orElseThrow();
+        return memberRepository.findById(id)
+            .orElseThrow(() -> new GlobalException(MemberExceptionType.MEMBER_NOT_FOUND));
     }
 }
