@@ -29,7 +29,7 @@ public class MemberService {
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) {
         //        TODO 커스텀 Exception
         Member member = findMember(id);
-        member.changeProfileImageUrl(request.getProfileImageUrl());
+        member.changeProfileImageUrl(request.getProfileImage());
         member.changeNickname(request.getNickname());
     }
 

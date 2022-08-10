@@ -1,6 +1,5 @@
 package louie.hanse.shareplate.interceptor;
 
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +26,7 @@ public class LogoutInterceptor implements HandlerInterceptor {
         String refreshToken = request.getHeader("Refresh-Token");
 
         if (!StringUtils.hasText(accessToken) || !StringUtils.hasText(refreshToken)) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             return false;
         }
 
@@ -49,9 +48,6 @@ public class LogoutInterceptor implements HandlerInterceptor {
             jwtProvider.verifyAccessToken(accessToken);
             jwtProvider.verifyRefreshToken(refreshToken);
         } catch (TokenExpiredException e) {
-        } catch (JWTDecodeException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
         } catch (JWTVerificationException e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
