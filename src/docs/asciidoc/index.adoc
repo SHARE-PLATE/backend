@@ -25,6 +25,32 @@ include::{snippets}/share-search-get/http-request.adoc[]
 === Response
 include::{snippets}/share-search-get/http-response.adoc[]
 
+== 내 쉐어 조회
+
+=== 내가 참여한 쉐어 조회
+
+=== Request
+include::{snippets}/share-search-mine-entry-get/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-search-mine-entry-get/http-response.adoc[]
+
+=== 내가 작성한 쉐어 조회
+
+=== Request
+include::{snippets}/share-search-mine-writer-get/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-search-mine-writer-get/http-response.adoc[]
+
+=== 내가 찜한 쉐어 조회
+
+=== Request
+include::{snippets}/share-search-mine-wish-get/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-search-mine-wish-get/http-response.adoc[]
+
 == 사용자 정보 조회
 
 === Request

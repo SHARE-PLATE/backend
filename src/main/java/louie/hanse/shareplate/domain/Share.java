@@ -28,6 +28,9 @@ public class Share {
     @OneToMany(mappedBy = "share")
     private List<Entry> entries = new ArrayList<>();
 
+    @OneToMany(mappedBy = "share")
+    private List<Wish> wishList = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private ShareType type;
 

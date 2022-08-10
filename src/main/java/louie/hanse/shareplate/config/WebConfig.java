@@ -3,6 +3,7 @@ package louie.hanse.shareplate.config;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.converter.StringToMineTypeConverter;
 import louie.hanse.shareplate.converter.StringToShareTypeConverter;
 import louie.hanse.shareplate.interceptor.LogoutInterceptor;
 import louie.hanse.shareplate.interceptor.MemberVerificationInterceptor;
@@ -31,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MemberVerificationInterceptor(jwtProvider))
             .order(1)
-            .addPathPatterns("/members", "/members/location", "/shares");
+            .addPathPatterns("/members", "/members/location", "/shares", "/shares/mine");
 
         registry.addInterceptor(new LogoutInterceptor(jwtProvider, loginService))
             .order(2)

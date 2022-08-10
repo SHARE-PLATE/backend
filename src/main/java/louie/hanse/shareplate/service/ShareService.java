@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.repository.ShareRepository;
+import louie.hanse.shareplate.type.MineType;
+import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
@@ -52,6 +54,24 @@ public class ShareService {
         ShareSearchRequest shareSearchRequest, Long memberId) {
         Member member = memberService.findMember(memberId);
         List<Share> shares = shareRepository.searchAroundMember(member, shareSearchRequest);
+        return shares.stream()
+            .map(ShareSearchResponse::new)
+            .collect(Collectors.toList());
+    }
+
+    public List<ShareSearchResponse> searchMine(
+        ShareMineSearchRequest shareMineSearchRequest, Long memberId) {
+        MineType mineType = shareMineSearchRequest.getMineType();
+        List<Share> shares = null;
+        if (mineType.isEntry()) {
+            shares = shareRepository.findWithEntry(memberId);
+        }
+        if (mineType.isWriter()) {
+            shares = shareRepository.findByWriterId(memberId);
+        }
+        if (mineType.isWish()) {
+            shares = shareRepository.findWithWish(memberId);
+        }
         return shares.stream()
             .map(ShareSearchResponse::new)
             .collect(Collectors.toList());

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ShareService;
+import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
@@ -32,5 +33,12 @@ public class ShareController {
         ShareSearchRequest shareSearchRequest, HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return shareService.searchAroundMember(shareSearchRequest, memberId);
+    }
+
+    @GetMapping("/mine")
+    public List<ShareSearchResponse> searchMine(
+        ShareMineSearchRequest shareMineSearchRequest, HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        return shareService.searchMine(shareMineSearchRequest, memberId);
     }
 }
