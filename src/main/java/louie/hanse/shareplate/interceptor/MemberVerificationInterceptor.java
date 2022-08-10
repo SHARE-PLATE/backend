@@ -1,16 +1,17 @@
 package louie.hanse.shareplate.interceptor;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import louie.hanse.shareplate.jwt.JwtProvider;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.HandlerInterceptor;
-
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.AuthExceptionType;
+import louie.hanse.shareplate.jwt.JwtProvider;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -24,15 +25,15 @@ public class MemberVerificationInterceptor implements HandlerInterceptor {
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (!StringUtils.hasText(accessToken)) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
+            throw new GlobalException(AuthExceptionType.EMPTY_ACCESS_TOKEN);
         }
 
         try {
             jwtProvider.verifyAccessToken(accessToken);
+        } catch (TokenExpiredException e) {
+            throw new GlobalException(AuthExceptionType.EXPIRED_ACCESS_TOKEN);
         } catch (JWTVerificationException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
+            throw new GlobalException(AuthExceptionType.TAMPERING_ACCESS_TOKEN);
         }
 
         Long memberId = jwtProvider.decodeMemberId(accessToken);
