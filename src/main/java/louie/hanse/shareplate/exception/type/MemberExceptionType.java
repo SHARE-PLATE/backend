@@ -5,12 +5,10 @@ import static org.springframework.http.HttpStatus.*;
 import org.springframework.http.HttpStatus;
 
 public enum MemberExceptionType implements ExceptionType {
-    EMPTY_ACCESS_TOKEN("MEMBER001", "올바르지 않은 토큰입니다.", BAD_REQUEST),
-    VERIFICATION_ACCESS_TOKEN("MEMBER002", "올바르지 않은 토큰입니다.", UNAUTHORIZED),
-    MEMBER_NOT_FOUND("MEMBER003", "올바르지 않은 토큰입니다.", BAD_REQUEST),
-    NOT_SUPPORT_IMAGE_TYPE("MEMBER004", "이미지 형식의 파일이 아닙니다.", BAD_REQUEST),
-    EMPTY_MEMBER_INFO("MEMBER005", "요청한 필드값이 비어있습니다.", BAD_REQUEST),
-    EMPTY_LOCATION("MEMBER006", "요청한 필드값이 비어있습니다.", BAD_REQUEST);
+    MEMBER_NOT_FOUND("MEMBER001", "존재하지 않는 회원입니다.", BAD_REQUEST),
+    NOT_SUPPORT_IMAGE_TYPE("MEMBER002", "이미지 형식의 파일이 아닙니다.", BAD_REQUEST),
+    EMPTY_MEMBER_INFO("MEMBER003", "요청한 필드값이 비어있습니다.", BAD_REQUEST),
+    EMPTY_LOCATION("MEMBER004", "요청한 필드값이 비어있습니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;
