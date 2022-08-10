@@ -38,7 +38,7 @@ public class LogoutInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String findRefreshToken = loginService.findRefreshTokenById(refreshTokenMemberId);
+        String findRefreshToken = loginService.findRefreshTokenByMemberId(refreshTokenMemberId);
         if (findRefreshToken == null || !findRefreshToken.equals(refreshToken)) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
