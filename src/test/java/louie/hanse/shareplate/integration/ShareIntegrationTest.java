@@ -130,15 +130,113 @@ class ShareIntegrationTest {
             .body("", hasSize(1))
             .body("[0].id", equalTo(1))
             .body("[0].thumbnailUrl", containsString("https://"))
-            .body("[0].title", equalTo("떡볶이 먹을 사람 모집합니다."))
+            .body("[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
             .body("[0].location", equalTo("강남역"))
             .body("[0].price", equalTo(10000))
             .body("[0].originalPrice", equalTo(30000))
-            .body("[0].currentRecruitment", equalTo(1))
+            .body("[0].currentRecruitment", equalTo(2))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].recruitmentLimit", equalTo(true))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
     }
 
+    @Test
+    void 내가_신청한_쉐어를_조회한다() {
+        Long memberId = memberRepository.findById(2355841047L)
+            .orElseThrow().getId();
+
+        String accessToken = jwtProvider.createAccessToken(memberId);
+
+        given(documentationSpec)
+            .filter(document("share-search-mine-entry-get"))
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .header(AUTHORIZATION, accessToken)
+            .param("mineType", "entry")
+            .param("shareType", "delivery")
+
+            .when()
+            .get("/shares/mine")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("", hasSize(1))
+            .body("[0].id", equalTo(1))
+            .body("[0].thumbnailUrl", containsString("https://"))
+            .body("[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
+            .body("[0].location", equalTo("강남역"))
+            .body("[0].price", equalTo(10000))
+            .body("[0].originalPrice", equalTo(30000))
+            .body("[0].currentRecruitment", equalTo(2))
+            .body("[0].finalRecruitment", equalTo(3))
+            .body("[0].recruitmentLimit", equalTo(true))
+            .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
+            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+    }
+
+    @Test
+    void 내가_등록한_쉐어를_조회한다() {
+        Long memberId = memberRepository.findById(2370842997L)
+            .orElseThrow().getId();
+
+        String accessToken = jwtProvider.createAccessToken(memberId);
+
+        given(documentationSpec)
+            .filter(document("share-search-mine-writer-get"))
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .header(AUTHORIZATION, accessToken)
+            .param("mineType", "writer")
+            .param("shareType", "delivery")
+
+            .when()
+            .get("/shares/mine")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("", hasSize(1))
+            .body("[0].id", equalTo(1))
+            .body("[0].thumbnailUrl", containsString("https://"))
+            .body("[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
+            .body("[0].location", equalTo("강남역"))
+            .body("[0].price", equalTo(10000))
+            .body("[0].originalPrice", equalTo(30000))
+            .body("[0].currentRecruitment", equalTo(2))
+            .body("[0].finalRecruitment", equalTo(3))
+            .body("[0].recruitmentLimit", equalTo(true))
+            .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
+            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+    }
+
+    @Test
+    void 내가_찜한_쉐어를_조회한다() {
+        Long memberId = memberRepository.findById(2370842997L)
+            .orElseThrow().getId();
+
+        String accessToken = jwtProvider.createAccessToken(memberId);
+
+        given(documentationSpec)
+            .filter(document("share-search-mine-wish-get"))
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .header(AUTHORIZATION, accessToken)
+            .param("mineType", "wish")
+            .param("shareType", "delivery")
+
+            .when()
+            .get("/shares/mine")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("", hasSize(1))
+            .body("[0].id", equalTo(2))
+            .body("[0].thumbnailUrl", containsString("https://"))
+            .body("[0].title", equalTo("판교역에서 치킨 먹을 사람 모집합니다."))
+            .body("[0].location", equalTo("판교역"))
+            .body("[0].price", equalTo(7000))
+            .body("[0].originalPrice", equalTo(28000))
+            .body("[0].currentRecruitment", equalTo(1))
+            .body("[0].finalRecruitment", equalTo(4))
+            .body("[0].recruitmentLimit", equalTo(true))
+            .body("[0].createdDateTime", equalTo("2022-07-03 16:00"))
+            .body("[0].appointmentDateTime", equalTo("2023-07-03 16:00"));
+    }
 }

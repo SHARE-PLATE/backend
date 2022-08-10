@@ -9,10 +9,23 @@ VALUES
 INSERT INTO share
     (id, appointment_date_time, created_date_time, description, latitude, longitude, location, original_price, price, recruitment, recruitment_limit, title, type, writer_id)
 VALUES
-    (1, '2023-08-03-16-00', '2022-08-03-16-00', '설명', 36.6576769, 128.3007637, '강남역', 30000, 10000, 3, true, '떡볶이 먹을 사람 모집합니다.', 'DELIVERY', 2370842997);
+    (1, '2023-08-03-16-00', '2022-08-03-16-00', '떡볶이 쉐어 설명', 36.6576769, 128.3007637, '강남역', 30000, 10000, 3, true, '강남역에서 떡볶이 먹을 사람 모집합니다.', 'DELIVERY', 2370842997),
+    (2, '2023-07-03-16-00', '2022-07-03-16-00', '치킨 쉐어 설명', 37.3951627, 127.1117136, '판교역', 28000, 7000, 4, true, '판교역에서 치킨 먹을 사람 모집합니다.', 'DELIVERY', 2355841047);
 
 INSERT INTO share_image
     (id, share_id, image_url)
 VALUES
     (1, 1, 'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg'),
-    (2, 1, 'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B52.jpeg');
+    (2, 1, 'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B52.jpeg'),
+    (3, 2, 'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/louie1se/%E1%84%8E%E1%85%B5%E1%84%8F%E1%85%B5%E1%86%AB1.jpeg'),
+    (4, 2, 'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/louie1se/%E1%84%8E%E1%85%B5%E1%84%8F%E1%85%B5%E1%86%AB2.jpeg');
+
+INSERT INTO entry
+    (id, member_id, share_id)
+VALUES
+    (1, 2355841047, 1);
+
+INSERT INTO wish
+    (id, member_id, share_id)
+VALUES
+    (1, 2370842997, 2);
