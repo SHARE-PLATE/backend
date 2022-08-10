@@ -7,5 +7,5 @@ public interface ExceptionType {
 
     String getMessage();
 
-    HttpStatus getHttpStatusCode();
+    HttpStatus getStatusCode();
 }

@@ -32,7 +32,7 @@ public enum MemberExceptionType implements ExceptionType {
     }
 
     @Override
-    public HttpStatus getHttpStatusCode() {
+    public HttpStatus getStatusCode() {
         return httpStatusCode;
     }
 }
