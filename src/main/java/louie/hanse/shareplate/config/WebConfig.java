@@ -54,6 +54,7 @@ public class WebConfig implements WebMvcConfigurer {
         registrar.registerFormatters(registry);
 
         registry.addConverter(new StringToShareTypeConverter());
+        registry.addConverter(new StringToMineTypeConverter());
     }
 
     @Override

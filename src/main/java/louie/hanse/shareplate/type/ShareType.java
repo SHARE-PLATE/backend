@@ -5,6 +5,6 @@ public enum ShareType {
 
     public static ShareType valueOfWithCaseInsensitive(String name) {
         name = name.toUpperCase();
-        return ShareType.valueOf(name);
+        return valueOf(name);
     }
 }
