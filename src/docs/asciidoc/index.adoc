@@ -98,3 +98,11 @@ include::{snippets}/entry-share/http-request.adoc[]
 
 === Response
 include::{snippets}/entry-share/http-response.adoc[]
+
+== 쉐어 참가
+
+=== Request
+include::{snippets}/entry-cancel/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-cancel/http-response.adoc[]
