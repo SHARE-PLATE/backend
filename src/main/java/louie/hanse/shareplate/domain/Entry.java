@@ -15,4 +15,8 @@ public class Entry {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
+    public Member getMember() {
+        return member;
+    }
 }
