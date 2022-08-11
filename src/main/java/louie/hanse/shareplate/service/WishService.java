@@ -26,4 +26,9 @@ public class WishService {
         Wish wish = new Wish(share, member);
         wishRepository.save(wish);
     }
+
+    @Transactional
+    public void delete(Long memberId, Long shareId) {
+        wishRepository.deleteByMemberIdAndShareId(memberId, shareId);
+    }
 }
