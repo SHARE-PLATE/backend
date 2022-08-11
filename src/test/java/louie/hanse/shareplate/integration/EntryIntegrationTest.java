@@ -72,9 +72,10 @@ public class EntryIntegrationTest {
             .filter(document("entry-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 2)
 
             .when()
-            .post("/shares/2/entry")
+            .post("/shares/{id}/entry")
 
             .then()
             .statusCode(HttpStatus.OK.value());
@@ -88,9 +89,10 @@ public class EntryIntegrationTest {
             .filter(document("entry-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 1)
 
             .when()
-            .delete("/shares/1/entry")
+            .delete("/shares/{id}/entry")
 
             .then()
             .statusCode(HttpStatus.OK.value());
