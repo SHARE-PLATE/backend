@@ -82,3 +82,11 @@ include::{snippets}/member-changed-location/http-request.adoc[]
 
 === Response
 include::{snippets}/member-changed-location/http-response.adoc[]
+
+== 쉐어 참가
+
+=== Request
+include::{snippets}/entry-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-share/http-response.adoc[]
