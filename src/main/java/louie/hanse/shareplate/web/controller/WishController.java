@@ -4,6 +4,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.WishService;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,13 @@ public class WishController {
         Long memberId = (Long) request.getAttribute("memberId");
 
         wishService.register(memberId, shareId);
+    }
+
+    @DeleteMapping
+    public void cancelWish(@RequestBody Map<String, Long> map, HttpServletRequest request) {
+        Long shareId = map.get("shareId");
+        Long memberId = (Long) request.getAttribute("memberId");
+
+        wishService.delete(memberId, shareId);
     }
 }

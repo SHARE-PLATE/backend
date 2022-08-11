@@ -129,3 +129,6 @@ include::{snippets}/entry-cancel/http-response.adoc[]
 
 === Request
 include::{snippets}/wish-list-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-list-cancel-share/http-response.adoc[]

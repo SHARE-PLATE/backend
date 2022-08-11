@@ -78,9 +78,28 @@ public class WishIntegrationTest {
             .header(AUTHORIZATION,accessToken)
             .body(requestParam)
 
-
             .when()
             .post("/wish-list")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 특정_회원이_특정_쉐어의_위시를_취소한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 2);
+
+        given(documentationSpec)
+            .filter(document("wish-list-cancel-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION,accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
 
             .then()
             .statusCode(HttpStatus.OK.value());
