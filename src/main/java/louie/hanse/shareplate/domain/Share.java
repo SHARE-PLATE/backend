@@ -46,7 +46,6 @@ public class Share {
     private int price;
     private int originalPrice;
     private int recruitment;
-    private boolean recruitmentLimit;
     private String location;
     private double latitude;
     private double longitude;
@@ -54,8 +53,25 @@ public class Share {
     private LocalDateTime appointmentDateTime;
     private LocalDateTime createdDateTime = LocalDateTime.now();
 
+    public Share(Long id, Member writer, ShareType type, String title, int price, int originalPrice,
+        int recruitment, String location, double latitude, double longitude, String description,
+        LocalDateTime appointmentDateTime) {
+        this.id = id;
+        this.writer = writer;
+        this.type = type;
+        this.title = title;
+        this.price = price;
+        this.originalPrice = originalPrice;
+        this.recruitment = recruitment;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
+        this.appointmentDateTime = appointmentDateTime;
+    }
+
     public Share(Member writer, ShareType type, String title, int price, int originalPrice,
-        int recruitment, boolean recruitmentLimit, String location, double latitude, double longitude, String description,
+        int recruitment, String location, double latitude, double longitude, String description,
         LocalDateTime appointmentDateTime) {
         this.writer = writer;
         this.type = type;
@@ -63,7 +79,6 @@ public class Share {
         this.price = price;
         this.originalPrice = originalPrice;
         this.recruitment = recruitment;
-        this.recruitmentLimit = recruitmentLimit;
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;

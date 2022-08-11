@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ShareService;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
+import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,5 +51,12 @@ public class ShareController {
     public ShareDetailResponse getDetail(@PathVariable Long id, HttpServletRequest request) {
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         return shareService.getDetail(id, accessToken);
+    }
+
+    @PutMapping("/{id}")
+    public void edit(@PathVariable Long id, ShareEditRequest shareEditRequest, HttpServletRequest request)
+        throws IOException {
+        Long memberId = (Long) request.getAttribute("memberId");
+        shareService.edit(shareEditRequest, id, memberId);
     }
 }

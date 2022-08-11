@@ -21,6 +21,7 @@ import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
+import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
@@ -128,12 +129,34 @@ public class ShareService {
             entry = entryRepository.existsByMemberIdAndShareId(memberId, id);
         }
 
-        Share share = shareRepository.findById(id)
-            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
+        Share share = findByIdOrElseThrow(id);
 
         if (check && !entry) {
             entry = shareRepository.existsByIdAndWriterId(id, memberId);
         }
         return new ShareDetailResponse(share, wish, entry);
+    }
+
+    @Transactional
+    public void edit(ShareEditRequest shareEditRequest, Long id, Long memberId) throws IOException {
+        if (isNotWriter(id, memberId)) {
+            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
+        }
+        Member writer = memberService.findByIdOrElseThrow(memberId);
+        Share share = shareEditRequest.toEntity(id, writer);
+        for (MultipartFile image : shareEditRequest.getImages()) {
+            String uploadImageUrl = uploadImage(image);
+            share.addShareImage(uploadImageUrl);
+        }
+        shareRepository.save(share);
+    }
+
+    private Share findByIdOrElseThrow(Long id) {
+        return shareRepository.findById(id)
+            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
+    }
+
+    private boolean isNotWriter(Long id, Long memberId) {
+        return !shareRepository.existsByIdAndWriterId(id, memberId);
     }
 }

@@ -9,7 +9,7 @@ import louie.hanse.shareplate.type.ShareType;
 import org.springframework.web.multipart.MultipartFile;
 
 @Setter
-public class ShareRegisterRequest {
+public class ShareEditRequest {
 
     private ShareType type;
     private List<MultipartFile> images;
@@ -23,8 +23,8 @@ public class ShareRegisterRequest {
     private String description;
     private LocalDateTime appointmentDateTime;
 
-    public Share toEntity(Member member) {
-        return new Share(member, type, title, price, originalPrice, recruitment, location, latitude, longitude, description, appointmentDateTime);
+    public Share toEntity(Long id, Member member) {
+        return new Share(id, member, type, title, price, originalPrice, recruitment, location, latitude, longitude, description, appointmentDateTime);
     }
 
     public List<MultipartFile> getImages() {
