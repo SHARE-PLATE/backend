@@ -22,7 +22,7 @@ public class EntryService {
 
     @Transactional
     public void entry(Long shareId, Long memberId) {
-        Member member = memberService.findMember(memberId);
+        Member member = memberService.findByIdOrElseThrow(memberId);
         //TODO 커스텀 예외처리
         Share share = shareRepository.findById(shareId).orElseThrow();
         Entry entry = new Entry(share, member);

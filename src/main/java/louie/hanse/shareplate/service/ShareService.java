@@ -52,7 +52,7 @@ public class ShareService {
     @Transactional
     public void register(ShareRegisterRequest request, Long memberId) throws IOException {
 //        TODO : 커스텀 Exception 처리
-        Member member = memberService.findMember(memberId);
+        Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
             String uploadedImageUrl = uploadImage(image);
@@ -63,7 +63,7 @@ public class ShareService {
 
     public List<ShareSearchResponse> searchAroundMember(
         ShareSearchRequest shareSearchRequest, Long memberId) {
-        Member member = memberService.findMember(memberId);
+        Member member = memberService.findByIdOrElseThrow(memberId);
         List<Share> shares = shareRepository.searchAroundMember(member, shareSearchRequest);
         return shares.stream()
             .map(ShareSearchResponse::new)

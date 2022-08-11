@@ -28,17 +28,17 @@ public class LoginService {
 
     @Transactional
     public void updateRefreshToken(String refreshToken, Long id) {
-        Member member = memberService.findMember(id);
+        Member member = memberService.findByIdOrElseThrow(id);
         member.changeRefreshToken(refreshToken);
     }
 
     @Transactional
     public void deleteRefreshToken(Long id) {
-        Member member = memberService.findMember(id);
+        Member member = memberService.findByIdOrElseThrow(id);
         member.deleteRefreshToken();
     }
 
     public String findRefreshTokenByMemberId(Long id) {
-        return memberService.findMember(id).getRefreshToken();
+        return memberService.findByIdOrElseThrow(id).getRefreshToken();
     }
 }
