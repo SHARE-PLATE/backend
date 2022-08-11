@@ -59,6 +59,14 @@ include::{snippets}/share-detail-get/http-request.adoc[]
 === Response
 include::{snippets}/share-detail-get/http-response.adoc[]
 
+== 쉐어 편집
+
+=== Request
+include::{snippets}/share-edit-put/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-edit-put/http-response.adoc[]
+
 == 사용자 정보 조회
 
 === Request
