@@ -506,6 +506,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_11">Response</a></li>
 </ul>
 </li>
+<li><a href="#_쉐어_참가_2">쉐어 참가</a>
+<ul class="sectlevel2">
+<li><a href="#_request_12">Request</a></li>
+<li><a href="#_response_12">Response</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -518,8 +524,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MzgsImlhdCI6MTY2MDIwNDMzOCwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.hufSbFSSvw6ZZtlFzLdehcAl0H_t7cmUGXubFmLUUb0
-Content-Type: multipart/form-data; boundary="ulro3njTlopcIZGKY80UEjDMgm_mnP4RXlK"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyODAsImlhdCI6MTY2MDIwNDY4MCwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.47DFL7OERn6g5PSUBby1GXzHVtNLA23ogv456XqpAgo
+Content-Type: multipart/form-data; boundary="j5UV0o02Kap0nuQ9fHD_xG_kPReg1I-tDx6quj"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=test.txt
@@ -604,7 +610,7 @@ Content-Type: text/plain
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares?type=delivery&amp;keyword=%EB%96%A1%EB%B3%B6%EC%9D%B4 HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MzcsImlhdCI6MTY2MDIwNDMzNywibWVtYmVySWQiOjIzNzA4NDI5OTd9.v3xbQlttUejmsqKdJApjzcIj07qVa7tDsQtF4geLu-Q</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyNzksImlhdCI6MTY2MDIwNDY3OSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.Dp9CjA6mE42wK87c1GWUV_BqogDyvn0wiw5KWa8Ehcw</code></pre>
 </div>
 </div>
 </div>
@@ -645,7 +651,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=entry&amp;shareType=delivery HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MzksImlhdCI6MTY2MDIwNDMzOSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.x7nI7zlckNQiPQLgqb9ac8Y8NrVXPkr12l4g9ra7Rsk</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyODMsImlhdCI6MTY2MDIwNDY4MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.MTMEDCbUX6E5CDw45LZb9KLxPQ5dLjlx_oP1wbgecPM</code></pre>
 </div>
 </div>
 </div>
@@ -681,7 +687,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=writer&amp;shareType=delivery HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MzksImlhdCI6MTY2MDIwNDMzOSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.JNfJwxG2qfvX_MQr__0g4d9GAX0UUtKMIT5elfDtMKw</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyODMsImlhdCI6MTY2MDIwNDY4MywibWVtYmVySWQiOjIzNzA4NDI5OTd9.Ot8jZj3qaKg3CsfNWYvSbfCveZ8z3R7dX4oYPWnAj3g</code></pre>
 </div>
 </div>
 </div>
@@ -717,7 +723,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=wish&amp;shareType=delivery HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MzksImlhdCI6MTY2MDIwNDMzOSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.JNfJwxG2qfvX_MQr__0g4d9GAX0UUtKMIT5elfDtMKw</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyODIsImlhdCI6MTY2MDIwNDY4MiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.nQt_W5OzYNoso39XhW-RT-4hTvmksLxl5hO_xo7x7ow</code></pre>
 </div>
 </div>
 </div>
@@ -797,8 +803,8 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /shares/3 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MzksImlhdCI6MTY2MDIwNDMzOSwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.loh4QYvvXX8P85yzR_11G4MV1w7jD01msOstou-NbBQ
-Content-Type: multipart/form-data; boundary="_rEvwVLitH4z9yIadcmMKfC4ifQcA07BCyS5L"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyODEsImlhdCI6MTY2MDIwNDY4MSwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.ICerFTQ-7oOdXLC0-qnGQ_zBxBeOplpMrSbJne-b8Lo
+Content-Type: multipart/form-data; boundary="4IoSR30AYTRyW9jSvoH3WcO0fT86f4oF"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=수정된 test1.txt
@@ -882,7 +888,7 @@ Content-Type: text/plain
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MjYsImlhdCI6MTY2MDIwNDMyNiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Ox6ozf4zDD4HIJv157VxNBxEl-VmxFUIT3JUI0Yrp6s
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyNzMsImlhdCI6MTY2MDIwNDY3MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.8BUyF7hIz9zcOP2dcsEwQfv-32VZKiYNb7AWQivC5dc
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -912,7 +918,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MjYsImlhdCI6MTY2MDIwNDMyNiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.4O7rfx0k3pVE2vAe3gw0vxDmefleD9mAQ3F2tMYk8OY
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyNzMsImlhdCI6MTY2MDIwNDY3MywibWVtYmVySWQiOjIzNzA4NDI5OTd9.93cs5meItIBoIStsRZ97sOcdtYOhE8JIQAymEWygfJE
 Content-Type: application/json
 
 {
@@ -941,7 +947,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /members/location HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MjcsImlhdCI6MTY2MDIwNDMyNywibWVtYmVySWQiOjIzNzA4NDI5OTd9.ICOstJ_K605rJoZbHtYZoP8kBqgOnpajVMROaVZr9ow
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyNzQsImlhdCI6MTY2MDIwNDY3NCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.TEujKaMzbrgmy6dv6aYcz977tgJmcmvBg-MGcPrm2Z4
 Content-Type: application/json
 
 {
@@ -970,7 +976,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/2/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDc5MjQsImlhdCI6MTY2MDIwNDMyNCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Pa_8eXPKD6aikYeV_M4_tvYAmMI86OzwbOnrsKKa8XQ
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyNzIsImlhdCI6MTY2MDIwNDY3MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.DvttWj6ZG7NqxFMYIYA9U4SvemQNlxprLqIV3F-VnEs
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -985,11 +991,34 @@ Content-Type: application/json</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_쉐어_참가_2"><a class="link" href="#_쉐어_참가_2">쉐어 참가</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_12"><a class="link" href="#_request_12">Request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/1/entry HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMDgyNzEsImlhdCI6MTY2MDIwNDY3MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Qy2mjjZUHWVFBeieeJx7ijGi9WkC07D1tS9TlrnyCno
+Content-Type: application/json</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_12"><a class="link" href="#_response_12">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-08-11 16:46:07 +0900
+Last updated 2022-08-11 16:56:19 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
