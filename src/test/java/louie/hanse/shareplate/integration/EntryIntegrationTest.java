@@ -79,4 +79,20 @@ public class EntryIntegrationTest {
             .then()
             .statusCode(HttpStatus.OK.value());
     }
+
+    @Test
+    void 특정_회원의_특정_쉐어_참가를_취소한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        given(documentationSpec)
+            .filter(document("entry-cancel"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+
+            .when()
+            .delete("/shares/1/entry")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
 }

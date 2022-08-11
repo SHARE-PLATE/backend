@@ -28,4 +28,9 @@ public class EntryService {
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
     }
+
+    @Transactional
+    public void cancel(Long shareId, Long memberId) {
+        entryRepository.deleteByMemberIdAndShareId(memberId, shareId);
+    }
 }
