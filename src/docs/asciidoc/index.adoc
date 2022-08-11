@@ -67,6 +67,24 @@ include::{snippets}/share-edit-put/http-request.adoc[]
 === Response
 include::{snippets}/share-edit-put/http-response.adoc[]
 
+== 쉐어 삭제
+
+=== Request
+include::{snippets}/share-delete/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-delete/http-response.adoc[]
+
+== 쉐어 삭제 실패
+
+=== 작성하지 않은 쉐어를 삭제하는 경우
+
+=== Request
+include::{snippets}/share-not-writer-delete/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-not-writer-delete/http-response.adoc[]
+
 == 사용자 정보 조회
 
 === Request

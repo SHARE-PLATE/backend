@@ -273,7 +273,7 @@ class ShareIntegrationTest {
     }
 
     @Test
-    void 사용자_본인이_등록한_쉐어를_편집한다() {
+    void 본인이_등록한_쉐어를_편집한다() {
         String accessToken = jwtProvider.createAccessToken(2355841022L);
 
         given(documentationSpec)
@@ -299,5 +299,37 @@ class ShareIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 본인이_등록한_쉐어를_삭제한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("share-not-writer-delete"))
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 4)
+
+            .when()
+            .delete("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 작성자가_아닌_사용자가_쉐어_삭제_요청을_보내는_경우_요청은_실패한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        given(documentationSpec)
+            .filter(document("share-delete"))
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 4)
+
+            .when()
+            .delete("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.FORBIDDEN.value());
     }
 }
