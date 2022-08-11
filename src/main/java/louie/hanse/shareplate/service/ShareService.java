@@ -161,7 +161,7 @@ public class ShareService {
         }
     }
 
-    private Share findByIdOrElseThrow(Long id) {
+    public Share findByIdOrElseThrow(Long id) {
         return shareRepository.findById(id)
             .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
     }
