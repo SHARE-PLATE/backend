@@ -17,7 +17,6 @@ public class ShareSearchResponse {
     private int originalPrice;
     private int currentRecruitment;
     private int finalRecruitment;
-    private boolean recruitmentLimit;
     private LocalDateTime createdDateTime;
     private LocalDateTime appointmentDateTime;
 
@@ -30,7 +29,6 @@ public class ShareSearchResponse {
         this.originalPrice = share.getOriginalPrice();
         this.currentRecruitment = share.getCurrentRecruitment();
         this.finalRecruitment = share.getRecruitment();
-        this.recruitmentLimit = share.isRecruitmentLimit();
         this.createdDateTime = share.getCreatedDateTime();
         this.appointmentDateTime = share.getAppointmentDateTime();
     }

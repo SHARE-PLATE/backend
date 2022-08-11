@@ -87,6 +87,8 @@ class ShareIntegrationTest {
 
         given(documentationSpec)
             .filter(document("share-register-post"))
+            .header(AUTHORIZATION, accessToken)
+            .contentType(MULTIPART)
             .multiPart("images", "test.txt", "abc".getBytes(), MediaType.TEXT_PLAIN_VALUE)
             .multiPart("images", "test.txt", "def".getBytes(), MediaType.TEXT_PLAIN_VALUE)
             .formParam("type", "delivery")
@@ -94,14 +96,11 @@ class ShareIntegrationTest {
             .formParam("price", 10000)
             .formParam("originalPrice", 30000)
             .formParam("recruitment", 3)
-            .formParam("recruitmentLimit", true)
             .formParam("location", "강남역")
             .formParam("latitude", 37.498095)
             .formParam("longitude", 127.027610)
             .formParam("appointmentDateTime", "2022-12-30 14:00")
             .formParam("description", "설명")
-            .header(AUTHORIZATION, accessToken)
-            .contentType(MULTIPART)
 
             .when()
             .post("/shares")
@@ -170,7 +169,6 @@ class ShareIntegrationTest {
             .body("[0].originalPrice", equalTo(30000))
             .body("[0].currentRecruitment", equalTo(2))
             .body("[0].finalRecruitment", equalTo(3))
-            .body("[0].recruitmentLimit", equalTo(true))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
     }
@@ -203,7 +201,6 @@ class ShareIntegrationTest {
             .body("[0].originalPrice", equalTo(30000))
             .body("[0].currentRecruitment", equalTo(2))
             .body("[0].finalRecruitment", equalTo(3))
-            .body("[0].recruitmentLimit", equalTo(true))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
     }
@@ -236,7 +233,6 @@ class ShareIntegrationTest {
             .body("[0].originalPrice", equalTo(28000))
             .body("[0].currentRecruitment", equalTo(1))
             .body("[0].finalRecruitment", equalTo(4))
-            .body("[0].recruitmentLimit", equalTo(true))
             .body("[0].createdDateTime", equalTo("2022-07-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-07-03 16:00"));
     }
