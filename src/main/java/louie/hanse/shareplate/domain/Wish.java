@@ -1,8 +1,11 @@
 package louie.hanse.shareplate.domain;
 
 import javax.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Wish {
 
     @Id
@@ -16,4 +19,10 @@ public class Wish {
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
+    public Wish(Share share, Member member) {
+        this.share = share;
+        share.getWishList().add(this);
+        this.member = member;
+    }
 }

@@ -32,7 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MemberVerificationInterceptor(jwtProvider))
             .order(1)
-            .addPathPatterns("/members", "/members/location", "/shares", "/shares/mine", "/shares/{id}", "/shares/{id}/entry");
+            .addPathPatterns("/members", "/members/location", "/shares", "/shares/mine",
+                "/shares/{id}", "/shares/{id}/entry", "/wish-list");
 
         registry.addInterceptor(new LogoutInterceptor(jwtProvider, loginService))
             .order(2)
