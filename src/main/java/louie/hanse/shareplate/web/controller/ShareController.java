@@ -12,6 +12,7 @@ import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,9 +55,16 @@ public class ShareController {
     }
 
     @PutMapping("/{id}")
-    public void edit(@PathVariable Long id, ShareEditRequest shareEditRequest, HttpServletRequest request)
+    public void edit(@PathVariable Long id, ShareEditRequest shareEditRequest,
+        HttpServletRequest request)
         throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");
         shareService.edit(shareEditRequest, id, memberId);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id, HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        shareService.delete(id, memberId);
     }
 }

@@ -33,10 +33,10 @@ public class Share {
     @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShareImage> shareImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share")
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Entry> entries = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share")
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wish> wishList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

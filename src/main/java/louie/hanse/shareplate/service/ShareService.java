@@ -52,7 +52,6 @@ public class ShareService {
 
     @Transactional
     public void register(ShareRegisterRequest request, Long memberId) throws IOException {
-//        TODO : 커스텀 Exception 처리
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
@@ -139,9 +138,7 @@ public class ShareService {
 
     @Transactional
     public void edit(ShareEditRequest shareEditRequest, Long id, Long memberId) throws IOException {
-        if (isNotWriter(id, memberId)) {
-            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
-        }
+        isNotWriterThrowException(id, memberId);
         Member writer = memberService.findByIdOrElseThrow(memberId);
         Share share = shareEditRequest.toEntity(id, writer);
         for (MultipartFile image : shareEditRequest.getImages()) {
@@ -149,6 +146,19 @@ public class ShareService {
             share.addShareImage(uploadImageUrl);
         }
         shareRepository.save(share);
+    }
+
+    @Transactional
+    public void delete(Long id, Long memberId) {
+        isNotWriterThrowException(id, memberId);
+        Share share = findByIdOrElseThrow(id);
+        shareRepository.delete(share);
+    }
+
+    private void isNotWriterThrowException(Long id, Long memberId) {
+        if (isNotWriter(id, memberId)) {
+            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
+        }
     }
 
     private Share findByIdOrElseThrow(Long id) {
