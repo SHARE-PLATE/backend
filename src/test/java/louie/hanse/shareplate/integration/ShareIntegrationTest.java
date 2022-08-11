@@ -276,4 +276,33 @@ class ShareIntegrationTest {
             .body("wish", equalTo(false))
             .body("entry", equalTo(false));
     }
+
+    @Test
+    void 사용자_본인이_등록한_쉐어를_편집한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841022L);
+
+        given(documentationSpec)
+            .filter(document("share-edit-put"))
+            .contentType(MULTIPART)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 3)
+            .multiPart("images", "수정된 test1.txt", "abcde".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .multiPart("images", "수정된 test2.txt", "fhgij".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .formParam("type", "ingredient")
+            .formParam("title", "수정된 제목")
+            .formParam("price", 13000)
+            .formParam("originalPrice", 26000)
+            .formParam("recruitment", 2)
+            .formParam("location", "역삼역")
+            .formParam("latitude", 37.500326)
+            .formParam("longitude", 127.036087)
+            .formParam("appointmentDateTime", "2022-12-31 14:00")
+            .formParam("description", "수정된 설명")
+
+            .when()
+            .put("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
 }
