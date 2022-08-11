@@ -51,6 +51,14 @@ include::{snippets}/share-search-mine-wish-get/http-request.adoc[]
 === Response
 include::{snippets}/share-search-mine-wish-get/http-response.adoc[]
 
+== 쉐어 상세 조회
+
+=== Request
+include::{snippets}/share-detail-get/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-detail-get/http-response.adoc[]
+
 == 사용자 정보 조회
 
 === Request

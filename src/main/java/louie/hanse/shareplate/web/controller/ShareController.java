@@ -5,11 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ShareService;
+import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,5 +43,11 @@ public class ShareController {
         ShareMineSearchRequest shareMineSearchRequest, HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return shareService.searchMine(shareMineSearchRequest, memberId);
+    }
+
+    @GetMapping("/{id}")
+    public ShareDetailResponse getDetail(@PathVariable Long id, HttpServletRequest request) {
+        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        return shareService.getDetail(id, accessToken);
     }
 }

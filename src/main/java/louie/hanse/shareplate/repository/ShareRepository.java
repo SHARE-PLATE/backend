@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ShareRepository extends JpaRepository<Share, Long>, CustomShareRepository {
 
-    List<Share> findByWriterId(Long memberId);
+    List<Share> findByWriterId(Long writerId);
 
     @Query("select s from Share s "
         + "join s.entries e on e.member.id = :memberId ")
@@ -17,4 +17,6 @@ public interface ShareRepository extends JpaRepository<Share, Long>, CustomShare
     @Query("select s from Share s "
         + "join s.wishList w on w.member.id = :memberId ")
     List<Share> findWithWish(@Param("memberId") Long memberId);
+
+    boolean existsByIdAndWriterId(Long id, Long writerId);
 }
