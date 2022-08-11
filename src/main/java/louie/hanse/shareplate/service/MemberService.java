@@ -21,7 +21,7 @@ public class MemberService {
     @Transactional
     public void changeLocation(MemberChangeLocationRequest request, Long id) {
 //        TODO 커스텀 Exception
-        Member member = findMember(id);
+        Member member = findByIdOrElseThrow(id);
         member.changeLocation(request.getLocation());
         member.changeLongitude(request.getLongitude());
         member.changeLatitude(request.getLatitude());
@@ -29,17 +29,17 @@ public class MemberService {
 
     @Transactional
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) {
-        Member member = findMember(id);
+        Member member = findByIdOrElseThrow(id);
         member.changeProfileImageUrl(request.getProfileImage());
         member.changeNickname(request.getNickname());
     }
 
     public MemberUserInfoResponse getUserInfo(Long id) {
-        Member member = findMember(id);
+        Member member = findByIdOrElseThrow(id);
         return new MemberUserInfoResponse(member);
     }
 
-    public Member findMember(Long id) {
+    public Member findByIdOrElseThrow(Long id) {
         return memberRepository.findById(id)
             .orElseThrow(() -> new GlobalException(MemberExceptionType.MEMBER_NOT_FOUND));
     }
