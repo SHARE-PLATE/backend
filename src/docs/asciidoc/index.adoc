@@ -124,3 +124,8 @@ include::{snippets}/entry-cancel/http-request.adoc[]
 
 === Response
 include::{snippets}/entry-cancel/http-response.adoc[]
+
+== 위시 등록
+
+=== Request
+include::{snippets}/wish-list-share/http-request.adoc[]
