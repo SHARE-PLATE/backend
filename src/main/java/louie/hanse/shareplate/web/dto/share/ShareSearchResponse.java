@@ -13,6 +13,8 @@ public class ShareSearchResponse {
     private String thumbnailUrl;
     private String title;
     private String location;
+    private double latitude;
+    private double longitude;
     private int price;
     private int originalPrice;
     private int currentRecruitment;
@@ -25,6 +27,8 @@ public class ShareSearchResponse {
         this.thumbnailUrl = share.getShareImages().get(0).getImageUrl();
         this.title = share.getTitle();
         this.location = share.getLocation();
+        this.latitude = share.getLatitude();
+        this.longitude = share.getLongitude();
         this.price = share.getPrice();
         this.originalPrice = share.getOriginalPrice();
         this.currentRecruitment = share.getCurrentRecruitment();

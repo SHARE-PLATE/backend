@@ -9,4 +9,6 @@ import louie.hanse.shareplate.type.ShareType;
 public class ShareSearchRequest {
     private ShareType type;
     private String keyword;
+    private Double latitude;
+    private Double longitude;
 }

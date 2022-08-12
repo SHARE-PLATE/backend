@@ -111,14 +111,39 @@ class ShareIntegrationTest {
 
     @Test
     void 회원_주변에_존재하면서_검색한_키워드가_포함된_쉐어를_조회한다() {
-        Long memberId = memberRepository.findById(2370842997L)
-            .orElseThrow().getId();
-        String accessToken = jwtProvider.createAccessToken(memberId);
-
         given(documentationSpec)
             .filter(document("share-search-get"))
             .accept(APPLICATION_JSON_VALUE)
-            .header(AUTHORIZATION, accessToken)
+            .param("type", "delivery")
+            .param("keyword", "떡볶이")
+            .param("latitude", 36.6576769)
+            .param("longitude", 128.3007637)
+
+            .when()
+            .get("/shares")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("", hasSize(1))
+            .body("[0].id", equalTo(1))
+            .body("[0].thumbnailUrl", containsString("https://"))
+            .body("[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
+            .body("[0].location", equalTo("강남역"))
+            .body("[0].latitude", equalTo(36.657677f))
+            .body("[0].longitude", equalTo(128.300764f))
+            .body("[0].price", equalTo(10000))
+            .body("[0].originalPrice", equalTo(30000))
+            .body("[0].currentRecruitment", equalTo(2))
+            .body("[0].finalRecruitment", equalTo(3))
+            .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
+            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+    }
+
+    @Test
+    void 검색한_키워드가_포함된_쉐어를_조회한다() {
+        given(documentationSpec)
+            .filter(document("share-search-get"))
+            .accept(APPLICATION_JSON_VALUE)
             .param("type", "delivery")
             .param("keyword", "떡볶이")
 
@@ -132,6 +157,8 @@ class ShareIntegrationTest {
             .body("[0].thumbnailUrl", containsString("https://"))
             .body("[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
             .body("[0].location", equalTo("강남역"))
+            .body("[0].latitude", equalTo(36.657677f))
+            .body("[0].longitude", equalTo(128.300764f))
             .body("[0].price", equalTo(10000))
             .body("[0].originalPrice", equalTo(30000))
             .body("[0].currentRecruitment", equalTo(2))

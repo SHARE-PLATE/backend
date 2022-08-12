@@ -36,9 +36,8 @@ public class ShareController {
 
     @GetMapping
     public List<ShareSearchResponse> searchAroundMember(
-        ShareSearchRequest shareSearchRequest, HttpServletRequest request) {
-        Long memberId = (Long) request.getAttribute("memberId");
-        return shareService.searchAroundMember(shareSearchRequest, memberId);
+        ShareSearchRequest shareSearchRequest) {
+        return shareService.searchAroundMember(shareSearchRequest);
     }
 
     @GetMapping("/mine")

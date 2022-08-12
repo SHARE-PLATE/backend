@@ -12,8 +12,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
-    private static final int SEARCH_RANGE = 2;
-
     @Id
     private Long id;
 
@@ -21,9 +19,6 @@ public class Member {
     private String thumbnailImageUrl;
     private String nickname;
     private String email;
-    private String location;
-    private double latitude;
-    private double longitude;
     private String refreshToken;
 
 
@@ -44,40 +39,12 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public void changeLocation(String location) {
-        this.location = location;
-    }
-
-    public void changeLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void changeLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public void changeRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 
     public void deleteRefreshToken() {
         this.refreshToken = null;
-    }
-
-    public double calculateStartLatitude() {
-        return latitude - SEARCH_RANGE;
-    }
-
-    public double calculateEndLatitude() {
-        return latitude + SEARCH_RANGE;
-    }
-
-    public double calculateStartLongitude() {
-        return longitude - SEARCH_RANGE;
-    }
-
-    public double calculateEndLongitude() {
-        return longitude + SEARCH_RANGE;
     }
 }
 

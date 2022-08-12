@@ -1,23 +1,21 @@
 INSERT INTO members
-(id, email, nickname, profile_image_url, thumbnail_image_url, latitude, longitude, refresh_token,
- location)
+(id, email, nickname, profile_image_url, thumbnail_image_url, refresh_token)
 VALUES (2370842997, 'dhdustnr0134@naver.com', '정현석',
         'http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_640x640.jpg',
         'http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg',
-        37.6576769, 127.3007637, NULL, '화도읍'),
+        NULL),
        (2355841047, 'x_x_x@hanmail.net', '한승연',
         'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
-        'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg', 0, 0,
-        NULL, NULL),
+        'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg',
+        NULL),
        (2355841022, 'jinjeon@test.com', '진전',
         'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
-        'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg', 0, 0,
-        NULL, NULL),
+        'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg',
+        NULL),
        (2355841033, 'khan@test.com', '칸',
         'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
-        'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg', 0, 0,
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM1NTg0MTA0NyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjoxNjYwMDMyNTEwLCJpYXQiOjE2NTk0Mjc3MTAsIm1lbWJlcklkIjoyMzU1ODQxMDQ3fQ.WBlJBO8HwEFGTxHzA--TGw22lO5vivrt_2qjntdcU-s',
-        NULL);
+        'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg',
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM1NTg0MTA0NyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjoxNjYwMDMyNTEwLCJpYXQiOjE2NTk0Mjc3MTAsIm1lbWJlcklkIjoyMzU1ODQxMDQ3fQ.WBlJBO8HwEFGTxHzA--TGw22lO5vivrt_2qjntdcU-s');
 
 INSERT INTO share
 (id, appointment_date_time, created_date_time, description, latitude, longitude, location,
@@ -52,6 +50,5 @@ VALUES (1, 2355841047, 1);
 
 INSERT INTO wish
     (id, member_id, share_id)
-VALUES
-       (1, 2370842997, 2),
+VALUES (1, 2370842997, 2),
        (2, 2355841047, 2);
