@@ -507,28 +507,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_11">Response</a></li>
 </ul>
 </li>
-<li><a href="#_사용자_위치정보_편집">사용자 위치정보 편집</a>
+<li><a href="#_쉐어_참가">쉐어 참가</a>
 <ul class="sectlevel2">
 <li><a href="#_request_12">Request</a></li>
 <li><a href="#_response_12">Response</a></li>
 </ul>
 </li>
-<li><a href="#_쉐어_참가">쉐어 참가</a>
+<li><a href="#_쉐어_참가_2">쉐어 참가</a>
 <ul class="sectlevel2">
 <li><a href="#_request_13">Request</a></li>
 <li><a href="#_response_13">Response</a></li>
 </ul>
 </li>
-<li><a href="#_쉐어_참가_2">쉐어 참가</a>
+<li><a href="#_위시_등록">위시 등록</a>
 <ul class="sectlevel2">
 <li><a href="#_request_14">Request</a></li>
 <li><a href="#_response_14">Response</a></li>
-</ul>
-</li>
-<li><a href="#_위시_등록">위시 등록</a>
-<ul class="sectlevel2">
-<li><a href="#_request_15">Request</a></li>
-<li><a href="#_response_15">Response</a></li>
 </ul>
 </li>
 </ul>
@@ -543,8 +537,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTgsImlhdCI6MTY2MDIxMjQ1OCwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.NMvUpjFKBzTMY1yPT6-RBie2W6tu9tlkp4Uinhvle2g
-Content-Type: multipart/form-data; boundary="FS9JaTtFFm2i7xDZj1UvZYPnIZ6bndi-Q"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDQsImlhdCI6MTY2MDI4Nzc0NCwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.E2BT2WjvJQYNk_9FWgBRDNDyCLdeacFGntSIAuKrbDA
+Content-Type: multipart/form-data; boundary="RD61Ik9v5hcPJt57LZniLEhz1G_a7z5xr"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=test.txt
@@ -628,8 +622,7 @@ Content-Type: text/plain
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares?type=delivery&amp;keyword=%EB%96%A1%EB%B3%B6%EC%9D%B4 HTTP/1.1
-Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTgsImlhdCI6MTY2MDIxMjQ1OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.Byhb4S30v6Ep8Ps36yyrHXF6yqy4-zRoqpbamd9xASw</code></pre>
+Accept: application/json</code></pre>
 </div>
 </div>
 </div>
@@ -645,6 +638,8 @@ Content-Type: application/json
   "thumbnailUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
   "title" : "강남역에서 떡볶이 먹을 사람 모집합니다.",
   "location" : "강남역",
+  "latitude" : 36.6576769,
+  "longitude" : 128.3007637,
   "price" : 10000,
   "originalPrice" : 30000,
   "currentRecruitment" : 2,
@@ -670,7 +665,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=entry&amp;shareType=delivery HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTksImlhdCI6MTY2MDIxMjQ1OSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.JO8nUYyjPNvDu0Mhe0I25_jSAL-aeQHet29rR365kAQ</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDUsImlhdCI6MTY2MDI4Nzc0NSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.SLcFCSFvuAPetYgMP5O6Pzyr1IfdOv1ywbeOC-5T7c4</code></pre>
 </div>
 </div>
 </div>
@@ -686,6 +681,8 @@ Content-Type: application/json
   "thumbnailUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
   "title" : "강남역에서 떡볶이 먹을 사람 모집합니다.",
   "location" : "강남역",
+  "latitude" : 36.6576769,
+  "longitude" : 128.3007637,
   "price" : 10000,
   "originalPrice" : 30000,
   "currentRecruitment" : 2,
@@ -706,7 +703,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=writer&amp;shareType=delivery HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTksImlhdCI6MTY2MDIxMjQ1OSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.FdxhoHg_HqCFwNdCyuEkcfx46wbj-YjmTc6tEN8TlKY</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDYsImlhdCI6MTY2MDI4Nzc0NiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.Z4hQ4QjZ_3V-3ouOxxqiBPP6-zMKptq1RJRB-KxiFMY</code></pre>
 </div>
 </div>
 </div>
@@ -722,6 +719,8 @@ Content-Type: application/json
   "thumbnailUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
   "title" : "강남역에서 떡볶이 먹을 사람 모집합니다.",
   "location" : "강남역",
+  "latitude" : 36.6576769,
+  "longitude" : 128.3007637,
   "price" : 10000,
   "originalPrice" : 30000,
   "currentRecruitment" : 2,
@@ -742,7 +741,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=wish&amp;shareType=delivery HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTgsImlhdCI6MTY2MDIxMjQ1OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.Byhb4S30v6Ep8Ps36yyrHXF6yqy4-zRoqpbamd9xASw</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDUsImlhdCI6MTY2MDI4Nzc0NSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.OU8QKqg5JuXB2_y4vOvWpQKos-umYKXSaPOaUHGl3eA</code></pre>
 </div>
 </div>
 </div>
@@ -758,6 +757,8 @@ Content-Type: application/json
   "thumbnailUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/louie1se/%E1%84%8E%E1%85%B5%E1%84%8F%E1%85%B5%E1%86%AB1.jpeg",
   "title" : "판교역에서 치킨 먹을 사람 모집합니다.",
   "location" : "판교역",
+  "latitude" : 37.3951627,
+  "longitude" : 127.1117136,
   "price" : 7000,
   "originalPrice" : 28000,
   "currentRecruitment" : 1,
@@ -822,8 +823,8 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /shares/3 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTYsImlhdCI6MTY2MDIxMjQ1NiwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.zzneuI9EHIY77ka2jhs9i_dbvwmqzec1Sd3TmidYQ44
-Content-Type: multipart/form-data; boundary="YhKQSbcmAgaxz013Gyw-bZ5c8bYJlweJiAEAzN"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzMzgsImlhdCI6MTY2MDI4NzczOCwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.Ayby8Ko-_fEcK7HLogi2j1Re5QUQ5FHN1E7sElZ5Ubs
+Content-Type: multipart/form-data; boundary="a3pwugb8EV7DA7fO0ZydFsBn9BqGYcWy_k"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=수정된 test1.txt
@@ -907,7 +908,7 @@ Content-Type: text/plain
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/4 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTcsImlhdCI6MTY2MDIxMjQ1NywibWVtYmVySWQiOjIzNzA4NDI5OTd9.0cAdKwVVgbaMpUvxLDEmPGNBv7nkrY6y4hwAjYR9f80</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDEsImlhdCI6MTY2MDI4Nzc0MSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.t68fKlGi8L_9al26YTRCRvaXatmO7CCGtg0GAm7U52g</code></pre>
 </div>
 </div>
 </div>
@@ -939,7 +940,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/4 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTksImlhdCI6MTY2MDIxMjQ1OSwibWVtYmVySWQiOjIzNTU4NDEwMzN9.8--yCLdEsoSlcFXpvbtFgUX3wAtoXBonluLzaXZfjfo</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDYsImlhdCI6MTY2MDI4Nzc0NiwibWVtYmVySWQiOjIzNTU4NDEwMzN9.42dAE2AcVZHKvgk9PEfonKuEmpKlblo7SprMItV25qU</code></pre>
 </div>
 </div>
 </div>
@@ -961,7 +962,7 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4i
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTEsImlhdCI6MTY2MDIxMjQ1MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.9I00S6lQNJ2qtRBLsb-wdyS2c2yfp85IlpJpJxyRLlo
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzMjYsImlhdCI6MTY2MDI4NzcyNiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Ln1w-6cQreeC7OgqjMvVdh7Tz8hwMsGZwHLLAUymo7I
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -991,7 +992,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTAsImlhdCI6MTY2MDIxMjQ1MCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.rM8GEv14_NGc7JX8CcRd5izTW5MUMX4sktpp6qUsk98
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzMjYsImlhdCI6MTY2MDI4NzcyNiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.kbxjGXsevADMF6Xd65LveWc3eBQl8PCTlO_IuNEtxp4
 Content-Type: application/json
 
 {
@@ -1013,21 +1014,15 @@ Content-Type: application/json
 </div>
 </div>
 <div class="sect1">
-<h2 id="_사용자_위치정보_편집"><a class="link" href="#_사용자_위치정보_편집">사용자 위치정보 편집</a></h2>
+<h2 id="_쉐어_참가"><a class="link" href="#_쉐어_참가">쉐어 참가</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_request_12"><a class="link" href="#_request_12">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /members/location HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTEsImlhdCI6MTY2MDIxMjQ1MSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.YyWrNfEES8e26v35eBObA4BCIGOwznxhlWweT2xsLk4
-Content-Type: application/json
-
-{
-  "latitude" : 37.6576769,
-  "location" : "화도읍",
-  "longitude" : 127.3007637
-}</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/2/entry HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzMjYsImlhdCI6MTY2MDI4NzcyNiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Ln1w-6cQreeC7OgqjMvVdh7Tz8hwMsGZwHLLAUymo7I
+Content-Type: application/json</code></pre>
 </div>
 </div>
 </div>
@@ -1042,14 +1037,14 @@ Content-Type: application/json
 </div>
 </div>
 <div class="sect1">
-<h2 id="_쉐어_참가"><a class="link" href="#_쉐어_참가">쉐어 참가</a></h2>
+<h2 id="_쉐어_참가_2"><a class="link" href="#_쉐어_참가_2">쉐어 참가</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_request_13"><a class="link" href="#_request_13">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/2/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNTAsImlhdCI6MTY2MDIxMjQ1MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.4o_IneHLp5zIuD5zD8MUMDMqtSJrkscI9LxLsrjfz6I
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/1/entry HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzMjQsImlhdCI6MTY2MDI4NzcyNCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.W40IRBLN0pp9Y9sJQex8L-6dhYUnvCZ6NDvQ8ZqPU6c
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1065,15 +1060,19 @@ Content-Type: application/json</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_쉐어_참가_2"><a class="link" href="#_쉐어_참가_2">쉐어 참가</a></h2>
+<h2 id="_위시_등록"><a class="link" href="#_위시_등록">위시 등록</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_request_14"><a class="link" href="#_request_14">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/1/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNDgsImlhdCI6MTY2MDIxMjQ0OCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Ziodg0w_tPHL5s8dVeVGs2H9dzDT6EzNSHhTV82NjK0
-Content-Type: application/json</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyOTEzNDYsImlhdCI6MTY2MDI4Nzc0NiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.KKpVURL5ryzGWRwsHf0Vp7qKW_1lgfmU4PzoqV9gkm4
+Content-Type: application/json
+
+{
+  "shareId" : 1
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1087,38 +1086,11 @@ Content-Type: application/json</code></pre>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_위시_등록"><a class="link" href="#_위시_등록">위시 등록</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_request_15"><a class="link" href="#_request_15">Request</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjAyMTYwNjAsImlhdCI6MTY2MDIxMjQ2MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.rZribH6GVF5OvLT01vk5N5ewzHqK73LeQypXAbeqW0I
-Content-Type: application/json
-
-{
-  "shareId" : 1
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_response_15"><a class="link" href="#_response_15">Response</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-08-11 19:04:32 +0900
+Last updated 2022-08-12 15:45:26 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

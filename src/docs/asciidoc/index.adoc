@@ -101,14 +101,6 @@ include::{snippets}/member-changed-user-information/http-request.adoc[]
 === Response
 include::{snippets}/member-changed-user-information/http-response.adoc[]
 
-== 사용자 위치정보 편집
-
-=== Request
-include::{snippets}/member-changed-location/http-request.adoc[]
-
-=== Response
-include::{snippets}/member-changed-location/http-response.adoc[]
-
 == 쉐어 참가
 
 === Request

@@ -28,7 +28,8 @@ public class MemberVerificationInterceptor implements HandlerInterceptor {
             HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         String method = request.getMethod();
 
-        if ("/shares/{id}".equals(requestUrlPattern) && HttpMethod.GET.matches(method)) {
+        if (("/shares/{id}".equals(requestUrlPattern) || "/shares".equals(requestUrlPattern))
+            && HttpMethod.GET.matches(method)) {
             return true;
         }
 

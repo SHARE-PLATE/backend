@@ -62,9 +62,8 @@ public class ShareService {
     }
 
     public List<ShareSearchResponse> searchAroundMember(
-        ShareSearchRequest shareSearchRequest, Long memberId) {
-        Member member = memberService.findByIdOrElseThrow(memberId);
-        List<Share> shares = shareRepository.searchAroundMember(member, shareSearchRequest);
+        ShareSearchRequest shareSearchRequest) {
+        List<Share> shares = shareRepository.searchAroundMember(shareSearchRequest);
         return shares.stream()
             .map(ShareSearchResponse::new)
             .collect(Collectors.toList());
