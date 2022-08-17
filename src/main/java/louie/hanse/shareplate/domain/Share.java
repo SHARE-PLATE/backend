@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,9 @@ public class Share {
 
     @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wish> wishList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "share", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ChatRoom chatRoom;
 
     @Enumerated(EnumType.STRING)
     private ShareType type;
@@ -93,6 +97,10 @@ public class Share {
 
     public int getCurrentRecruitment() {
         return entries.size() + 1;
+    }
+
+    public void changeChatRoom(ChatRoom chatRoom) {
+        this.chatRoom = chatRoom;
     }
 
 }
