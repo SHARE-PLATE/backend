@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.domain.ChatRoom;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.exception.GlobalException;
@@ -58,6 +59,7 @@ public class ShareService {
             String uploadedImageUrl = uploadImage(image);
             share.addShareImage(uploadedImageUrl);
         }
+        new ChatRoom(member, share);
         shareRepository.save(share);
     }
 
