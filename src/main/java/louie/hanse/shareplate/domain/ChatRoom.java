@@ -12,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoom {
 
@@ -24,6 +26,9 @@ public class ChatRoom {
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
     private List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "chatRoom")
+    private List<Chat> chats = new ArrayList<>();
 
     @JoinColumn
     @OneToOne(fetch = FetchType.LAZY)
