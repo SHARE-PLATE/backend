@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div id="app">
+  <input type="text" v-model="message">
+  <button type="button" @click="sendMessage">메시지 전송</button>
+</div>
+</body>
+
+<script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
+<script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
+<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      message: ''
+    },
+    created() {
+
+    },
+    methods : {
+      sendMessage: function() {
+        ws.send("/app/chatrooms/1/chat", {
+          Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjA3MzI3MjAsImlhdCI6MTY2MDcyOTEyMCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.lQqlLwiEgG7fucDiR9uvC_W7-zQ05v-53lbc9-C7N6k'
+        }, JSON.stringify({contents:'내용123'}));
+      }
+    }
+  });
+
+  var socket = new SockJS("/websocket");
+  var ws = Stomp.over(socket);
+  function connect() {
+    ws.connect({}, function (frame) {
+    });
+  }
+  connect();
+</script>
+</html>
