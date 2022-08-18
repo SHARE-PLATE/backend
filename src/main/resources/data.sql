@@ -52,3 +52,8 @@ INSERT INTO wish
     (id, member_id, share_id)
 VALUES (1, 2370842997, 2),
        (2, 2355841047, 2);
+
+INSERT INTO chat_room
+    (id, share_id)
+VALUES
+    (1, 1);
