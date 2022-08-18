@@ -30,8 +30,8 @@
     methods : {
       sendMessage: function() {
         ws.send("/app/chatrooms/1/chat", {
-          Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjA3MzI3MjAsImlhdCI6MTY2MDcyOTEyMCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.lQqlLwiEgG7fucDiR9uvC_W7-zQ05v-53lbc9-C7N6k'
-        }, JSON.stringify({contents:'내용123'}));
+          Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjA4MDM0MjYsImlhdCI6MTY2MDc5OTgyNiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.x-2eYffb7wDbjJuB6I38shlr4Zjqe9RyfkBBRDNOxLo'
+        }, JSON.stringify({contents: vm.$data.message}));
       }
     }
   });
@@ -40,6 +40,10 @@
   var ws = Stomp.over(socket);
   function connect() {
     ws.connect({}, function (frame) {
+      ws.subscribe("/topic/chatrooms/1", function (message) {
+        var messageContents = JSON.parse(message.body);
+        console.log("messageContents : " + messageContents.contents);
+      });
     });
   }
   connect();

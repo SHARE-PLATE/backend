@@ -20,14 +20,13 @@ public class MemberVerificationSocketInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
-        if (!headerAccessor.getCommand().equals(StompCommand.SEND)) {
-            return null;
+        if (headerAccessor.getCommand().equals(StompCommand.SEND)) {
+            String accessToken = headerAccessor.getNativeHeader(HttpHeaders.AUTHORIZATION).get(0);
+            jwtProvider.verifyAccessToken(accessToken);
+            Long memberId = jwtProvider.decodeMemberId(accessToken);
+            Map<String, Object> sessionAttributes = headerAccessor.getSessionAttributes();
+            sessionAttributes.put("memberId", memberId);
         }
-        String accessToken = headerAccessor.getNativeHeader(HttpHeaders.AUTHORIZATION).get(0);
-        jwtProvider.verifyAccessToken(accessToken);
-        Long memberId = jwtProvider.decodeMemberId(accessToken);
-        Map<String, Object> sessionAttributes = headerAccessor.getSessionAttributes();
-        sessionAttributes.put("memberId", memberId);
         return message;
     }
 

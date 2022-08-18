@@ -19,12 +19,12 @@ public class ChatService {
     private final MemberService memberService;
 
     @Transactional
-    public void save(Long chatRoomId, Long memberId, String contents) {
+    public Chat save(Long chatRoomId, Long memberId, String contents) {
         //TODO 추후 커스텀 예외처리 적용
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
             .orElseThrow();
         Member member = memberService.findByIdOrElseThrow(memberId);
         Chat chat = new Chat(chatRoom, member, contents);
-        chatRepository.save(chat);
+        return chatRepository.save(chat);
     }
 }
