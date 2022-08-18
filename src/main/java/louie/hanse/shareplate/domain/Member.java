@@ -1,5 +1,6 @@
 package louie.hanse.shareplate.domain;
 
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +46,27 @@ public class Member {
 
     public void deleteRefreshToken() {
         this.refreshToken = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Member member = (Member) o;
+        return Objects.equals(id, member.id) && Objects.equals(profileImageUrl,
+            member.profileImageUrl) && Objects.equals(thumbnailImageUrl,
+            member.thumbnailImageUrl) && Objects.equals(nickname, member.nickname)
+            && Objects.equals(email, member.email) && Objects.equals(refreshToken,
+            member.refreshToken);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, profileImageUrl, thumbnailImageUrl, nickname, email, refreshToken);
     }
 }
 
