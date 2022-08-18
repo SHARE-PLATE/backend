@@ -2,7 +2,7 @@ package louie.hanse.shareplate.config;
 
 
 import lombok.RequiredArgsConstructor;
-import louie.hanse.shareplate.interceptor.TopicSubscriptionInterceptor;
+import louie.hanse.shareplate.interceptor.MemberVerificationSocketInterceptor;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -34,6 +34,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new TopicSubscriptionInterceptor(jwtProvider));
+        registration.interceptors(new MemberVerificationSocketInterceptor(jwtProvider));
     }
 }
