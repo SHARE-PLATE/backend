@@ -146,6 +146,8 @@ class ShareIntegrationTest {
             .accept(APPLICATION_JSON_VALUE)
             .param("type", "delivery")
             .param("keyword", "떡볶이")
+            .param("latitude", 36.6576769)
+            .param("longitude", 128.3007637)
 
             .when()
             .get("/shares")
