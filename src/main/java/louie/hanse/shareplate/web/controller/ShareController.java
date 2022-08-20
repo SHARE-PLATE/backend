@@ -8,6 +8,8 @@ import louie.hanse.shareplate.service.ShareService;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
@@ -65,5 +67,10 @@ public class ShareController {
     public void delete(@PathVariable Long id, HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         shareService.delete(id, memberId);
+    }
+
+    @GetMapping("/recommendation")
+    public List<ShareRecommendationResponse> recommendationAroundMember(ShareRecommendationRequest request) {
+        return shareService.recommendationAroundMember(request);
     }
 }

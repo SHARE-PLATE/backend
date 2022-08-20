@@ -170,6 +170,21 @@ class ShareIntegrationTest {
     }
 
     @Test
+    void 검색한_키워드가_포함된_쉐어를_추천한다() {
+        given(documentationSpec)
+            .filter(document("share-recommendation-get"))
+            .accept(APPLICATION_JSON_VALUE)
+            .param("latitude", 36.6576769)
+            .param("longitude", 128.3007637)
+
+            .when()
+            .get("/shares/recommendation")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
     void 내가_신청한_쉐어를_조회한다() {
         Long memberId = memberRepository.findById(2355841047L)
             .orElseThrow().getId();

@@ -19,4 +19,5 @@ public interface ShareRepository extends JpaRepository<Share, Long>, CustomShare
     List<Share> findWithWish(@Param("memberId") Long memberId);
 
     boolean existsByIdAndWriterId(Long id, Long writerId);
+
 }
