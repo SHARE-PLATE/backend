@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +25,8 @@ import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
@@ -89,25 +92,6 @@ public class ShareService {
             .collect(Collectors.toList());
     }
 
-    private String uploadImage(MultipartFile image) throws IOException {
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(image.getContentType());
-        objectMetadata.setContentLength(image.getSize());
-
-        String originalImageName = image.getOriginalFilename();
-        String ext = originalImageName.substring(originalImageName.lastIndexOf(".") + 1);
-
-        String storeFileName = UUID.randomUUID() + "." + ext;
-        String key = fileUploadLocation + "/" + storeFileName;
-
-        try (InputStream inputStream = image.getInputStream()) {
-            amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        }
-
-        return amazonS3Client.getUrl(bucket, key).toString();
-    }
-
     public ShareDetailResponse getDetail(Long id, String accessToken) {
         boolean check = true;
         Long memberId = null;
@@ -156,15 +140,41 @@ public class ShareService {
         shareRepository.delete(share);
     }
 
+    public Share findByIdOrElseThrow(Long id) {
+        return shareRepository.findById(id)
+            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
+    }
+
+    public List<ShareRecommendationResponse> recommendationAroundMember(ShareRecommendationRequest request) {
+        List<ShareRecommendationResponse> shareRecommendationResponses = shareRepository
+            .recommendationAroundMember(request);
+        Collections.shuffle(shareRecommendationResponses);
+        return shareRecommendationResponses;
+    }
+
+    private String uploadImage(MultipartFile image) throws IOException {
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(image.getContentType());
+        objectMetadata.setContentLength(image.getSize());
+
+        String originalImageName = image.getOriginalFilename();
+        String ext = originalImageName.substring(originalImageName.lastIndexOf(".") + 1);
+
+        String storeFileName = UUID.randomUUID() + "." + ext;
+        String key = fileUploadLocation + "/" + storeFileName;
+
+        try (InputStream inputStream = image.getInputStream()) {
+            amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        }
+
+        return amazonS3Client.getUrl(bucket, key).toString();
+    }
+
     private void isNotWriterThrowException(Long id, Long memberId) {
         if (isNotWriter(id, memberId)) {
             throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
         }
-    }
-
-    public Share findByIdOrElseThrow(Long id) {
-        return shareRepository.findById(id)
-            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
     }
 
     private boolean isNotWriter(Long id, Long memberId) {

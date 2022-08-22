@@ -25,6 +25,14 @@ include::{snippets}/share-search-get/http-request.adoc[]
 === Response
 include::{snippets}/share-search-get/http-response.adoc[]
 
+== 쉐어 추천
+
+=== Request
+include::{snippets}/share-recommendation-get/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-register-post/http-response.adoc[]
+
 == 내 쉐어 조회
 
 === 내가 참여한 쉐어 조회

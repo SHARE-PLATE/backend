@@ -7,8 +7,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Share;
+import louie.hanse.shareplate.web.dto.share.QShareRecommendationResponse;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
@@ -20,24 +22,31 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
 
     @Override
     public List<Share> searchAroundMember(ShareSearchRequest request) {
+        double latitude = request.getLatitude();
+        double longitude = request.getLongitude();
         return queryFactory
             .selectFrom(share)
             .where(
                 share.type.eq(request.getType()),
                 titleContains(request.getKeyword()),
-                latitudeBetween(request.getLatitude()),
-                longitudeBetween(request.getLongitude())
+                share.latitude.between(calculateStartLatitude(latitude), calculateEndLatitude(latitude)),
+                share.longitude.between(calculateStartLongitude(longitude), calculateEndLongitude(longitude))
             ).fetch();
     }
 
-    private BooleanExpression latitudeBetween(Double latitude) {
-        return ObjectUtils.isEmpty(latitude) ? null :
-            share.latitude.between(calculateStartLatitude(latitude), calculateEndLatitude(latitude));
-    }
-
-    private BooleanExpression longitudeBetween(Double longitude) {
-        return ObjectUtils.isEmpty(longitude) ? null :
-            share.longitude.between(calculateStartLongitude(longitude), calculateEndLongitude(longitude));
+    @Override
+    public List<ShareRecommendationResponse> recommendationAroundMember(
+        ShareRecommendationRequest request) {
+        double latitude = request.getLatitude();
+        double longitude = request.getLongitude();
+        return queryFactory.select(new QShareRecommendationResponse(share))
+            .from(share)
+            .where(
+                titleContains(request.getKeyword()),
+                share.latitude.between(calculateStartLatitude(latitude), calculateEndLatitude(latitude)),
+                share.longitude.between(calculateStartLongitude(longitude), calculateEndLongitude(longitude))
+            )
+            .fetch();
     }
 
     private BooleanExpression titleContains(String keyword) {

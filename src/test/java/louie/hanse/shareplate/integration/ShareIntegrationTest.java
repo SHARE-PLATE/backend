@@ -146,6 +146,8 @@ class ShareIntegrationTest {
             .accept(APPLICATION_JSON_VALUE)
             .param("type", "delivery")
             .param("keyword", "떡볶이")
+            .param("latitude", 36.6576769)
+            .param("longitude", 128.3007637)
 
             .when()
             .get("/shares")
@@ -165,6 +167,21 @@ class ShareIntegrationTest {
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+    }
+
+    @Test
+    void 검색한_키워드가_포함된_쉐어를_추천한다() {
+        given(documentationSpec)
+            .filter(document("share-recommendation-get"))
+            .accept(APPLICATION_JSON_VALUE)
+            .param("latitude", 36.6576769)
+            .param("longitude", 128.3007637)
+
+            .when()
+            .get("/shares/recommendation")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
     }
 
     @Test
