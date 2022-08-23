@@ -9,10 +9,11 @@ import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
-import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
+import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
+import louie.hanse.shareplate.web.dto.share.ShareWriterResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +71,13 @@ public class ShareController {
     }
 
     @GetMapping("/recommendation")
-    public List<ShareRecommendationResponse> recommendationAroundMember(ShareRecommendationRequest request) {
+    public List<ShareCommonResponse> recommendationAroundMember(
+        ShareRecommendationRequest request) {
         return shareService.recommendationAroundMember(request);
+    }
+
+    @GetMapping("/writer")
+    public ShareWriterResponse getWriteByMember(Long writerId) {
+        return shareService.getWriteByMember(writerId);
     }
 }
