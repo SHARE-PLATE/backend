@@ -135,6 +135,7 @@ class ShareIntegrationTest {
             .body("[0].originalPrice", equalTo(30000))
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
+            .body("[0].writerId", equalTo(2370842997L))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
     }
