@@ -110,7 +110,7 @@ class ShareIntegrationTest {
     }
 
     @Test
-    void 회원_주변에_존재하면서_검색한_키워드가_포함된_쉐어를_조회한다() {
+    void 검색한_키워드가_포함된_회원_주변의_쉐어를_조회한다() {
         given(documentationSpec)
             .filter(document("share-search-get"))
             .accept(APPLICATION_JSON_VALUE)
@@ -133,44 +133,14 @@ class ShareIntegrationTest {
             .body("[0].longitude", equalTo(128.300764f))
             .body("[0].price", equalTo(10000))
             .body("[0].originalPrice", equalTo(30000))
-            .body("[0].currentRecruitment", equalTo(2))
+            .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
-    void 검색한_키워드가_포함된_쉐어를_조회한다() {
-        given(documentationSpec)
-            .filter(document("share-search-get"))
-            .accept(APPLICATION_JSON_VALUE)
-            .param("type", "delivery")
-            .param("keyword", "떡볶이")
-            .param("latitude", 36.6576769)
-            .param("longitude", 128.3007637)
-
-            .when()
-            .get("/shares")
-
-            .then()
-            .statusCode(HttpStatus.OK.value())
-            .body("", hasSize(1))
-            .body("[0].id", equalTo(1))
-            .body("[0].thumbnailUrl", containsString("https://"))
-            .body("[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
-            .body("[0].location", equalTo("강남역"))
-            .body("[0].latitude", equalTo(36.657677f))
-            .body("[0].longitude", equalTo(128.300764f))
-            .body("[0].price", equalTo(10000))
-            .body("[0].originalPrice", equalTo(30000))
-            .body("[0].currentRecruitment", equalTo(2))
-            .body("[0].finalRecruitment", equalTo(3))
-            .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
-    }
-
-    @Test
-    void 검색한_키워드가_포함된_쉐어를_추천한다() {
+    void 검색한_키워드가_포함된_회원_주변의_쉐어를_추천한다() {
         given(documentationSpec)
             .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
@@ -210,7 +180,7 @@ class ShareIntegrationTest {
             .body("[0].location", equalTo("강남역"))
             .body("[0].price", equalTo(10000))
             .body("[0].originalPrice", equalTo(30000))
-            .body("[0].currentRecruitment", equalTo(2))
+            .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
@@ -242,7 +212,7 @@ class ShareIntegrationTest {
             .body("[0].location", equalTo("강남역"))
             .body("[0].price", equalTo(10000))
             .body("[0].originalPrice", equalTo(30000))
-            .body("[0].currentRecruitment", equalTo(2))
+            .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
@@ -274,7 +244,7 @@ class ShareIntegrationTest {
             .body("[0].location", equalTo("판교역"))
             .body("[0].price", equalTo(7000))
             .body("[0].originalPrice", equalTo(28000))
-            .body("[0].currentRecruitment", equalTo(1))
+            .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(4))
             .body("[0].createdDateTime", equalTo("2022-07-03 16:00"))
             .body("[0].appointmentDateTime", equalTo("2023-07-03 16:00"));
@@ -305,9 +275,9 @@ class ShareIntegrationTest {
             .body("description", equalTo("떡볶이 쉐어 설명"))
             .body("price", equalTo(10000))
             .body("originalPrice", equalTo(30000))
-            .body("currentRecruitment", equalTo(2))
+            .body("currentRecruitment", equalTo(3))
             .body("finalRecruitment", equalTo(3))
-            .body("recruitmentMemberThumbnailImageUrls", hasSize(2))
+            .body("recruitmentMemberThumbnailImageUrls", hasSize(3))
             .body("recruitmentMemberThumbnailImageUrls[0]", containsString("http://"))
             .body("recruitmentMemberThumbnailImageUrls[1]", containsString("http://"))
             .body("createdDateTime", equalTo("2022-08-03 16:00"))
