@@ -10,7 +10,7 @@ import louie.hanse.shareplate.domain.Share;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ShareRecommendationResponse {
+public class ShareCommonResponse {
 
     private Long id;
     private String thumbnailUrl;
@@ -21,7 +21,7 @@ public class ShareRecommendationResponse {
     private LocalDateTime appointmentDateTime;
 
     @QueryProjection
-    public ShareRecommendationResponse(Share share) {
+    public ShareCommonResponse(Share share) {
         this.id = share.getId();
         this.thumbnailUrl = share.getShareImages().get(0).getImageUrl();
         this.title = share.getTitle();
