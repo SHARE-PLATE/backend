@@ -75,4 +75,9 @@ public class ShareController {
         ShareRecommendationRequest request) {
         return shareService.recommendationAroundMember(request);
     }
+
+    @GetMapping("/writer")
+    public ShareWriterResponse getWriteByMember(Long writerId) {
+        return shareService.getWriteByMember(writerId);
+    }
 }

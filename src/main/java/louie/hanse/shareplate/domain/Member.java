@@ -1,5 +1,7 @@
 package louie.hanse.shareplate.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,12 +18,14 @@ public class Member {
     @Id
     private Long id;
 
+    @OneToMany(mappedBy = "writer")
+    private List<Share> shares = new ArrayList<>();
+
     private String profileImageUrl;
     private String thumbnailImageUrl;
     private String nickname;
     private String email;
     private String refreshToken;
-
 
     public Member(Long id, String profileImageUrl, String thumbnailImageUrl, String nickname,
         String email) {

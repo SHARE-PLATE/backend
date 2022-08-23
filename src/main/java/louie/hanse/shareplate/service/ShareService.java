@@ -22,14 +22,15 @@ import louie.hanse.shareplate.repository.EntryRepository;
 import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.MineType;
+import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
-import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
+import louie.hanse.shareplate.web.dto.share.ShareWriterResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,11 +146,16 @@ public class ShareService {
             .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
     }
 
-    public List<ShareRecommendationResponse> recommendationAroundMember(ShareRecommendationRequest request) {
-        List<ShareRecommendationResponse> shareRecommendationResponses = shareRepository
+    public List<ShareCommonResponse> recommendationAroundMember(ShareRecommendationRequest request) {
+        List<ShareCommonResponse> shareCommonRespons = shareRepository
             .recommendationAroundMember(request);
-        Collections.shuffle(shareRecommendationResponses);
-        return shareRecommendationResponses;
+        Collections.shuffle(shareCommonRespons);
+        return shareCommonRespons;
+    }
+
+    public ShareWriterResponse getWriteByMember(Long writerId) {
+        Member writer = memberService.findByIdOrElseThrow(writerId);
+        return new ShareWriterResponse(writer);
     }
 
     private String uploadImage(MultipartFile image) throws IOException {
