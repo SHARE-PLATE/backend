@@ -26,7 +26,7 @@ public class ChatService {
         return chatRepository.save(chat);
     }
 
-    public int getUnread(Long memberId) {
-        return chatRepository.getUnread(memberId);
+    public int getTotalUnread(Long memberId) {
+        return chatRepository.getTotalUnread(memberId);
     }
 }

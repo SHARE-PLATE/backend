@@ -19,7 +19,7 @@ public class ChatController {
     @GetMapping("/unread")
     public Map<String, Integer> getUnread(HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
-        int count = chatService.getUnread(memberId);
+        int count = chatService.getTotalUnread(memberId);
         return Collections.singletonMap("count", count);
     }
 }
