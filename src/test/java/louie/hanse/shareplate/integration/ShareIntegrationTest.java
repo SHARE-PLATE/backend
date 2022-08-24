@@ -168,6 +168,7 @@ class ShareIntegrationTest {
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "entry")
             .param("shareType", "delivery")
+            .param("isExpired", "false")
 
             .when()
             .get("/shares/mine")
@@ -200,6 +201,7 @@ class ShareIntegrationTest {
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "writer")
             .param("shareType", "delivery")
+            .param("isExpired", "false")
 
             .when()
             .get("/shares/mine")
@@ -232,6 +234,7 @@ class ShareIntegrationTest {
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "wish")
             .param("shareType", "delivery")
+            .param("isExpired", "false")
 
             .when()
             .get("/shares/mine")

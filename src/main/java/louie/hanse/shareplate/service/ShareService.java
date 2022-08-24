@@ -7,9 +7,12 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.ChatRoom;
@@ -22,6 +25,7 @@ import louie.hanse.shareplate.repository.EntryRepository;
 import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.MineType;
+import louie.hanse.shareplate.type.ShareType;
 import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
@@ -77,17 +81,20 @@ public class ShareService {
 
     public List<ShareSearchResponse> searchMine(
         ShareMineSearchRequest shareMineSearchRequest, Long memberId) {
-        MineType mineType = shareMineSearchRequest.getMineType();
-        List<Share> shares = null;
-        if (mineType.isEntry()) {
-            shares = shareRepository.findWithEntry(memberId);
-        }
-        if (mineType.isWriter()) {
-            shares = shareRepository.findByWriterId(memberId);
-        }
-        if (mineType.isWish()) {
-            shares = shareRepository.findWithWish(memberId);
-        }
+        ShareType type = shareMineSearchRequest.getShareType();
+        boolean expired = shareMineSearchRequest.isExpired();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        Map<MineType, Supplier<List<Share>>> shareFindMapByMineType = Map.of(
+            MineType.ENTRY, () -> shareRepository.findWithEntryByMemberIdAndTypeAndIsExpired(
+                memberId, type, expired, currentDateTime),
+            MineType.WRITER, () -> shareRepository.findByWriterIdAndTypeAndIsExpired(
+                memberId, type, expired, currentDateTime),
+            MineType.WISH, () -> shareRepository.findWithWishByMemberIdAndTypeAndIsExpired(
+                memberId, type, expired, currentDateTime)
+        );
+
+        List<Share> shares = shareFindMapByMineType.get(shareMineSearchRequest.getMineType()).get();
         return shares.stream()
             .map(ShareSearchResponse::new)
             .collect(Collectors.toList());

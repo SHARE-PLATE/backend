@@ -11,4 +11,5 @@ public class ShareMineSearchRequest {
 
     private MineType mineType;
     private ShareType shareType;
+    private boolean isExpired;
 }
