@@ -19,7 +19,7 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public int getUnread(Long memberId) {
+    public int getTotalUnread(Long memberId) {
         List<Long> chatRoomIds = queryFactory
             .select(chatRoom.id)
             .from(chatRoom)
@@ -49,6 +49,32 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
                 .intValue();
         }
         return count;
+    }
+
+    @Override
+    public int getUnread(Long memberId, Long chatRoomId) {
+        queryFactory.select(chatRoom.id)
+            .from(chatRoom)
+            .join(chatRoom.chatRoomMembers, chatRoomMember)
+            .join(chatRoomMember.member, member)
+            .on(member.id.eq(memberId))
+            .fetch();
+
+        LocalDateTime localDateTime = queryFactory.select(chatLog.recentReadDatetime)
+            .from(chatLog)
+            .where(
+                chatLog.chatRoom.id.eq(chatRoomId),
+                chatLog.member.id.eq(memberId)
+            ).fetchOne();
+
+        return queryFactory.select(chat.count())
+            .from(chat)
+            .where(
+                chat.chatRoom.id.eq(chatRoomId),
+                chat.writer.id.ne(memberId),
+                gtWrittenDateTime(localDateTime)
+            ).fetchOne()
+            .intValue();
     }
 
     private BooleanExpression gtWrittenDateTime(LocalDateTime localDateTime) {
