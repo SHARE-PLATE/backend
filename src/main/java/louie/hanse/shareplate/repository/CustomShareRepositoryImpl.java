@@ -15,6 +15,7 @@ import louie.hanse.shareplate.web.dto.share.QShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
         return queryFactory
             .selectFrom(share)
             .where(
-                share.type.eq(request.getType()),
+                typeEq(request.getType()),
                 titleContains(request.getKeyword()),
                 share.latitude.between(calculateStartLatitude(latitude),
                     calculateEndLatitude(latitude)),
@@ -91,6 +92,10 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
                 share.type.eq(type),
                 isExpired(expired, currentDateTime)
             ).fetch();
+    }
+
+    private BooleanExpression typeEq(ShareType type) {
+        return ObjectUtils.isEmpty(type) ? null : share.type.eq(type);
     }
 
     private BooleanExpression isExpired(boolean expired, LocalDateTime currentDateTime) {
