@@ -103,4 +103,10 @@ public class Share {
         this.chatRoom = chatRoom;
     }
 
+    public boolean isNotEnd() {
+        if (appointmentDateTime.compareTo(LocalDateTime.now()) > 0) {
+            return true;
+        }
+        return false;
+    }
 }
