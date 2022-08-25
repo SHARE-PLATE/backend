@@ -47,12 +47,10 @@ public class ShareDetailResponse {
         this.originalPrice = share.getOriginalPrice();
         this.currentRecruitment = share.getCurrentRecruitment();
         this.finalRecruitment = share.getRecruitment();
-        List<String> recruitmentMemberThumbnailImageUrls = share.getEntries().stream()
+        this.recruitmentMemberThumbnailImageUrls = share.getEntries().stream()
             .map(Entry::getMember)
             .map(Member::getThumbnailImageUrl)
             .collect(Collectors.toList());
-        recruitmentMemberThumbnailImageUrls.add(share.getWriter().getThumbnailImageUrl());
-        this.recruitmentMemberThumbnailImageUrls = recruitmentMemberThumbnailImageUrls;
         this.createdDateTime = share.getCreatedDateTime();
         this.appointmentDateTime = share.getAppointmentDateTime();
         this.wish = wish;
