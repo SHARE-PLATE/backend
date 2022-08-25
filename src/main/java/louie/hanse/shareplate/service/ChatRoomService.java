@@ -42,15 +42,15 @@ public class ChatRoomService {
         return new ChatRoomDetailResponse(chatRoom, member);
     }
 
-
     public List<ChatRoomListResponse> getList(Long memberId) {
         List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberId(memberId);
         List<ChatRoomListResponse> chatRoomList = new ArrayList<>();
         for (ChatRoom chatRoom : chatRooms) {
             int unreadCount = chatRepository.getUnread(memberId, chatRoom.getId());
-            Chat chat = chatRepository.findTopByChatRoomIdOrderByWrittenDateTimeDesc(chatRoom.getId());
+            Chat chat = chatRepository
+                .findTopByChatRoomIdOrderByWrittenDateTimeDesc(chatRoom.getId());
             ChatRoomListResponse chatRoomListResponse = new ChatRoomListResponse(chatRoom, chat,
-                unreadCount);
+                unreadCount, memberId);
             chatRoomList.add(chatRoomListResponse);
         }
         return chatRoomList;

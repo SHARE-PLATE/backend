@@ -23,18 +23,18 @@ public class ChatRoomListResponse {
     private List<String> recruitmentMemberImageUrls;
     private int unreadCount;
 
-    public ChatRoomListResponse(ChatRoom chatRoom, Chat chat, int unreadCount) {
+    public ChatRoomListResponse(ChatRoom chatRoom, Chat chat, int unreadCount, Long memberId) {
         this.id = chatRoom.getId();
         this.shareThumbnailImageUrl = chatRoom.getShare().getShareImages().get(0).getImageUrl();
         this.currentRecruitment = chatRoom.getShare().getCurrentRecruitment();
         this.recentMessage = chat.getContents();
         this.recentMessageDataTime = chat.getWrittenDateTime();
         this.recruitmentMemberNicknames = chatRoom.getShare().getEntries().stream()
-            .map(Entry::getMember).map(
-                Member::getNickname).collect(Collectors.toList());
+            .map(Entry::getMember).filter(member -> !member.getId().equals(memberId))
+            .map(Member::getNickname).collect(Collectors.toList());
         this.recruitmentMemberImageUrls = chatRoom.getShare().getEntries().stream()
-            .map(Entry::getMember).map(Member::getThumbnailImageUrl).collect(
-                Collectors.toList());
+            .map(Entry::getMember).filter(member -> !member.getId().equals(memberId))
+            .map(Member::getThumbnailImageUrl).collect(Collectors.toList());
         this.unreadCount = unreadCount;
     }
 
