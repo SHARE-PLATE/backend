@@ -95,10 +95,6 @@ public class Share {
         shareImages.add(shareImage);
     }
 
-    public int getCurrentRecruitment() {
-        return entries.size();
-    }
-
     public void changeChatRoom(ChatRoom chatRoom) {
         this.chatRoom = chatRoom;
     }
@@ -108,5 +104,13 @@ public class Share {
             return true;
         }
         return false;
+    }
+
+    public int getCurrentRecruitment() {
+        return entries.size();
+    }
+
+    public int getWishCount() {
+        return wishList.size();
     }
 }
