@@ -96,7 +96,7 @@ public class Share {
     }
 
     public int getCurrentRecruitment() {
-        return entries.size() + 1;
+        return entries.size();
     }
 
     public void changeChatRoom(ChatRoom chatRoom) {
