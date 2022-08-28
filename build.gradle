@@ -58,6 +58,9 @@ dependencies {
 	testImplementation 'io.findify:s3mock_2.13:0.2.6'
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+	testImplementation "org.testcontainers:junit-jupiter:1.17.2"
+	testImplementation "org.testcontainers:mysql:1.17.2" // mysql 컨테이너를 사용한다면 추가
 }
 
 tasks.named('test') {

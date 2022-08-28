@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:8://testDB
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        default_batch_fetch_size: 100
+    defer-datasource-initialization: true
+    open-in-view: false
+
+  config:
+    import: classpath:oauth.yml,classpath:s3.yml
+
+  sql:
+    init:
+      mode: always
+      encoding: utf-8
+
+  h2:
+    console:
+      enabled: true
+
+logging.level:
+  org:
+    hibernate.SQL: debug
+  com:
+    amazonaws:
+      util:
+        EC2MetadataUtils: error
