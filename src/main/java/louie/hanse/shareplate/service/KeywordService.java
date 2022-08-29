@@ -22,4 +22,9 @@ public class KeywordService {
         Keyword keyword = request.toEntity(member);
         keywordRepository.save(keyword);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        keywordRepository.deleteById(id);
+    }
 }
