@@ -87,4 +87,19 @@ class KeywordIntegrationTest {
             .then()
             .statusCode(HttpStatus.OK.value());
     }
+
+    @Test
+    void 등록한_키워드를_삭제한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        given()
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 1)
+
+            .when()
+            .delete("/keywords/{id}")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
 }
