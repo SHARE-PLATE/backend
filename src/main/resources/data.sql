@@ -94,3 +94,8 @@ INSERT INTO chat_log
 VALUES
     (1, '2022-08-03-16-00', 1, 2370842997),
     (2, '2022-10-03-16-00', 1, 2355841047);
+
+INSERT INTO keyword
+    (id, contents, location, latitude, longitude, member_id)
+VALUES
+    (1, '떡볶이', '강남역', 37.498095, 127.027610, 2370842997);
