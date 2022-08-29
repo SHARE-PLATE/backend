@@ -287,7 +287,8 @@ class ShareIntegrationTest {
             .body("createdDateTime", equalTo("2022-08-03 16:00"))
             .body("appointmentDateTime", equalTo("2023-08-03 16:00"))
             .body("wish", equalTo(false))
-            .body("entry", equalTo(false));
+            .body("entry", equalTo(false))
+            .body("wishCount", equalTo(1));
     }
 
     @Test

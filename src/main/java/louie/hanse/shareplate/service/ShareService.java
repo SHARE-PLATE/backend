@@ -89,7 +89,7 @@ public class ShareService {
         LocalDateTime currentDateTime = LocalDateTime.now();
 
         Map<MineType, Supplier<List<Share>>> shareFindMapByMineType = Map.of(
-            MineType.ENTRY, () -> shareRepository.findWithEntryByMemberIdAndTypeAndIsExpired(
+            MineType.ENTRY, () -> shareRepository.findWithEntryByMemberIdAndTypeAndNotWriteByMeAndIsExpired(
                 memberId, type, expired, currentDateTime),
             MineType.WRITER, () -> shareRepository.findByWriterIdAndTypeAndIsExpired(
                 memberId, type, expired, currentDateTime),

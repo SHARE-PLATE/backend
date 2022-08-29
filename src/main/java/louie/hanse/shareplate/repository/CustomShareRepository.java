@@ -17,7 +17,7 @@ public interface CustomShareRepository {
     List<Share> findByWriterIdAndTypeAndIsExpired(
         Long writerId, ShareType type, boolean expired, LocalDateTime currentDateTime);
 
-    List<Share> findWithEntryByMemberIdAndTypeAndIsExpired(
+    List<Share> findWithEntryByMemberIdAndTypeAndNotWriteByMeAndIsExpired(
         Long memberId, ShareType type, boolean expired, LocalDateTime currentDateTime);
 
     List<Share> findWithWishByMemberIdAndTypeAndIsExpired(

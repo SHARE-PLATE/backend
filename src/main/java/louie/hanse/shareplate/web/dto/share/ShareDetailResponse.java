@@ -30,6 +30,7 @@ public class ShareDetailResponse {
     private LocalDateTime appointmentDateTime;
     private boolean wish;
     private boolean entry;
+    private int wishCount;
 
     public ShareDetailResponse(Share share, boolean wish, boolean entry) {
         this.id = share.getId();
@@ -55,5 +56,6 @@ public class ShareDetailResponse {
         this.appointmentDateTime = share.getAppointmentDateTime();
         this.wish = wish;
         this.entry = entry;
+        this.wishCount = share.getWishCount();
     }
 }

@@ -71,12 +71,13 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
     }
 
     @Override
-    public List<Share> findWithEntryByMemberIdAndTypeAndIsExpired(
+    public List<Share> findWithEntryByMemberIdAndTypeAndNotWriteByMeAndIsExpired(
         Long memberId, ShareType type, boolean expired, LocalDateTime currentDateTime) {
         return queryFactory
             .selectFrom(share)
             .join(share.entries, entry).on(entry.member.id.eq(memberId))
             .where(
+                share.writer.id.ne(memberId),
                 share.type.eq(type),
                 isExpired(expired, currentDateTime)
             ).fetch();
