@@ -35,4 +35,9 @@ public class NotificationService {
             .map(KeywordNotificationResponse::new)
             .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void delete(Long id) {
+        notificationRepository.deleteById(id);
+    }
 }
