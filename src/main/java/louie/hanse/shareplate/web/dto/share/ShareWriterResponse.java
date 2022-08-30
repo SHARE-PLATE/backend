@@ -3,12 +3,10 @@ package louie.hanse.shareplate.web.dto.share;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 
 @Getter
-@NoArgsConstructor
 public class ShareWriterResponse {
 
     private String writer;

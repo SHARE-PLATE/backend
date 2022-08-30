@@ -1,10 +1,8 @@
 package louie.hanse.shareplate.web.dto.share;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Share;
 
-@NoArgsConstructor
 @Getter
 public class SharePreviewResponse {
 

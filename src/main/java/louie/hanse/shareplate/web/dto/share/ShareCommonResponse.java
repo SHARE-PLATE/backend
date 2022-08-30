@@ -3,12 +3,9 @@ package louie.hanse.shareplate.web.dto.share;
 
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Share;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShareCommonResponse {
 
