@@ -132,3 +132,19 @@ include::{snippets}/wish-list-share/http-request.adoc[]
 
 === Response
 include::{snippets}/wish-list-cancel-share/http-response.adoc[]
+
+== 활동 알림 조회
+
+=== Request
+include::{snippets}/member-get-activity-notification-list/http-request.adoc[]
+
+=== Response
+include::{snippets}/member-get-activity-notification-list/http-response.adoc[]
+
+== 키워드 알림 조회
+
+=== Request
+include::{snippets}/member-get-keyword-notification-list/http-request.adoc[]
+
+=== Response
+include::{snippets}/member-get-keyword-notification-list/http-response.adoc[]

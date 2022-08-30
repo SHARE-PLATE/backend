@@ -9,7 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    @Query("select n from ActivityNotification n where n.member.id = :memberId and n.type = 'ACTIVITY'")
-    List<ActivityNotification> findAllByMemberId(@Param("memberId") Long memberId);
+    @Query("select a from ActivityNotification a where a.member.id = :memberId and a.type = 'ACTIVITY'")
+    List<ActivityNotification> findAllActivityNotificationByMemberId(
+        @Param("memberId") Long memberId);
 
+    @Query("select  n from Notification  n where n.member.id = :memberId and n.type = 'KEYWORD'")
+    List<Notification> findAllKeywordNotificationByMemberId(@Param("memberId") Long memberId);
 }
