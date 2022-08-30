@@ -95,6 +95,18 @@ VALUES
     (1, '2022-08-03-16-00', 1, 2370842997),
     (2, '2022-10-03-16-00', 1, 2355841047);
 
+INSERT INTO notification
+(id, created_date_time, type, member_id, share_id)
+VALUES
+    (1, '2022-07-03-16-00', 'ACTIVITY', 2355841047, 2);
+
+INSERT INTO activity_notification
+    (activity_type, id, entry_member_id)
+VALUES
+    ('ENTRY', 1, 2370842997);
+
+
+
 INSERT INTO keyword
     (id, contents, location, latitude, longitude, member_id)
 VALUES

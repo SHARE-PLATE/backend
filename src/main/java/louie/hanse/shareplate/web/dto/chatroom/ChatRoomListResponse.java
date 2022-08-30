@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Chat;
 import louie.hanse.shareplate.domain.ChatRoom;
 import louie.hanse.shareplate.domain.Entry;
 import louie.hanse.shareplate.domain.Member;
 
-@NoArgsConstructor
 @Getter
 public class ChatRoomListResponse {
 

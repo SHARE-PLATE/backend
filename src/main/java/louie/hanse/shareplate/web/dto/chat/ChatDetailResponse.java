@@ -2,11 +2,9 @@ package louie.hanse.shareplate.web.dto.chat;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Chat;
 import louie.hanse.shareplate.domain.Member;
 
-@NoArgsConstructor
 @Getter
 public class ChatDetailResponse {
 
