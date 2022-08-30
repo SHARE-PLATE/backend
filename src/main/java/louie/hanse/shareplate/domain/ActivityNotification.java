@@ -6,8 +6,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.Getter;
 import louie.hanse.shareplate.type.ActivityType;
 
+@Getter
 @Entity
 public class ActivityNotification extends Notification {
 
