@@ -35,4 +35,12 @@ public class Keyword {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public String getLocation() {
+        return location;
+    }
 }
