@@ -2,7 +2,6 @@ package louie.hanse.shareplate.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.service.MemberService;
 import louie.hanse.shareplate.web.dto.member.MemberChangeUserInfoRequest;
 import louie.hanse.shareplate.web.dto.member.MemberUserInfoResponse;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 @RestController
-@Slf4j
 public class MemberController {
 
     private final MemberService memberService;

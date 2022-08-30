@@ -2,7 +2,6 @@ package louie.hanse.shareplate.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.service.EntryService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/shares/{id}/entry")
-@Slf4j
 public class EntryController {
 
     private final EntryService entryService;

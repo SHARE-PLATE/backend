@@ -136,15 +136,23 @@ include::{snippets}/wish-list-cancel-share/http-response.adoc[]
 == 활동 알림 조회
 
 === Request
-include::{snippets}/member-get-activity-notification-list/http-request.adoc[]
+include::{snippets}/notification-activity-list/http-request.adoc[]
 
 === Response
-include::{snippets}/member-get-activity-notification-list/http-response.adoc[]
+include::{snippets}/notification-activity-list/http-response.adoc[]
 
 == 키워드 알림 조회
 
 === Request
-include::{snippets}/member-get-keyword-notification-list/http-request.adoc[]
+include::{snippets}/notification-keyword-list/http-request.adoc[]
 
 === Response
-include::{snippets}/member-get-keyword-notification-list/http-response.adoc[]
+include::{snippets}/notification-keyword-list/http-response.adoc[]
+
+== 알림 단건 삭제
+
+=== Request
+include::{snippets}/notification-delete-only-one/http-request.adoc[]
+
+=== Response
+include::{snippets}/notification-delete-only-one/http-response.adoc[]
