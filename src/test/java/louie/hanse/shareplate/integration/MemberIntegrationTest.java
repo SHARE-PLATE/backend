@@ -87,11 +87,11 @@ class MemberIntegrationTest {
 
     @Test
     void 특정_회원의_정보를_변경한다() {
-        String accessToken = jwtProvider.createAccessToken(2370842997L);
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("profileImageUrl", "https:s3.com");
-        requestParams.put("nickname", "louie1se");
+        requestParams.put("nickname", "칸칸칸칸");
         requestParams.put("email", "email_test.com");
 
         given(documentationSpec)
