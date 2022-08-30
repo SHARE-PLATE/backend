@@ -293,7 +293,7 @@ class ShareIntegrationTest {
 
     @Test
     void 본인이_등록한_쉐어를_편집한다() {
-        String accessToken = jwtProvider.createAccessToken(2355841022L);
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
             .filter(document("share-edit-put"))
