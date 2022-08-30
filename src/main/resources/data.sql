@@ -99,7 +99,8 @@ INSERT INTO notification
 (id, created_date_time, type, member_id, share_id)
 VALUES
     (1, '2022-07-03-16-00', 'ACTIVITY', 2355841047, 2),
-    (2, '2022-07-03-16-00', 'KEYWORD', 2370842997, 1);
+    (2, '2022-07-03-16-00', 'KEYWORD', 2370842997, 1),
+    (3, '2022-07-03-16-00', 'KEYWORD', 2355841033, 2);
 
 INSERT INTO activity_notification
     (activity_type, id, entry_member_id)
@@ -109,4 +110,5 @@ VALUES
 INSERT INTO keyword
     (id, contents, location, latitude, longitude, member_id)
 VALUES
-    (1, '떡볶이', '강남역', 37.498095, 127.027610, 2370842997);
+    (1, '떡볶이', '강남역', 37.498095, 127.027610, 2370842997),
+    (2, '치킨', '판교역', 37.3951627, 127.1117136, 2355841033);
