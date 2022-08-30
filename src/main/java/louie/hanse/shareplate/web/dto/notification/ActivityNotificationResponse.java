@@ -1,15 +1,12 @@
 package louie.hanse.shareplate.web.dto.notification;
 
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import louie.hanse.shareplate.domain.ActivityNotification;
 import louie.hanse.shareplate.type.ActivityType;
 
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ActivityNotificationResponse {
 
