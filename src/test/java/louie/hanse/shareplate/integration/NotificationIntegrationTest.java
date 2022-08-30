@@ -79,7 +79,7 @@ public class NotificationIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("member-get-activity-notification-list"))
+            .filter(document("notification-activity-list"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 
@@ -103,7 +103,7 @@ public class NotificationIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("member-get-keyword-notification-list"))
+            .filter(document("notification-keyword-list"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 
@@ -118,5 +118,24 @@ public class NotificationIntegrationTest {
             .body("[0].shareThumbnailImageUrl", equalTo(
                 "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg"))
             .body("[0].notificationCreatedDateTime", equalTo("2022-07-03 16:00"));
+    }
+
+    @Test
+    void 특정_회원의_알림을_단건_삭제한다() {
+
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("notification-delete-only-one"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 3)
+
+            .when()
+            .delete("/notifications/{id}")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+
     }
 }

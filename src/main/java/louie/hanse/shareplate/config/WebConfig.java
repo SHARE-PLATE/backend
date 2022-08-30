@@ -35,7 +35,8 @@ public class WebConfig implements WebMvcConfigurer {
             .addPathPatterns("/members", "/members/location", "/shares", "/shares/mine",
                 "/shares/{id}", "/shares/{id}/entry", "/wish-list", "/chatrooms/{id}",
                 "/chat-logs/update-read-time", "/chats/unread", "/chatroom-members",
-                "/chatrooms", "/keywords", "/notifications/activity", "/notifications/keyword")
+                "/chatrooms", "/keywords", "/notifications/activity", "/notifications/keyword",
+                "/notifications/{id}")
             .excludePathPatterns("/shares/recommendation", "/shares/writer");
 
         registry.addInterceptor(new LogoutInterceptor(jwtProvider, loginService))
