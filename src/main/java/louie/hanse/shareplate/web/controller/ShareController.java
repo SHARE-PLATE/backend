@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.service.NotificationService;
 import louie.hanse.shareplate.service.ShareService;
+import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
-import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
@@ -29,12 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShareController {
 
     private final ShareService shareService;
+    private final NotificationService notificationService;
 
     @PostMapping
     public void register(ShareRegisterRequest shareRegisterRequest, HttpServletRequest request)
         throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");
-        shareService.register(shareRegisterRequest, memberId);
+        Long shareId = shareService.register(shareRegisterRequest, memberId);
+        notificationService.registerAndSend(shareId);
     }
 
     @GetMapping

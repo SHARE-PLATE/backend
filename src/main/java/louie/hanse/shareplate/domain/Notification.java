@@ -12,9 +12,13 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.type.NotificationType;
 
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Getter
@@ -35,5 +39,11 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdDateTime = LocalDateTime.now();
+
+    public Notification(Share share, Member member, NotificationType type) {
+        this.share = share;
+        this.member = member;
+        this.type = type;
+    }
 }
