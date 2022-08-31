@@ -37,7 +37,7 @@ public class ShareController {
         throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");
         Long shareId = shareService.register(shareRegisterRequest, memberId);
-        notificationService.registerAndSend(shareId);
+        notificationService.saveKeywordNotificationAndSend(shareId, memberId);
     }
 
     @GetMapping
