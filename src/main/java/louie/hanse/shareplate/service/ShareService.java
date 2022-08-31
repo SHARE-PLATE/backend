@@ -61,7 +61,7 @@ public class ShareService {
     private final JwtProvider jwtProvider;
 
     @Transactional
-    public void register(ShareRegisterRequest request, Long memberId) throws IOException {
+    public Long register(ShareRegisterRequest request, Long memberId) throws IOException {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
@@ -72,6 +72,7 @@ public class ShareService {
         entryRepository.save(entry);
         new ChatRoom(member, share);
         shareRepository.save(share);
+        return share.getId();
     }
 
     public List<ShareSearchResponse> searchAroundMember(
