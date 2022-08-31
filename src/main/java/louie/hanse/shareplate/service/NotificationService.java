@@ -40,4 +40,9 @@ public class NotificationService {
     public void delete(Long id) {
         notificationRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteAll(List<Long> idList) {
+        notificationRepository.deleteAllByIdInBatch(idList);
+    }
 }

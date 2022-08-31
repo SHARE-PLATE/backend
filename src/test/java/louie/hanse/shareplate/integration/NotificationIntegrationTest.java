@@ -17,6 +17,9 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.service.ShareService;
@@ -136,6 +139,26 @@ public class NotificationIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value());
+    }
 
+    @Test
+    void 특정_회원의_알림을_선택_삭제한다() {
+
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        Map<String, List<Long>> requestBody = Map.of("idList",
+            new ArrayList<>(List.of(3L, 4L)));
+
+        given(documentationSpec)
+            .filter(document("notification-delete-all"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestBody)
+
+            .when()
+            .delete("/notifications")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
     }
 }

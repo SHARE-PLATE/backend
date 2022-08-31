@@ -156,3 +156,11 @@ include::{snippets}/notification-delete-only-one/http-request.adoc[]
 
 === Response
 include::{snippets}/notification-delete-only-one/http-response.adoc[]
+
+== 알림 선택 삭제
+
+=== Request
+include::{snippets}/notification-delete-all/http-request.adoc[]
+
+=== Response
+include::{snippets}/share-not-writer-delete/http-response.adoc[]
