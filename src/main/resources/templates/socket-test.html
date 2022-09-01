@@ -42,7 +42,9 @@
     ws.connect({}, function (frame) {
       ws.subscribe("/topic/chatrooms/1", function (message) {
         var messageContents = JSON.parse(message.body);
-        console.log("messageContents : " + messageContents.contents);
+      });
+      ws.subscribe("/queue/notifications/entries/7", function (message) {
+        var messageContents = JSON.parse(message.body);
       });
     });
   }

@@ -15,4 +15,11 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
     boolean existsByMemberIdAndShareId(Long memberId, Long shareId);
 
     void deleteByMemberIdAndShareId(Long memberId, Long shareId);
+
+    @Query("select e from Entry e "
+        + "join fetch e.member m "
+        + "join fetch e.share s "
+        + "join fetch s.shareImages si ")
+    List<Entry> findAllByShareId(Long shareId);
+
 }
