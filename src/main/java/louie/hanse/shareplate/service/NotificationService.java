@@ -1,5 +1,7 @@
 package louie.hanse.shareplate.service;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,7 @@ import louie.hanse.shareplate.type.NotificationType;
 import louie.hanse.shareplate.web.dto.notification.ActivityNotificationResponse;
 import louie.hanse.shareplate.web.dto.notification.KeywordNotificationResponse;
 import org.springframework.messaging.core.MessageSendingOperations;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class NotificationService {
 
+    private static final ZoneOffset seoulZoneOffset = ZoneOffset.of("+9");
+
+    private final TaskScheduler taskScheduler;
     private final ShareService shareService;
+    private final EntryRepository entryRepository;
     private final MemberService memberService;
     private final NotificationRepository notificationRepository;
     private final KeywordRepository keywordRepository;
-    private final EntryRepository entryRepository;
     private final MessageSendingOperations messageSendingOperations;
 
     public List<ActivityNotificationResponse> getActivityNotificationList(Long memberId) {
@@ -80,11 +86,9 @@ public class NotificationService {
         }
         notificationRepository.saveAll(notifications);
 
-        for (int i = 0; i < keywords.size(); i++) {
-            Long keywordId = keywords.get(i).getId();
-            messageSendingOperations.convertAndSend(
-                "/queue/notifications/keywords/" + keywordId, responses.get(i));
-        }
+        sendKeywordNotifications(keywords, responses);
+
+        createDeadlineNotificationSchedule(share.getId());
     }
 
     @Transactional
@@ -108,6 +112,42 @@ public class NotificationService {
             Long entryMemberId = entries.get(i).getMember().getId();
             messageSendingOperations.convertAndSend(
                 "/queue/notifications/entries/" + entryMemberId, responses.get(i));
+        }
+    }
+
+    private void createDeadlineNotificationSchedule(Long shareId) {
+        Share share = shareService.findByIdOrElseThrow(shareId);
+
+        Instant instant = share.getAppointmentDateTime().minusMinutes(30)
+            .toInstant(seoulZoneOffset);
+
+        taskScheduler.schedule(() -> {
+            List<Entry> entries = entryRepository.findAllByShareId(shareId);
+
+            List<ActivityNotification> activityNotifications = new ArrayList<>();
+            List<ActivityNotificationResponse> activityNotificationResponses = new ArrayList<>();
+            for (Entry entry : entries) {
+                ActivityNotification activityNotification = new ActivityNotification(
+                    share, entry.getMember(), NotificationType.ACTIVITY, ActivityType.DEADLINE);
+                activityNotificationResponses.add(
+                    new ActivityNotificationResponse(activityNotification));
+            }
+            notificationRepository.saveAll(activityNotifications);
+
+            for (int i = 0; i < entries.size(); i++) {
+                messageSendingOperations.convertAndSend(
+                    "/queue/notifications/entries/" + entries.get(i).getId(),
+                    activityNotificationResponses.get(i));
+            }
+        }, instant);
+    }
+
+    private void sendKeywordNotifications(List<Keyword> keywords,
+        List<KeywordNotificationResponse> responses) {
+        for (int i = 0; i < keywords.size(); i++) {
+            Long keywordId = keywords.get(i).getId();
+            messageSendingOperations.convertAndSend(
+                "/queue/notifications/keywords/" + keywordId, responses.get(i));
         }
     }
 }

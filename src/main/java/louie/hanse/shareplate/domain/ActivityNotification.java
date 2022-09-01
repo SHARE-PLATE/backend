@@ -25,10 +25,15 @@ public class ActivityNotification extends Notification {
     private Member entryMember;
 
     public ActivityNotification(Share share, Member member,
-        NotificationType type,
-        ActivityType activityType, Member entryMember) {
+        NotificationType type, ActivityType activityType, Member entryMember) {
         super(share, member, type);
         this.activityType = activityType;
         this.entryMember = entryMember;
+    }
+
+    public ActivityNotification(Share share, Member member, NotificationType type,
+        ActivityType activityType) {
+        super(share, member, type);
+        this.activityType = activityType;
     }
 }
