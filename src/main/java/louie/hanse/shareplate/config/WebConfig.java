@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.converter.StringToMineTypeConverter;
 import louie.hanse.shareplate.converter.StringToShareTypeConverter;
+import louie.hanse.shareplate.interceptor.LoginVerificationInterceptor;
 import louie.hanse.shareplate.interceptor.LogoutInterceptor;
 import louie.hanse.shareplate.interceptor.MemberVerificationInterceptor;
 import louie.hanse.shareplate.interceptor.ReissueAccessTokenInterceptor;
@@ -40,11 +41,16 @@ public class WebConfig implements WebMvcConfigurer {
             .excludePathPatterns("/shares/recommendation", "/shares/writer");
 
         registry.addInterceptor(new LogoutInterceptor(jwtProvider, loginService))
-            .order(2)
+            .order(1)
             .addPathPatterns("/logout");
+
         registry.addInterceptor(new ReissueAccessTokenInterceptor(jwtProvider, loginService))
-            .order(3)
+            .order(1)
             .addPathPatterns("/reissue/access-token");
+
+        registry.addInterceptor(new LoginVerificationInterceptor(jwtProvider, loginService))
+            .order(1)
+            .addPathPatterns("/login/verification");
     }
 
     @Bean

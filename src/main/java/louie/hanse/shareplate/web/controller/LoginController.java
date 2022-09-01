@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
-@Slf4j
 @RequiredArgsConstructor
 public class LoginController {
 
@@ -32,12 +30,12 @@ public class LoginController {
     private final JwtProvider jwtProvider;
 
     @GetMapping("/login/form")
-    public void loginForm(HttpServletResponse response) throws IOException {
+    public void redirectLoginForm(HttpServletResponse response) throws IOException {
         response.sendRedirect(oAuthProperties.getLoginFormUrl());
     }
 
     @PostMapping("/login")
-    public Map<String, String> redirectLogin(@RequestBody Map<String, String> paramMap,
+    public Map<String, String> login(@RequestBody Map<String, String> paramMap,
         HttpServletResponse response) {
 
         String code = paramMap.get("code");
@@ -76,4 +74,7 @@ public class LoginController {
         loginService.deleteRefreshToken(refreshTokenMemberId);
     }
 
+    @GetMapping("/login/verification")
+    public void loginVerification() {
+    }
 }
