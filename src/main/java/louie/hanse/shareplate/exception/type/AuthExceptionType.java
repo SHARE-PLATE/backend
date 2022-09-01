@@ -17,7 +17,7 @@ public enum AuthExceptionType implements ExceptionType {
     TAMPERING_REFRESH_TOKEN("AUTH009", "변조된 Refresh-Token 입니다.", UNAUTHORIZED),
     INVALID_REFRESH_TOKEN("AUTH010", "올바르지 않은 Refresh-Token 입니다.", UNAUTHORIZED),
     NOT_EXPIRED_ACCESS_TOKEN("AUTH011", "만료되지 않은 Access-Token 입니다.", UNAUTHORIZED);
-;
+
 
     private final String errorCode;
     private final String message;

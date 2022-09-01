@@ -5,7 +5,6 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 
 @RequiredArgsConstructor
-@Slf4j
 public class MemberVerificationInterceptor implements HandlerInterceptor {
 
     private final JwtProvider jwtProvider;

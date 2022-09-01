@@ -5,7 +5,6 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
@@ -14,7 +13,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @RequiredArgsConstructor
-@Slf4j
 public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
 
     private final JwtProvider jwtProvider;
@@ -41,7 +39,7 @@ public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
 
             try {
                 jwtProvider.verifyRefreshToken(refreshToken);
-            }catch (TokenExpiredException exception) {
+            } catch (TokenExpiredException exception) {
                 throw new GlobalException(AuthExceptionType.EXPIRED_REFRESH_TOKEN);
             } catch (JWTVerificationException exception) {
                 throw new GlobalException(AuthExceptionType.TAMPERING_REFRESH_TOKEN);
