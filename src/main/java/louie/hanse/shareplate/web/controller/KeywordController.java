@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.KeywordService;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterRequest;
+import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,10 @@ public class KeywordController {
     }
 
     @PostMapping
-    public void register(@RequestBody KeywordRegisterRequest keywordRegisterRequest,
+    public KeywordRegisterResponse register(@RequestBody KeywordRegisterRequest keywordRegisterRequest,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
-        keywordService.register(keywordRegisterRequest, memberId);
+        return keywordService.register(keywordRegisterRequest, memberId);
     }
 
     @DeleteMapping("/{id}")

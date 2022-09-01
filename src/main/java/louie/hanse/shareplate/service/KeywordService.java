@@ -7,6 +7,7 @@ import louie.hanse.shareplate.domain.Keyword;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.repository.KeywordRepository;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterRequest;
+import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +21,11 @@ public class KeywordService {
     private final MemberService memberService;
 
     @Transactional
-    public void register(KeywordRegisterRequest request, Long memberId) {
+    public KeywordRegisterResponse register(KeywordRegisterRequest request, Long memberId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Keyword keyword = request.toEntity(member);
         keywordRepository.save(keyword);
+        return new KeywordRegisterResponse(keyword);
     }
 
     @Transactional
