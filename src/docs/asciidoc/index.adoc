@@ -164,3 +164,19 @@ include::{snippets}/notification-delete-all/http-request.adoc[]
 
 === Response
 include::{snippets}/share-not-writer-delete/http-response.adoc[]
+
+== 회원 로그아웃
+
+=== Request
+include::{snippets}/login-logout-member/http-request.adoc[]
+
+=== Response
+include::{snippets}/login-logout-member/http-response.adoc[]
+
+== 회원의 로그인 여부 확인
+
+=== Request
+include::{snippets}/login-verification/http-request.adoc[]
+
+=== Response
+include::{snippets}/login-verification/http-response.adoc[]
