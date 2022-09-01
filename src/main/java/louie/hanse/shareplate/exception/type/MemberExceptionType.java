@@ -8,7 +8,8 @@ public enum MemberExceptionType implements ExceptionType {
     MEMBER_NOT_FOUND("MEMBER001", "존재하지 않는 회원입니다.", BAD_REQUEST),
     NOT_SUPPORT_IMAGE_TYPE("MEMBER002", "이미지 형식의 파일이 아닙니다.", BAD_REQUEST),
     EMPTY_MEMBER_INFO("MEMBER003", "요청한 필드값이 비어있습니다.", BAD_REQUEST),
-    EMPTY_LOCATION("MEMBER004", "요청한 필드값이 비어있습니다.", BAD_REQUEST);
+    EMPTY_LOCATION("MEMBER004", "요청한 필드값이 비어있습니다.", BAD_REQUEST),
+    NOT_LOGIN_MEMBER("MEMBER005", "로그인되지 않은 회원입니다.", UNAUTHORIZED);
 
     private final String errorCode;
     private final String message;
