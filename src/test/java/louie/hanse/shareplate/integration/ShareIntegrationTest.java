@@ -275,7 +275,8 @@ class ShareIntegrationTest {
             .body("imageUrls[0]", containsString("https://"))
             .body("imageUrls[1]", containsString("https://"))
             .body("writer", equalTo("정현석"))
-            .body("writerThumbnailImageUrl", equalTo("http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
+            .body("writerThumbnailImageUrl", equalTo(
+                "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
             .body("title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
             .body("location", equalTo("강남역"))
             .body("latitude", equalTo(36.657677f))
@@ -292,7 +293,11 @@ class ShareIntegrationTest {
             .body("appointmentDateTime", equalTo("2023-08-03 16:00"))
             .body("wish", equalTo(false))
             .body("entry", equalTo(false))
-            .body("wishCount", equalTo(1));
+            .body("wishCount", equalTo(1))
+            .body("negotiation", equalTo(true))
+            .body("locationGuide", equalTo("강남역 1번 출구"))
+            .body("hashtags", hasSize(2))
+            .body("hashtags[0]", equalTo("해시태그 내용 1"));
     }
 
     @Test
