@@ -20,6 +20,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
+import java.util.List;
 import louie.hanse.shareplate.config.S3MockConfig;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.jwt.JwtProvider;
@@ -96,6 +97,9 @@ class ShareIntegrationTest {
             .formParam("price", 10000)
             .formParam("originalPrice", 30000)
             .formParam("recruitment", 3)
+            .formParam("negotiation", true)
+            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
+            .formParam("locationGuide", "강남역 파출소 앞")
             .formParam("location", "강남역")
             .formParam("latitude", 37.498095)
             .formParam("longitude", 127.027610)
@@ -307,6 +311,9 @@ class ShareIntegrationTest {
             .formParam("price", 13000)
             .formParam("originalPrice", 26000)
             .formParam("recruitment", 2)
+            .formParam("negotiation", true)
+            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
+            .formParam("locationGuide", "강남역 파출소 앞")
             .formParam("location", "역삼역")
             .formParam("latitude", 37.500326)
             .formParam("longitude", 127.036087)

@@ -68,10 +68,18 @@ public class ShareService {
             String uploadedImageUrl = uploadImage(image);
             share.addShareImage(uploadedImageUrl);
         }
+
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (String contents : request.getHashtags()) {
+            Hashtag hashtag = new Hashtag(share, contents);
+            hashtags.add(hashtag);
+        }
+
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
         new ChatRoom(member, share);
         shareRepository.save(share);
+        hashtagRepository.saveAll(hashtags);
         return share.getId();
     }
 
@@ -134,15 +142,22 @@ public class ShareService {
     }
 
     @Transactional
-    public void edit(ShareEditRequest shareEditRequest, Long id, Long memberId) throws IOException {
+    public void edit(ShareEditRequest request, Long id, Long memberId) throws IOException {
         isNotWriterThrowException(id, memberId);
         Member writer = memberService.findByIdOrElseThrow(memberId);
-        Share share = shareEditRequest.toEntity(id, writer);
-        for (MultipartFile image : shareEditRequest.getImages()) {
+        Share share = request.toEntity(id, writer);
+        for (MultipartFile image : request.getImages()) {
             String uploadImageUrl = uploadImage(image);
             share.addShareImage(uploadImageUrl);
         }
+
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (String contents : request.getHashtags()) {
+            Hashtag hashtag = new Hashtag(share, contents);
+            hashtags.add(hashtag);
+        }
         shareRepository.save(share);
+        hashtagRepository.saveAll(hashtags);
     }
 
     @Transactional
