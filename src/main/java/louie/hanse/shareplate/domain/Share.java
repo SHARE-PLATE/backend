@@ -50,6 +50,8 @@ public class Share {
     private int price;
     private int originalPrice;
     private int recruitment;
+    private boolean negotiation;
+    private String locationGuide;
     private String location;
     private double latitude;
     private double longitude;

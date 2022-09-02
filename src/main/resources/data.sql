@@ -19,15 +19,15 @@ VALUES (2370842997, 'dhdustnr0134@naver.com', '정현석',
 
 INSERT INTO share
 (id, appointment_date_time, created_date_time, description, latitude, longitude, location,
- original_price, price, recruitment, title, type, writer_id)
+ original_price, price, recruitment, title, type, writer_id, negotiation, location_guide)
 VALUES (1, '2023-08-03-16-00', '2022-08-03-16-00', '떡볶이 쉐어 설명', 36.6576769, 128.3007637, '강남역',
-        30000, 10000, 3, '강남역에서 떡볶이 먹을 사람 모집합니다.', 'DELIVERY', 2370842997),
+        30000, 10000, 3, '강남역에서 떡볶이 먹을 사람 모집합니다.', 'DELIVERY', 2370842997, true, '강남역 1번 출구'),
        (2, '2023-07-03-16-00', '2022-07-03-16-00', '치킨 쉐어 설명', 37.3951627, 127.1117136, '판교역',
-        28000, 7000, 4, '판교역에서 치킨 먹을 사람 모집합니다.', 'DELIVERY', 2355841047),
+        28000, 7000, 4, '판교역에서 치킨 먹을 사람 모집합니다.', 'DELIVERY', 2355841047, false, '판교역 2번 출구'),
        (3, '2023-07-03-16-00', '2022-07-03-16-00', '양파 쉐어 설명', 37.5132612, 127.1001336, '잠실역', 9000,
-        3000, 3, '잠실역에서 양파 구매할사람 모집합니다.', 'INGREDIENT', 2398606895),
+        3000, 3, '잠실역에서 양파 구매할사람 모집합니다.', 'INGREDIENT', 2398606895, true, '잠실역 3번 출구'),
        (4, '2023-06-03-16-00', '2022-07-03-16-00', '햄버거 쉐어 설명', 37.5132612, 127.1001336, '잠실역',
-        24000, 8000, 3, '잠실역에서 햄버거 먹을 사람 모집합니다.', 'DELIVERY', 2355841033);
+        24000, 8000, 3, '잠실역에서 햄버거 먹을 사람 모집합니다.', 'DELIVERY', 2355841033, false, '잠실역 3번 출구');
 
 INSERT INTO share_image
     (id, share_id, image_url)
@@ -62,10 +62,10 @@ VALUES
     (3, 2355841047, 2);
 
 INSERT INTO chat_room
-    (id, share_id)
+    (id, share_id, type)
 VALUES
-    (1, 1),
-    (2, 2);
+    (1, 1, 'ENTRY'),
+    (2, 2, 'ENTRY');
 
 INSERT INTO chat_room_member
     (id, chat_room_id, member_id)
