@@ -62,10 +62,10 @@ VALUES
     (3, 2355841047, 2);
 
 INSERT INTO chat_room
-    (id, share_id)
+    (id, share_id, type)
 VALUES
-    (1, 1),
-    (2, 2);
+    (1, 1, 'ENTRY'),
+    (2, 2, 'ENTRY');
 
 INSERT INTO chat_room_member
     (id, chat_room_id, member_id)

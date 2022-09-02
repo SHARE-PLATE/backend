@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,7 @@ import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.type.ChatRoomType;
 
 @Entity
 @Getter
@@ -33,6 +36,9 @@ public class ChatRoom {
     @JoinColumn
     @OneToOne(fetch = FetchType.LAZY)
     private Share share;
+
+    @Enumerated(EnumType.STRING)
+    private ChatRoomType type;
 
     public ChatRoom(Member member, Share share) {
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, this);
