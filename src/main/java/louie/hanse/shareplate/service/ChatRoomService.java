@@ -11,6 +11,7 @@ import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.repository.ChatLogRepository;
 import louie.hanse.shareplate.repository.ChatRepository;
 import louie.hanse.shareplate.repository.ChatRoomRepository;
+import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomDetailResponse;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomListResponse;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,8 @@ public class ChatRoomService {
         return new ChatRoomDetailResponse(chatRoom, member);
     }
 
-    public List<ChatRoomListResponse> getList(Long memberId) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberId(memberId);
+    public List<ChatRoomListResponse> getList(Long memberId, ChatRoomType type) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberId(memberId, type);
         List<ChatRoomListResponse> chatRoomList = new ArrayList<>();
         for (ChatRoom chatRoom : chatRooms) {
             int unreadCount = chatRepository.getUnread(memberId, chatRoom.getId());

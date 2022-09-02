@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,14 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.ChatRoom;
 import louie.hanse.shareplate.domain.Entry;
+import louie.hanse.shareplate.domain.Hashtag;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.EntryRepository;
+import louie.hanse.shareplate.repository.HashtagRepository;
 import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.MineType;
@@ -55,6 +58,7 @@ public class ShareService {
 
     private final MemberService memberService;
     private final ShareRepository shareRepository;
+    private final HashtagRepository hashtagRepository;
     private final WishRepository wishRepository;
     private final EntryRepository entryRepository;
     private final AmazonS3 amazonS3Client;
@@ -68,10 +72,18 @@ public class ShareService {
             String uploadedImageUrl = uploadImage(image);
             share.addShareImage(uploadedImageUrl);
         }
+
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (String contents : request.getHashtags()) {
+            Hashtag hashtag = new Hashtag(share, contents);
+            hashtags.add(hashtag);
+        }
+
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
         new ChatRoom(member, share);
         shareRepository.save(share);
+        hashtagRepository.saveAll(hashtags);
         return share.getId();
     }
 
@@ -134,15 +146,22 @@ public class ShareService {
     }
 
     @Transactional
-    public void edit(ShareEditRequest shareEditRequest, Long id, Long memberId) throws IOException {
+    public void edit(ShareEditRequest request, Long id, Long memberId) throws IOException {
         isNotWriterThrowException(id, memberId);
         Member writer = memberService.findByIdOrElseThrow(memberId);
-        Share share = shareEditRequest.toEntity(id, writer);
-        for (MultipartFile image : shareEditRequest.getImages()) {
+        Share share = request.toEntity(id, writer);
+        for (MultipartFile image : request.getImages()) {
             String uploadImageUrl = uploadImage(image);
             share.addShareImage(uploadImageUrl);
         }
+
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (String contents : request.getHashtags()) {
+            Hashtag hashtag = new Hashtag(share, contents);
+            hashtags.add(hashtag);
+        }
         shareRepository.save(share);
+        hashtagRepository.saveAll(hashtags);
     }
 
     @Transactional

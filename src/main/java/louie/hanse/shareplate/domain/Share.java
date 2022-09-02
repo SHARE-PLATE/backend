@@ -31,16 +31,19 @@ public class Share {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
-    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<ShareImage> shareImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Entry> entries = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Wish> wishList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "share", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Hashtag> hashtags = new ArrayList<>();
+
+    @OneToOne(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private ChatRoom chatRoom;
 
     @Enumerated(EnumType.STRING)
@@ -61,7 +64,7 @@ public class Share {
 
     public Share(Long id, Member writer, ShareType type, String title, int price, int originalPrice,
         int recruitment, String location, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime) {
+        LocalDateTime appointmentDateTime, String locationGuide, boolean negotiation) {
         this.id = id;
         this.writer = writer;
         this.type = type;
@@ -74,11 +77,13 @@ public class Share {
         this.longitude = longitude;
         this.description = description;
         this.appointmentDateTime = appointmentDateTime;
+        this.locationGuide = locationGuide;
+        this.negotiation = negotiation;
     }
 
     public Share(Member writer, ShareType type, String title, int price, int originalPrice,
         int recruitment, String location, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime) {
+        LocalDateTime appointmentDateTime, String locationGuide, boolean negotiation) {
         this.writer = writer;
         this.type = type;
         this.title = title;
@@ -90,6 +95,8 @@ public class Share {
         this.longitude = longitude;
         this.description = description;
         this.appointmentDateTime = appointmentDateTime;
+        this.locationGuide = locationGuide;
+        this.negotiation = negotiation;
     }
 
     public void addShareImage(String shareImageUrl) {

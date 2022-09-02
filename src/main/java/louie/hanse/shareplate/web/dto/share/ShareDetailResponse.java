@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import louie.hanse.shareplate.domain.Entry;
+import louie.hanse.shareplate.domain.Hashtag;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.domain.ShareImage;
@@ -17,6 +18,9 @@ public class ShareDetailResponse {
     private String writer;
     private String writerThumbnailImageUrl;
     private String title;
+    private List<String> hashtags;
+    private boolean negotiation;
+    private String locationGuide;
     private String location;
     private double latitude;
     private double longitude;
@@ -57,5 +61,10 @@ public class ShareDetailResponse {
         this.wish = wish;
         this.entry = entry;
         this.wishCount = share.getWishCount();
+        this.negotiation = share.isNegotiation();
+        this.hashtags = share.getHashtags().stream()
+            .map(Hashtag::getContents)
+            .collect(Collectors.toList());
+        this.locationGuide = share.getLocationGuide();
     }
 }

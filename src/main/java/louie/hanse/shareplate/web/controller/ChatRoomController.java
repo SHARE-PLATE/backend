@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ChatRoomService;
+import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomDetailResponse;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomListResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,9 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chatrooms")
-    public List<ChatRoomListResponse> chatRoomList(HttpServletRequest request) {
+    public List<ChatRoomListResponse> chatRoomList(HttpServletRequest request, ChatRoomType type) {
         Long memberId = (Long) request.getAttribute("memberId");
-        return chatRoomService.getList(memberId);
+        return chatRoomService.getList(memberId, type);
     }
 
 }

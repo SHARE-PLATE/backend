@@ -3,6 +3,7 @@ package louie.hanse.shareplate.config;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.converter.StringToChatRoomTypeConverter;
 import louie.hanse.shareplate.converter.StringToMineTypeConverter;
 import louie.hanse.shareplate.converter.StringToShareTypeConverter;
 import louie.hanse.shareplate.interceptor.LoginVerificationInterceptor;
@@ -67,6 +68,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addConverter(new StringToShareTypeConverter());
         registry.addConverter(new StringToMineTypeConverter());
+        registry.addConverter(new StringToChatRoomTypeConverter());
     }
 
     @Override
