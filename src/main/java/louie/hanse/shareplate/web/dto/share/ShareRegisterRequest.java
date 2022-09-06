@@ -19,7 +19,8 @@ public class ShareRegisterRequest {
     private int recruitment;
     private String location;
     private String locationGuide;
-    private boolean negotiation;
+    private boolean locationNegotiation;
+    private boolean priceNegotiation;
     private List<String> hashtags;
     private double latitude;
     private double longitude;
@@ -28,7 +29,8 @@ public class ShareRegisterRequest {
 
     public Share toEntity(Member member) {
         return new Share(member, type, title, price, originalPrice, recruitment, location, latitude,
-            longitude, description, appointmentDateTime, locationGuide, negotiation);
+            longitude, description, appointmentDateTime, locationGuide, locationNegotiation,
+            priceNegotiation);
     }
 
     public List<MultipartFile> getImages() {

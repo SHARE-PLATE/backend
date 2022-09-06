@@ -19,7 +19,8 @@ public class ShareDetailResponse {
     private String writerThumbnailImageUrl;
     private String title;
     private List<String> hashtags;
-    private boolean negotiation;
+    private boolean locationNegotiation;
+    private boolean priceNegotiation;
     private String locationGuide;
     private String location;
     private double latitude;
@@ -61,7 +62,8 @@ public class ShareDetailResponse {
         this.wish = wish;
         this.entry = entry;
         this.wishCount = share.getWishCount();
-        this.negotiation = share.isNegotiation();
+        this.locationNegotiation = share.isLocationNegotiation();
+        this.priceNegotiation = share.isPriceNegotiation();
         this.hashtags = share.getHashtags().stream()
             .map(Hashtag::getContents)
             .collect(Collectors.toList());
