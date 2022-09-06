@@ -53,7 +53,8 @@ public class Share {
     private int price;
     private int originalPrice;
     private int recruitment;
-    private boolean negotiation;
+    private boolean locationNegotiation;
+    private boolean priceNegotiation;
     private String locationGuide;
     private String location;
     private double latitude;
@@ -64,7 +65,8 @@ public class Share {
 
     public Share(Long id, Member writer, ShareType type, String title, int price, int originalPrice,
         int recruitment, String location, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime, String locationGuide, boolean negotiation) {
+        LocalDateTime appointmentDateTime, String locationGuide, boolean locationNegotiation,
+        boolean priceNegotiation) {
         this.id = id;
         this.writer = writer;
         this.type = type;
@@ -78,12 +80,14 @@ public class Share {
         this.description = description;
         this.appointmentDateTime = appointmentDateTime;
         this.locationGuide = locationGuide;
-        this.negotiation = negotiation;
+        this.locationNegotiation = locationNegotiation;
+        this.priceNegotiation = priceNegotiation;
     }
 
     public Share(Member writer, ShareType type, String title, int price, int originalPrice,
         int recruitment, String location, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime, String locationGuide, boolean negotiation) {
+        LocalDateTime appointmentDateTime, String locationGuide, boolean locationNegotiation,
+        boolean priceNegotiation) {
         this.writer = writer;
         this.type = type;
         this.title = title;
@@ -96,7 +100,8 @@ public class Share {
         this.description = description;
         this.appointmentDateTime = appointmentDateTime;
         this.locationGuide = locationGuide;
-        this.negotiation = negotiation;
+        this.locationNegotiation = locationNegotiation;
+        this.priceNegotiation = priceNegotiation;
     }
 
     public void addShareImage(String shareImageUrl) {

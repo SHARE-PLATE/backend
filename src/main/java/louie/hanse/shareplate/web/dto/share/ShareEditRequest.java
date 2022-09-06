@@ -18,7 +18,8 @@ public class ShareEditRequest {
     private int originalPrice;
     private int recruitment;
     private String locationGuide;
-    private boolean negotiation;
+    private boolean locationNegotiation;
+    private boolean priceNegotiation;
     private String location;
     private double latitude;
     private double longitude;
@@ -28,7 +29,8 @@ public class ShareEditRequest {
 
     public Share toEntity(Long id, Member member) {
         return new Share(id, member, type, title, price, originalPrice, recruitment, location,
-            latitude, longitude, description, appointmentDateTime, locationGuide, negotiation);
+            latitude, longitude, description, appointmentDateTime, locationGuide, locationNegotiation,
+            priceNegotiation);
     }
 
     public List<MultipartFile> getImages() {
