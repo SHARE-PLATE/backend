@@ -18,7 +18,7 @@ VALUES (2370842997, 'dhdustnr0134@naver.com', '정현석',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM1NTg0MTAzMyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjo5OTk5OTk5OTk5OSwiaWF0IjoxNjYxMTMxMTgxLCJtZW1iZXJJZCI6MjM1NTg0MTAzM30.NmdUynRyknjHpQJ0zbvoCNzVjjF4JNSB7Uhnql8cZF0');
 
 INSERT INTO share
-(id, appointment_date_time, created_date_time, description, latitude, longitude, location,
+(id, closed_date_time, created_date_time, description, latitude, longitude, location,
  original_price, price, recruitment, title, type, writer_id, location_negotiation,
  price_negotiation, location_guide)
 VALUES (1, '2023-08-03-16-00', '2022-08-03-16-00', '떡볶이 쉐어 설명', 36.6576769, 128.3007637, '강남역',

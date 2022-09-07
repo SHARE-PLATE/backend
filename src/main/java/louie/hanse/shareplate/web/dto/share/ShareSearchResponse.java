@@ -19,7 +19,7 @@ public class ShareSearchResponse {
     private int finalRecruitment;
     private long writerId;
     private LocalDateTime createdDateTime;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime closedDateTime;
 
     public ShareSearchResponse(Share share) {
         this.id = share.getId();
@@ -34,6 +34,6 @@ public class ShareSearchResponse {
         this.finalRecruitment = share.getRecruitment();
         this.writerId = share.getWriter().getId();
         this.createdDateTime = share.getCreatedDateTime();
-        this.appointmentDateTime = share.getAppointmentDateTime();
+        this.closedDateTime = share.getClosedDateTime();
     }
 }

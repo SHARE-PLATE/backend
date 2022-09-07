@@ -59,7 +59,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .formParam("location", "강남역")
             .formParam("latitude", 37.498095)
             .formParam("longitude", 127.027610)
-            .formParam("appointmentDateTime", "2022-12-30 14:00")
+            .formParam("closedDateTime", "2022-12-30 14:00")
             .formParam("description", "설명")
 
             .when()
@@ -97,7 +97,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].writerId", equalTo(2370842997L))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
@@ -145,7 +145,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
@@ -178,7 +178,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
@@ -211,7 +211,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(4))
             .body("[0].createdDateTime", equalTo("2022-07-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-07-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-07-03 16:00"));
     }
 
     @Test
@@ -246,7 +246,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("recruitmentMemberThumbnailImageUrls[0]", containsString("http://"))
             .body("recruitmentMemberThumbnailImageUrls[1]", containsString("http://"))
             .body("createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("appointmentDateTime", equalTo("2023-08-03 16:00"))
+            .body("closedDateTime", equalTo("2023-08-03 16:00"))
             .body("wish", equalTo(false))
             .body("entry", equalTo(false))
             .body("wishCount", equalTo(1))
@@ -280,7 +280,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .formParam("location", "역삼역")
             .formParam("latitude", 37.500326)
             .formParam("longitude", 127.036087)
-            .formParam("appointmentDateTime", "2022-12-31 14:00")
+            .formParam("closedDateTime", "2022-12-31 14:00")
             .formParam("description", "수정된 설명")
 
             .when()
@@ -343,6 +343,6 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("shares[0].location", equalTo("강남역"))
             .body("shares[0].price", equalTo(10000))
             .body("shares[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("shares[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("shares[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 }

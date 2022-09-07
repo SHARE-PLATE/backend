@@ -25,11 +25,11 @@ public class ShareRegisterRequest {
     private double latitude;
     private double longitude;
     private String description;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime closedDateTime;
 
     public Share toEntity(Member member) {
         return new Share(member, type, title, price, originalPrice, recruitment, location, latitude,
-            longitude, description, appointmentDateTime, locationGuide, locationNegotiation,
+            longitude, description, closedDateTime, locationGuide, locationNegotiation,
             priceNegotiation);
     }
 

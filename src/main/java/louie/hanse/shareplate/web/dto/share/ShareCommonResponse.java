@@ -15,7 +15,7 @@ public class ShareCommonResponse {
     private String location;
     private int price;
     private LocalDateTime createdDateTime;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime closedDateTime;
 
     @QueryProjection
     public ShareCommonResponse(Share share) {
@@ -25,6 +25,6 @@ public class ShareCommonResponse {
         this.location = share.getLocation();
         this.price = share.getPrice();
         this.createdDateTime = share.getCreatedDateTime();
-        this.appointmentDateTime = share.getAppointmentDateTime();
+        this.closedDateTime = share.getClosedDateTime();
     }
 }

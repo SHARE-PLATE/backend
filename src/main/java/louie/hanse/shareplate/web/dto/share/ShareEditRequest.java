@@ -25,11 +25,11 @@ public class ShareEditRequest {
     private double longitude;
     private String description;
     private List<String> hashtags;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime closedDateTime;
 
     public Share toEntity(Long id, Member member) {
         return new Share(id, member, type, title, price, originalPrice, recruitment, location,
-            latitude, longitude, description, appointmentDateTime, locationGuide, locationNegotiation,
+            latitude, longitude, description, closedDateTime, locationGuide, locationNegotiation,
             priceNegotiation);
     }
 

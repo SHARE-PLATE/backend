@@ -101,9 +101,9 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
 
     private BooleanExpression isExpired(boolean expired, LocalDateTime currentDateTime) {
         if (expired) {
-            return share.appointmentDateTime.lt(currentDateTime);
+            return share.closedDateTime.lt(currentDateTime);
         }
-        return share.appointmentDateTime.gt(currentDateTime);
+        return share.closedDateTime.gt(currentDateTime);
     }
 
     private BooleanExpression titleContains(String keyword) {

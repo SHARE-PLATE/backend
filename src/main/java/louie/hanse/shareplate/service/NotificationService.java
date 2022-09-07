@@ -118,7 +118,7 @@ public class NotificationService {
     private void createDeadlineNotificationSchedule(Long shareId) {
         Share share = shareService.findByIdOrElseThrow(shareId);
 
-        Instant instant = share.getAppointmentDateTime().minusMinutes(30)
+        Instant instant = share.getClosedDateTime().minusMinutes(30)
             .toInstant(seoulZoneOffset);
 
         taskScheduler.schedule(() -> {

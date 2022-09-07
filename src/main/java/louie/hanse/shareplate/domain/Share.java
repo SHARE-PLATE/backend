@@ -60,12 +60,12 @@ public class Share {
     private double latitude;
     private double longitude;
     private String description;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime closedDateTime;
     private LocalDateTime createdDateTime = LocalDateTime.now();
 
     public Share(Long id, Member writer, ShareType type, String title, int price, int originalPrice,
         int recruitment, String location, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime, String locationGuide, boolean locationNegotiation,
+        LocalDateTime closedDateTime, String locationGuide, boolean locationNegotiation,
         boolean priceNegotiation) {
         this.id = id;
         this.writer = writer;
@@ -78,7 +78,7 @@ public class Share {
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
-        this.appointmentDateTime = appointmentDateTime;
+        this.closedDateTime = closedDateTime;
         this.locationGuide = locationGuide;
         this.locationNegotiation = locationNegotiation;
         this.priceNegotiation = priceNegotiation;
@@ -86,7 +86,7 @@ public class Share {
 
     public Share(Member writer, ShareType type, String title, int price, int originalPrice,
         int recruitment, String location, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime, String locationGuide, boolean locationNegotiation,
+        LocalDateTime closedDateTime, String locationGuide, boolean locationNegotiation,
         boolean priceNegotiation) {
         this.writer = writer;
         this.type = type;
@@ -98,7 +98,7 @@ public class Share {
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
-        this.appointmentDateTime = appointmentDateTime;
+        this.closedDateTime = closedDateTime;
         this.locationGuide = locationGuide;
         this.locationNegotiation = locationNegotiation;
         this.priceNegotiation = priceNegotiation;
@@ -114,7 +114,7 @@ public class Share {
     }
 
     public boolean isNotEnd() {
-        if (appointmentDateTime.compareTo(LocalDateTime.now()) > 0) {
+        if (closedDateTime.compareTo(LocalDateTime.now()) > 0) {
             return true;
         }
         return false;
