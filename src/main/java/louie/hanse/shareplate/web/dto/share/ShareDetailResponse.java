@@ -32,7 +32,7 @@ public class ShareDetailResponse {
     private int finalRecruitment;
     private List<String> recruitmentMemberThumbnailImageUrls;
     private LocalDateTime createdDateTime;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime closedDateTime;
     private boolean wish;
     private boolean entry;
     private int wishCount;
@@ -58,7 +58,7 @@ public class ShareDetailResponse {
             .map(Member::getThumbnailImageUrl)
             .collect(Collectors.toList());
         this.createdDateTime = share.getCreatedDateTime();
-        this.appointmentDateTime = share.getAppointmentDateTime();
+        this.closedDateTime = share.getClosedDateTime();
         this.wish = wish;
         this.entry = entry;
         this.wishCount = share.getWishCount();

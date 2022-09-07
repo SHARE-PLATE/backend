@@ -1,4 +1,4 @@
-package louie.hanse.shareplate.integration;
+package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.MULTIPART;
@@ -6,53 +6,26 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpHeaders.CONNECTION;
-import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
-import static org.springframework.http.HttpHeaders.DATE;
-import static org.springframework.http.HttpHeaders.HOST;
-import static org.springframework.http.HttpHeaders.TRANSFER_ENCODING;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.removeHeaders;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
-import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import louie.hanse.shareplate.config.S3MockConfig;
 import louie.hanse.shareplate.domain.Member;
+import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.service.ShareService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
 
 @Import(S3MockConfig.class)
 @DisplayName("쉐어 기능 통합 테스트")
-@DisplayNameGeneration(ReplaceUnderscores.class)
-@ExtendWith({RestDocumentationExtension.class})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ShareIntegrationTest {
-
-    @LocalServerPort
-    int port;
-
-    RequestSpecification documentationSpec;
+class ShareIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     ShareService shareService;
@@ -62,24 +35,6 @@ class ShareIntegrationTest {
 
     @Autowired
     MemberRepository memberRepository;
-
-    @BeforeEach
-    void setup(RestDocumentationContextProvider restDocumentation) {
-        RestAssured.port = port;
-        documentationSpec = new RequestSpecBuilder()
-            .addFilter(
-                documentationConfiguration(restDocumentation)
-                    .operationPreprocessors()
-                    .withRequestDefaults(
-                        prettyPrint(),
-                        removeHeaders(HOST, CONTENT_LENGTH))
-                    .withResponseDefaults(
-                        prettyPrint(),
-                        removeHeaders(CONTENT_LENGTH, CONNECTION, DATE, TRANSFER_ENCODING, "Keep-Alive",
-                            HttpHeaders.VARY))
-            )
-            .build();
-    }
 
     @Test
     void 음식_공유를_하기_위해_쉐어를_등록한다() {
@@ -104,7 +59,7 @@ class ShareIntegrationTest {
             .formParam("location", "강남역")
             .formParam("latitude", 37.498095)
             .formParam("longitude", 127.027610)
-            .formParam("appointmentDateTime", "2022-12-30 14:00")
+            .formParam("closedDateTime", "2022-12-30 14:00")
             .formParam("description", "설명")
 
             .when()
@@ -142,7 +97,7 @@ class ShareIntegrationTest {
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].writerId", equalTo(2370842997L))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
@@ -190,7 +145,7 @@ class ShareIntegrationTest {
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
@@ -223,7 +178,7 @@ class ShareIntegrationTest {
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(3))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 
     @Test
@@ -256,7 +211,7 @@ class ShareIntegrationTest {
             .body("[0].currentRecruitment", equalTo(3))
             .body("[0].finalRecruitment", equalTo(4))
             .body("[0].createdDateTime", equalTo("2022-07-03 16:00"))
-            .body("[0].appointmentDateTime", equalTo("2023-07-03 16:00"));
+            .body("[0].closedDateTime", equalTo("2023-07-03 16:00"));
     }
 
     @Test
@@ -291,7 +246,7 @@ class ShareIntegrationTest {
             .body("recruitmentMemberThumbnailImageUrls[0]", containsString("http://"))
             .body("recruitmentMemberThumbnailImageUrls[1]", containsString("http://"))
             .body("createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("appointmentDateTime", equalTo("2023-08-03 16:00"))
+            .body("closedDateTime", equalTo("2023-08-03 16:00"))
             .body("wish", equalTo(false))
             .body("entry", equalTo(false))
             .body("wishCount", equalTo(1))
@@ -325,7 +280,7 @@ class ShareIntegrationTest {
             .formParam("location", "역삼역")
             .formParam("latitude", 37.500326)
             .formParam("longitude", 127.036087)
-            .formParam("appointmentDateTime", "2022-12-31 14:00")
+            .formParam("closedDateTime", "2022-12-31 14:00")
             .formParam("description", "수정된 설명")
 
             .when()
@@ -388,6 +343,6 @@ class ShareIntegrationTest {
             .body("shares[0].location", equalTo("강남역"))
             .body("shares[0].price", equalTo(10000))
             .body("shares[0].createdDateTime", equalTo("2022-08-03 16:00"))
-            .body("shares[0].appointmentDateTime", equalTo("2023-08-03 16:00"));
+            .body("shares[0].closedDateTime", equalTo("2023-08-03 16:00"));
     }
 }
