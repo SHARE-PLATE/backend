@@ -6,7 +6,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import org.springframework.http.HttpStatus;
 
 public enum ShareExceptionType implements ExceptionType {
-    EMPTY_SHARE_INFO("SHARE001", "요청한 필드값이 비어있습니다.", BAD_REQUEST),
+    EMPTY_SHARE_INFO("SHARE001", "요청한 쉐어정보 값이 비어있습니다.", BAD_REQUEST),
     IMAGE_LIMIT_EXCEEDED("SHARE002", "이미지 5개를 초과하였습니다.", BAD_REQUEST),
     NOT_SUPPORT_IMAGE_TYPE("SHARE003", "이미지 형식의 파일이 아닙니다.", BAD_REQUEST),
     SHARE_INFO_IS_NEGATIVE("SHARE004", "요청값은 양수여야 합니다.", BAD_REQUEST),
