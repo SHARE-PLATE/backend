@@ -6,7 +6,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
-import java.util.Collections;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("채팅방 기능 통합 테스트")
-public class ChatRoomIntegrationTest extends InitIntegrationTest {
+class ChatRoomIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
@@ -74,21 +73,21 @@ public class ChatRoomIntegrationTest extends InitIntegrationTest {
             .body("chats[0].writtenByMe", equalTo(true));
     }
 
-    @Test
-    void 회원이_문의용_일대일_채팅방을_생성한다() {
-        String accessToken = jwtProvider.createAccessToken(2370842997L);
-
-        given(documentationSpec)
-            .contentType(ContentType.JSON)
-            .filter(document("chatRoom-for-inquire-in-question"))
-            .header(AUTHORIZATION, accessToken)
-            .body(Collections.singletonMap("shareId", 2))
-
-            .when()
-            .post("/chatrooms")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
-    }
+//    @Test
+//    void 회원이_문의용_일대일_채팅방을_생성한다() {
+//        String accessToken = jwtProvider.createAccessToken(2398606895L);
+//
+//        given(documentationSpec)
+//            .contentType(ContentType.JSON)
+//            .filter(document("chatRoom-for-inquire-in-question"))
+//            .header(AUTHORIZATION, accessToken)
+//            .body(Collections.singletonMap("shareId", 2))
+//
+//            .when()
+//            .post("/chatrooms")
+//
+//            .then()
+//            .statusCode(HttpStatus.OK.value());
+//    }
 
 }

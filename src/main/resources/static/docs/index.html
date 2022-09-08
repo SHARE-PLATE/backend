@@ -555,6 +555,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_19">Response</a></li>
 </ul>
 </li>
+<li><a href="#_회원_로그아웃">회원 로그아웃</a>
+<ul class="sectlevel2">
+<li><a href="#_request_20">Request</a></li>
+<li><a href="#_response_20">Response</a></li>
+</ul>
+</li>
+<li><a href="#_회원의_로그인_여부_확인">회원의 로그인 여부 확인</a>
+<ul class="sectlevel2">
+<li><a href="#_request_21">Request</a></li>
+<li><a href="#_response_21">Response</a></li>
+</ul>
+</li>
+<li><a href="#_회원의_채팅방_목록_조회">회원의 채팅방 목록 조회</a>
+<ul class="sectlevel2">
+<li><a href="#_request_22">Request</a></li>
+<li><a href="#_response_22">Response</a></li>
+</ul>
+</li>
+<li><a href="#_회원의_채팅방_상세_메세지_조회">회원의 채팅방 상세 메세지 조회</a>
+<ul class="sectlevel2">
+<li><a href="#_request_23">Request</a></li>
+<li><a href="#_response_23">Response</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -567,8 +591,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTQsImlhdCI6MTY2MTkyMTM5NCwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.0hHtwkVrpkaffEWj-3Dgbxb0QuJ6Ofj2vEsomnuwwyk
-Content-Type: multipart/form-data; boundary="44Ug_4GFusMawor6ayElN0hG9Y2GXIG410Bcl"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjMsImlhdCI6MTY2MjYxOTAyMywibWVtYmVySWQiOjIzNTU4NDEwMzN9.6MloJXrsfqee9DVywMC2JYF6nrvkgqmNRkERtebfPk8
+Content-Type: multipart/form-data; boundary="GTbK-XyfUdVkZ4hPfEhoSzvArsl1hv4l"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=test.txt
@@ -606,6 +630,31 @@ Content-Type: text/plain
 
 3
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=locationNegotiation; filename=file
+Content-Type: text/plain
+
+true
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=priceNegotiation; filename=file
+Content-Type: text/plain
+
+true
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=hashtags; filename=file
+Content-Type: text/plain
+
+해시태그1
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=hashtags; filename=file
+Content-Type: text/plain
+
+해시태그2
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=locationGuide; filename=file
+Content-Type: text/plain
+
+강남역 파출소 앞
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=location; filename=file
 Content-Type: text/plain
 
@@ -621,7 +670,7 @@ Content-Type: text/plain
 
 127.02761
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=appointmentDateTime; filename=file
+Content-Disposition: form-data; name=closedDateTime; filename=file
 Content-Type: text/plain
 
 2022-12-30 14:00
@@ -676,7 +725,7 @@ Content-Type: application/json
   "finalRecruitment" : 3,
   "writerId" : 2370842997,
   "createdDateTime" : "2022-08-03 16:00",
-  "appointmentDateTime" : "2023-08-03 16:00"
+  "closedDateTime" : "2023-08-03 16:00"
 } ]</code></pre>
 </div>
 </div>
@@ -718,7 +767,7 @@ Accept: application/json</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=entry&amp;shareType=delivery&amp;isExpired=false HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTQsImlhdCI6MTY2MTkyMTM5NCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.4VHW-pJoB3ecbalUGlQ3AO1PpzrUW-um58-Y9L0IhLo</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjQsImlhdCI6MTY2MjYxOTAyNCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Q1EPwNqvQrrIUpVbBAL7uNgaTxETXl9JmKAWqSjjD2Y</code></pre>
 </div>
 </div>
 </div>
@@ -742,7 +791,7 @@ Content-Type: application/json
   "finalRecruitment" : 3,
   "writerId" : 2370842997,
   "createdDateTime" : "2022-08-03 16:00",
-  "appointmentDateTime" : "2023-08-03 16:00"
+  "closedDateTime" : "2023-08-03 16:00"
 } ]</code></pre>
 </div>
 </div>
@@ -757,7 +806,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=writer&amp;shareType=delivery&amp;isExpired=false HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTQsImlhdCI6MTY2MTkyMTM5NCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.y8bi5M_LUjXe00FxDewpUZB8h3cbcFkBzRj27cs80nw</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjQsImlhdCI6MTY2MjYxOTAyNCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.Vd2G2d_PbLsBa38QPDlwz0m-13e8VvhN1pdAjKqnNso</code></pre>
 </div>
 </div>
 </div>
@@ -781,7 +830,7 @@ Content-Type: application/json
   "finalRecruitment" : 3,
   "writerId" : 2370842997,
   "createdDateTime" : "2022-08-03 16:00",
-  "appointmentDateTime" : "2023-08-03 16:00"
+  "closedDateTime" : "2023-08-03 16:00"
 } ]</code></pre>
 </div>
 </div>
@@ -796,7 +845,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=wish&amp;shareType=delivery&amp;isExpired=false HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTQsImlhdCI6MTY2MTkyMTM5NCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.y8bi5M_LUjXe00FxDewpUZB8h3cbcFkBzRj27cs80nw</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjQsImlhdCI6MTY2MjYxOTAyNCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.Vd2G2d_PbLsBa38QPDlwz0m-13e8VvhN1pdAjKqnNso</code></pre>
 </div>
 </div>
 </div>
@@ -820,7 +869,7 @@ Content-Type: application/json
   "finalRecruitment" : 4,
   "writerId" : 2355841047,
   "createdDateTime" : "2022-07-03 16:00",
-  "appointmentDateTime" : "2023-07-03 16:00"
+  "closedDateTime" : "2023-07-03 16:00"
 } ]</code></pre>
 </div>
 </div>
@@ -852,6 +901,10 @@ Content-Type: application/json
   "writer" : "정현석",
   "writerThumbnailImageUrl" : "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg",
   "title" : "강남역에서 떡볶이 먹을 사람 모집합니다.",
+  "hashtags" : [ "해시태그 내용 1", "해시태그 내용 2" ],
+  "locationNegotiation" : true,
+  "priceNegotiation" : false,
+  "locationGuide" : "강남역 1번 출구",
   "location" : "강남역",
   "latitude" : 36.6576769,
   "longitude" : 128.3007637,
@@ -860,9 +913,9 @@ Content-Type: application/json
   "originalPrice" : 30000,
   "currentRecruitment" : 3,
   "finalRecruitment" : 3,
-  "recruitmentMemberThumbnailImageUrls" : [ "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg", "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg", "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg" ],
+  "recruitmentMemberThumbnailImageUrls" : [ "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg", "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg", "http://k.kakaocdn.net/dn/wl7Uo/btroITQ7nLc/uATndUk4PMZ0HfcOe5NWi1/img_110x110.jpg" ],
   "createdDateTime" : "2022-08-03 16:00",
-  "appointmentDateTime" : "2023-08-03 16:00",
+  "closedDateTime" : "2023-08-03 16:00",
   "wish" : false,
   "entry" : false,
   "wishCount" : 1
@@ -880,8 +933,8 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /shares/3 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDIyIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTEsImlhdCI6MTY2MTkyMTM5MSwibWVtYmVySWQiOjIzNTU4NDEwMjJ9.rDbDKZeqjoe7ThCe-5lGZ4r0bLvUbKzKyA2U39O4Cg0
-Content-Type: multipart/form-data; boundary="ekm4rLID5C3DwKsTUsEBw2EVErlOoCTI1OD3MrIU"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzk4NjA2ODk1IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjEsImlhdCI6MTY2MjYxOTAyMSwibWVtYmVySWQiOjIzOTg2MDY4OTV9.W2ixFSGXvrPb9x5-PVapY8nEPzoPppVcAMfPKhvAwxA
+Content-Type: multipart/form-data; boundary="pgJNlD0iMUuTIVy6mpiNmgqGfeWWUzn6"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=수정된 test1.txt
@@ -919,6 +972,31 @@ Content-Type: text/plain
 
 2
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=locationNegotiation; filename=file
+Content-Type: text/plain
+
+true
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=priceNegotiation; filename=file
+Content-Type: text/plain
+
+false
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=hashtags; filename=file
+Content-Type: text/plain
+
+해시태그1
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=hashtags; filename=file
+Content-Type: text/plain
+
+해시태그2
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=locationGuide; filename=file
+Content-Type: text/plain
+
+강남역 파출소 앞
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=location; filename=file
 Content-Type: text/plain
 
@@ -934,7 +1012,7 @@ Content-Type: text/plain
 
 127.036087
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=appointmentDateTime; filename=file
+Content-Disposition: form-data; name=closedDateTime; filename=file
 Content-Type: text/plain
 
 2022-12-31 14:00
@@ -965,7 +1043,7 @@ Content-Type: text/plain
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/4 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTMsImlhdCI6MTY2MTkyMTM5MywibWVtYmVySWQiOjIzNzA4NDI5OTd9.3XR4Iql_AFpt5qhO4J4V0Sz2cUcYg8EKoZcV9Mg9yqU</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjMsImlhdCI6MTY2MjYxOTAyMywibWVtYmVySWQiOjIzNzA4NDI5OTd9.-oKqFG08ckshJ8NB103Sn_zzzfTF1ep7ovUEcKhVPSc</code></pre>
 </div>
 </div>
 </div>
@@ -997,7 +1075,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/4 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTQsImlhdCI6MTY2MTkyMTM5NCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.pmb3j0Ifq5mBlQfUiw2TWCNFrXBUioRYyAZYmCyoR0A</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjQsImlhdCI6MTY2MjYxOTAyNCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.1cd4QVzEleGMBLnzu55jfODzfxrWtRz8zobfYg37r64</code></pre>
 </div>
 </div>
 </div>
@@ -1019,7 +1097,7 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4i
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODMsImlhdCI6MTY2MTkyMTM4MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.k1qyioQtRrBgYvnOo-SyhUMjXQtS640K5EY4X8ZI6Z0
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.djgGRhrEjrWFGXvNeACyilE3uu85HvmN11O5EqvatKw
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1049,7 +1127,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODMsImlhdCI6MTY2MTkyMTM4MywibWVtYmVySWQiOjIzNTU4NDEwMzN9.vIHX5zCq24kldtXY_MnlpZEyChIKVWm-4eBgHQ5xKEo
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNTU4NDEwMzN9.QjnlmTb_kLQ9sH-fpHxD5mc7ujlXI3wyGYZeT0sD4dU
 Content-Type: application/json
 
 {
@@ -1077,8 +1155,8 @@ Content-Type: application/json
 <h3 id="_request_13"><a class="link" href="#_request_13">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/2/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODIsImlhdCI6MTY2MTkyMTM4MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.aYbfY0jXV8Vr_asKJgaXDykBq_awoBM2InWOzJTWSK4
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/4/entry HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzk4NjA2ODk1IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTEsImlhdCI6MTY2MjYxOTAxMSwibWVtYmVySWQiOjIzOTg2MDY4OTV9.1HwXUif999_byHeaPayXZOJQbgTHsjjCJ8MTm1LvYNA
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1101,7 +1179,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/1/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODIsImlhdCI6MTY2MTkyMTM4MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.aYbfY0jXV8Vr_asKJgaXDykBq_awoBM2InWOzJTWSK4
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTEsImlhdCI6MTY2MjYxOTAxMSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.ecSs7fs3_xIN4kBIOszRvp7q7Kp2JmiEHISzBoU3oQw
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1124,7 +1202,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5OTUsImlhdCI6MTY2MTkyMTM5NSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.EFgvcdw-rXunqyRa4cJUWpUe8LlS2ST-MqrWHQ_heG0
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MjUsImlhdCI6MTY2MjYxOTAyNSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.a7bJ7SP_xy1dKFQ1iWWRdIAfFOqsVkk_Tmb25hsLBbY
 Content-Type: application/json
 
 {
@@ -1151,7 +1229,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notifications/activity HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODQsImlhdCI6MTY2MTkyMTM4NCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.JkE1EkJlOBO0ZTTe_4JgL20cDW90ZzyBDHaa7X8syFQ
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.djgGRhrEjrWFGXvNeACyilE3uu85HvmN11O5EqvatKw
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1184,7 +1262,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notifications/keyword HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODQsImlhdCI6MTY2MTkyMTM4NCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.oolWksxUIQlql06qq3ZLlmins7XSgIaJuFc6Muv5Qec
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.kBlbAJgwkGXvUEyoLC8-SayhZYeHebihdjwAAJDKeA0
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1216,7 +1294,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /notifications/3 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODMsImlhdCI6MTY2MTkyMTM4MywibWVtYmVySWQiOjIzNTU4NDEwMzN9.vIHX5zCq24kldtXY_MnlpZEyChIKVWm-4eBgHQ5xKEo
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNTU4NDEwMzN9.QjnlmTb_kLQ9sH-fpHxD5mc7ujlXI3wyGYZeT0sD4dU
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1239,7 +1317,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /notifications HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjE5MjQ5ODQsImlhdCI6MTY2MTkyMTM4NCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.JkE1EkJlOBO0ZTTe_4JgL20cDW90ZzyBDHaa7X8syFQ
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.djgGRhrEjrWFGXvNeACyilE3uu85HvmN11O5EqvatKw
 Content-Type: application/json
 
 {
@@ -1258,11 +1336,164 @@ Content-Type: application/json
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_회원_로그아웃"><a class="link" href="#_회원_로그아웃">회원 로그아웃</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_20"><a class="link" href="#_request_20">Request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /logout HTTP/1.1
+Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNTU4NDEwMzN9.QjnlmTb_kLQ9sH-fpHxD5mc7ujlXI3wyGYZeT0sD4dU
+Refresh-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM1NTg0MTAzMyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjo5OTk5OTk5OTk5OSwiaWF0IjoxNjYxMTMxMTgxLCJtZW1iZXJJZCI6MjM1NTg0MTAzM30.NmdUynRyknjHpQJ0zbvoCNzVjjF4JNSB7Uhnql8cZF0
+Content-Type: application/json</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_20"><a class="link" href="#_response_20">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_회원의_로그인_여부_확인"><a class="link" href="#_회원의_로그인_여부_확인">회원의 로그인 여부 확인</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_21"><a class="link" href="#_request_21">Request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /login/verification HTTP/1.1
+Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTIsImlhdCI6MTY2MjYxOTAxMiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.kBlbAJgwkGXvUEyoLC8-SayhZYeHebihdjwAAJDKeA0
+Refresh-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM3MDg0Mjk5NyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjo5OTk5OTk5OTk5OSwiaWF0IjoxNjYxMTMxMTgxLCJtZW1iZXJJZCI6MjM3MDg0Mjk5N30.YocTTr79m94e3fkMK3HiGe5U96WtHT4pvognZpeIS8A
+Content-Type: application/json</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_21"><a class="link" href="#_response_21">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_회원의_채팅방_목록_조회"><a class="link" href="#_회원의_채팅방_목록_조회">회원의 채팅방 목록 조회</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_22"><a class="link" href="#_request_22">Request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /chatrooms?type=entry HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MDcsImlhdCI6MTY2MjYxOTAwNywibWVtYmVySWQiOjIzNzA4NDI5OTd9.tOYUiL7iCw3Ab3314DEtPoj__ddTh0v9009B04LJDRk
+Content-Type: application/json</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_22"><a class="link" href="#_response_22">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[ {
+  "id" : 1,
+  "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
+  "currentRecruitment" : 3,
+  "recentMessage" : "내용4",
+  "recentMessageDataTime" : "2022-10-03 16:00",
+  "recruitmentMemberNicknames" : [ "한승연", "전한용" ],
+  "recruitmentMemberImageUrls" : [ "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg", "http://k.kakaocdn.net/dn/wl7Uo/btroITQ7nLc/uATndUk4PMZ0HfcOe5NWi1/img_110x110.jpg" ],
+  "unreadCount" : 1
+}, {
+  "id" : 2,
+  "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/louie1se/%E1%84%8E%E1%85%B5%E1%84%8F%E1%85%B5%E1%86%AB1.jpeg",
+  "currentRecruitment" : 3,
+  "recentMessage" : "내용4",
+  "recentMessageDataTime" : "2022-10-03 16:00",
+  "recruitmentMemberNicknames" : [ "한승연", "전한용" ],
+  "recruitmentMemberImageUrls" : [ "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg", "http://k.kakaocdn.net/dn/wl7Uo/btroITQ7nLc/uATndUk4PMZ0HfcOe5NWi1/img_110x110.jpg" ],
+  "unreadCount" : 4
+} ]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_회원의_채팅방_상세_메세지_조회"><a class="link" href="#_회원의_채팅방_상세_메세지_조회">회원의 채팅방 상세 메세지 조회</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_23"><a class="link" href="#_request_23">Request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /chatrooms/1 HTTP/1.1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjI2MjI2MTAsImlhdCI6MTY2MjYxOTAxMCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.cQKqRby1ERNCX9tUyVHA0ZX9IbGNN3ZXAgsk3FURh50
+Content-Type: application/json</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_23"><a class="link" href="#_response_23">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "share" : {
+    "id" : 1,
+    "thumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
+    "title" : "강남역에서 떡볶이 먹을 사람 모집합니다.",
+    "price" : 10000,
+    "originalPrice" : 30000,
+    "currentRecruitment" : 3,
+    "finalRecruitment" : 3
+  },
+  "chats" : [ {
+    "contents" : "내용1",
+    "writer" : "정현석",
+    "writerThumbnailImageUrl" : "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg",
+    "writtenDateTime" : "2022-07-03 16:00",
+    "writtenByMe" : true
+  }, {
+    "contents" : "내용2",
+    "writer" : "한승연",
+    "writerThumbnailImageUrl" : "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
+    "writtenDateTime" : "2022-07-03 16:01",
+    "writtenByMe" : false
+  }, {
+    "contents" : "내용3",
+    "writer" : "정현석",
+    "writerThumbnailImageUrl" : "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg",
+    "writtenDateTime" : "2022-07-03 16:02",
+    "writtenByMe" : true
+  }, {
+    "contents" : "내용4",
+    "writer" : "한승연",
+    "writerThumbnailImageUrl" : "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
+    "writtenDateTime" : "2022-10-03 16:00",
+    "writtenByMe" : false
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-08-31 13:48:44 +0900
+Last updated 2022-09-08 15:36:08 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
