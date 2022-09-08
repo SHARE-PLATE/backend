@@ -20,13 +20,13 @@ public class EntryIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 특정_회원이_특정_쉐어에_참가_한다() {
-        String accessToken = jwtProvider.createAccessToken(2355841047L);
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
             .filter(document("entry-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 2)
+            .pathParam("id", 4)
 
             .when()
             .post("/shares/{id}/entry")

@@ -40,10 +40,15 @@ public class ChatRoom {
     @Enumerated(EnumType.STRING)
     private ChatRoomType type;
 
-    public ChatRoom(Member member, Share share) {
+    public ChatRoom(Member member, Share share, ChatRoomType type) {
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, this);
         chatRoomMembers.add(chatRoomMember);
         this.share = share;
         share.changeChatRoom(this);
+        this.type = type;
+    }
+
+    public void addChatRoomMember(Member member) {
+        chatRoomMembers.add(new ChatRoomMember(member, this));
     }
 }

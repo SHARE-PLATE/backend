@@ -8,6 +8,7 @@ import louie.hanse.shareplate.domain.Chat;
 import louie.hanse.shareplate.domain.ChatLog;
 import louie.hanse.shareplate.domain.ChatRoom;
 import louie.hanse.shareplate.domain.Member;
+import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.repository.ChatLogRepository;
 import louie.hanse.shareplate.repository.ChatRepository;
 import louie.hanse.shareplate.repository.ChatRoomRepository;
@@ -26,6 +27,7 @@ public class ChatRoomService {
     private final ChatLogRepository chatLogRepository;
     private final ChatRepository chatRepository;
     private final MemberService memberService;
+    private final ShareService shareService;
 
     @Transactional
     public ChatRoomDetailResponse getDetail(Long id, Long memberId) {
@@ -59,5 +61,14 @@ public class ChatRoomService {
 
     public ChatRoom findByIdOrElseThrow(Long id) {
         return chatRoomRepository.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public Long createQuestionChatRoom(Long memberId, Long shareId) {
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Share share = shareService.findByIdOrElseThrow(shareId);
+        ChatRoom chatRoom = new ChatRoom(member, share, ChatRoomType.QUESTION);
+        chatRoom.addChatRoomMember(share.getWriter());
+        return chatRoomRepository.save(chatRoom).getId();
     }
 }
