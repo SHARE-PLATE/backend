@@ -28,6 +28,7 @@ import louie.hanse.shareplate.repository.EntryRepository;
 import louie.hanse.shareplate.repository.HashtagRepository;
 import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.repository.WishRepository;
+import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.type.ShareType;
 import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
@@ -81,7 +82,7 @@ public class ShareService {
 
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
-        new ChatRoom(member, share);
+        new ChatRoom(member, share, ChatRoomType.ENTRY);
         shareRepository.save(share);
         hashtagRepository.saveAll(hashtags);
         return share.getId();

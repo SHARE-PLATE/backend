@@ -1,6 +1,8 @@
 package louie.hanse.shareplate.web.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ChatRoomService;
@@ -9,25 +11,38 @@ import louie.hanse.shareplate.web.dto.chatroom.ChatRoomDetailResponse;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomListResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/chatrooms")
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
-    @GetMapping("/chatrooms/{id}")
+    @GetMapping("/{id}")
     public ChatRoomDetailResponse chatRoomDetail(@PathVariable Long id,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return chatRoomService.getDetail(id, memberId);
     }
 
-    @GetMapping("/chatrooms")
+    @GetMapping
     public List<ChatRoomListResponse> chatRoomList(HttpServletRequest request, ChatRoomType type) {
         Long memberId = (Long) request.getAttribute("memberId");
         return chatRoomService.getList(memberId, type);
+    }
+
+    @PostMapping
+    public Map<String, Long> createQuestionChatRoom(@RequestBody Map<String, Long> map,
+        HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        Long shareId = map.get("shareId");
+        Long id = chatRoomService.createQuestionChatRoom(memberId, shareId);
+        return Collections.singletonMap("id", id);
     }
 
 }
