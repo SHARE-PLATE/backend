@@ -180,3 +180,27 @@ include::{snippets}/login-verification/http-request.adoc[]
 
 === Response
 include::{snippets}/login-verification/http-response.adoc[]
+
+== 회원의 채팅방 목록 조회
+
+=== Request
+include::{snippets}/chatRoom-list-of-member/http-request.adoc[]
+
+=== Response
+include::{snippets}/chatRoom-list-of-member/http-response.adoc[]
+
+== 회원의 채팅방 상세 메세지 조회
+
+=== Request
+include::{snippets}/chatRoom-detail-of-member/http-request.adoc[]
+
+=== Response
+include::{snippets}/chatRoom-detail-of-member/http-response.adoc[]
+
+== 회원이 문의를 위 일대일 채팅방 생성
+
+=== Request
+include::{snippets}/chatRoom-for-inquire-in-question/http-request.adoc[]
+
+=== Response
+include::{snippets}/chatRoom-for-inquire-in-question/http-response.adoc[]
