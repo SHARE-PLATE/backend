@@ -57,8 +57,8 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .formParam("hashtags", List.of("해시태그1", "해시태그2"))
             .formParam("locationGuide", "강남역 파출소 앞")
             .formParam("location", "강남역")
-            .formParam("latitude", 37.498095)
-            .formParam("longitude", 127.027610)
+            .formParam("latitude", 37.524159)
+            .formParam("longitude", 126.872879)
             .formParam("closedDateTime", "2022-12-30 14:00")
             .formParam("description", "설명")
 

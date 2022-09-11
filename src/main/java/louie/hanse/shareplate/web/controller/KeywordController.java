@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.KeywordService;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterRequest;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterResponse;
-import louie.hanse.shareplate.web.dto.keyword.KeywordResponse;
+import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ public class KeywordController {
     private final KeywordService keywordService;
 
     @GetMapping
-    public List<KeywordResponse> getKeywords(HttpServletRequest request) {
+    public List<KeywordListResponse> getKeywords(HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return keywordService.getKeywords(memberId);
     }
