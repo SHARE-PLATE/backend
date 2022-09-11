@@ -182,10 +182,10 @@ public class ShareService {
     }
 
     public List<ShareCommonResponse> recommendationAroundMember(ShareRecommendationRequest request) {
-        List<ShareCommonResponse> shareCommonRespons = shareRepository
+        List<ShareCommonResponse> shareCommonResponses = shareRepository
             .recommendationAroundMember(request);
-        Collections.shuffle(shareCommonRespons);
-        return shareCommonRespons;
+        Collections.shuffle(shareCommonResponses);
+        return shareCommonResponses;
     }
 
     public ShareWriterResponse getWriteByMember(Long writerId) {
