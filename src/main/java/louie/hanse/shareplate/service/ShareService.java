@@ -147,9 +147,12 @@ public class ShareService {
 
     @Transactional
     public void edit(ShareEditRequest request, Long id, Long memberId) throws IOException {
-        isNotWriterThrowException(id, memberId);
         Member writer = memberService.findByIdOrElseThrow(memberId);
-        Share share = request.toEntity(id, writer);
+        Share share = findWithMemberByIdOrElseThrow(id);
+
+        share.isNotWriterThrowException(writer);
+
+        share = request.toEntity(id, writer);
         for (MultipartFile image : request.getImages()) {
             String uploadImageUrl = uploadImage(image);
             share.addShareImage(uploadImageUrl);
@@ -166,8 +169,10 @@ public class ShareService {
 
     @Transactional
     public void delete(Long id, Long memberId) {
-        isNotWriterThrowException(id, memberId);
-        Share share = findByIdOrElseThrow(id);
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Share share = findWithMemberByIdOrElseThrow(id);
+
+        share.isNotWriterThrowException(member);
         shareRepository.delete(share);
     }
 
@@ -188,6 +193,11 @@ public class ShareService {
         return new ShareWriterResponse(writer);
     }
 
+    private Share findWithMemberByIdOrElseThrow(Long id) {
+        return shareRepository.findWithMemberById(id)
+            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
+    }
+
     private String uploadImage(MultipartFile image) throws IOException {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(image.getContentType());
@@ -205,15 +215,5 @@ public class ShareService {
         }
 
         return amazonS3Client.getUrl(bucket, key).toString();
-    }
-
-    private void isNotWriterThrowException(Long id, Long memberId) {
-        if (isNotWriter(id, memberId)) {
-            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
-        }
-    }
-
-    private boolean isNotWriter(Long id, Long memberId) {
-        return !shareRepository.existsByIdAndWriterId(id, memberId);
     }
 }

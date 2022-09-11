@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.type.ShareType;
 
 @Getter
@@ -120,11 +122,22 @@ public class Share {
         return false;
     }
 
+    public void isNotWriterThrowException(Member member) {
+        if (isNotWriter(member)) {
+            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
+        }
+    }
+
+
     public int getCurrentRecruitment() {
         return entries.size();
     }
 
     public int getWishCount() {
         return wishList.size();
+    }
+
+    private boolean isNotWriter(Member member) {
+        return !writer.equals(member);
     }
 }
