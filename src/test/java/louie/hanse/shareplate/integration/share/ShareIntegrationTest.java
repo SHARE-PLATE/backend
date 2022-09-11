@@ -11,7 +11,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import java.util.List;
 import louie.hanse.shareplate.config.S3MockConfig;
-import louie.hanse.shareplate.domain.Member;
+import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.MemberRepository;
@@ -35,39 +35,6 @@ class ShareIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     MemberRepository memberRepository;
-
-    @Test
-    void 음식_공유를_하기_위해_쉐어를_등록한다() {
-        Member member = memberRepository.findAll().get(0);
-        String accessToken = jwtProvider.createAccessToken(member.getId());
-
-        given(documentationSpec)
-            .filter(document("share-register-post"))
-            .header(AUTHORIZATION, accessToken)
-            .contentType(MULTIPART)
-            .multiPart("images", "test.txt", "abc".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart("images", "test.txt", "def".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .formParam("type", "delivery")
-            .formParam("title", "제목")
-            .formParam("price", 10000)
-            .formParam("originalPrice", 30000)
-            .formParam("recruitment", 3)
-            .formParam("locationNegotiation", true)
-            .formParam("priceNegotiation", true)
-            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
-            .formParam("locationGuide", "강남역 파출소 앞")
-            .formParam("location", "강남역")
-            .formParam("latitude", 37.498095)
-            .formParam("longitude", 127.027610)
-            .formParam("closedDateTime", "2022-12-30 14:00")
-            .formParam("description", "설명")
-
-            .when()
-            .post("/shares")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
-    }
 
     @Test
     void 검색한_키워드가_포함된_회원_주변의_쉐어를_조회한다() {
@@ -291,6 +258,74 @@ class ShareIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 존재하지_않은_쉐어를_편집하려는_경우_예외를_반환한다() {
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
+
+        given(documentationSpec)
+            .filter(document("share-edit-put"))
+            .contentType(MULTIPART)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 1000000000)
+            .multiPart("images", "수정된 test1.txt", "abcde".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .multiPart("images", "수정된 test2.txt", "fhgij".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .formParam("type", "ingredient")
+            .formParam("title", "수정된 제목")
+            .formParam("price", 13000)
+            .formParam("originalPrice", 26000)
+            .formParam("recruitment", 2)
+            .formParam("negotiation", true)
+            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
+            .formParam("locationGuide", "강남역 파출소 앞")
+            .formParam("location", "역삼역")
+            .formParam("latitude", 37.500326)
+            .formParam("longitude", 127.036087)
+            .formParam("appointmentDateTime", "2022-12-31 14:00")
+            .formParam("description", "수정된 설명")
+
+            .when()
+            .put("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 쉐어를_작성하지_않은_사람이_쉐어를_편집하면_예외를_반환한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        given(documentationSpec)
+            .filter(document("share-edit-put"))
+            .contentType(MULTIPART)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 3)
+            .multiPart("images", "수정된 test1.txt", "abcde".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .multiPart("images", "수정된 test2.txt", "fhgij".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .formParam("type", "ingredient")
+            .formParam("title", "수정된 제목")
+            .formParam("price", 13000)
+            .formParam("originalPrice", 26000)
+            .formParam("recruitment", 2)
+            .formParam("negotiation", true)
+            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
+            .formParam("locationGuide", "강남역 파출소 앞")
+            .formParam("location", "역삼역")
+            .formParam("latitude", 37.500326)
+            .formParam("longitude", 127.036087)
+            .formParam("appointmentDateTime", "2022-12-31 14:00")
+            .formParam("description", "수정된 설명")
+
+            .when()
+            .put("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.FORBIDDEN.value())
+            .body("errorCode", equalTo(ShareExceptionType.IS_NOT_WRITER.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.IS_NOT_WRITER.getMessage()));
+    }
+
+    @Test
     void 본인이_등록한_쉐어를_삭제한다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
@@ -304,6 +339,40 @@ class ShareIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 존재하지_않은_쉐어를_삭제하려는_경우_예외를_반환한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("share-not-writer-delete"))
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 1000000000)
+
+            .when()
+            .delete("/shares/{id}")
+
+            .then()
+            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 작성하지_않은_쉐어를_삭제하려는_경우_예외를_반환한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("share-not-writer-delete"))
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 1)
+
+            .when()
+            .delete("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
     @Test
