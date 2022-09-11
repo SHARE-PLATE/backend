@@ -101,13 +101,15 @@ public class ShareService {
         boolean expired = shareMineSearchRequest.isExpired();
         LocalDateTime currentDateTime = LocalDateTime.now();
 
+        Member member = memberService.findByIdOrElseThrow(memberId);
+
         Map<MineType, Supplier<List<Share>>> shareFindMapByMineType = Map.of(
             MineType.ENTRY, () -> shareRepository.findWithEntryByMemberIdAndTypeAndNotWriteByMeAndIsExpired(
-                memberId, type, expired, currentDateTime),
+                member, type, expired, currentDateTime),
             MineType.WRITER, () -> shareRepository.findByWriterIdAndTypeAndIsExpired(
-                memberId, type, expired, currentDateTime),
+                member, type, expired, currentDateTime),
             MineType.WISH, () -> shareRepository.findWithWishByMemberIdAndTypeAndIsExpired(
-                memberId, type, expired, currentDateTime)
+                member, type, expired, currentDateTime)
         );
 
         List<Share> shares = shareFindMapByMineType.get(shareMineSearchRequest.getMineType()).get();

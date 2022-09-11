@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.type.ShareType;
 import louie.hanse.shareplate.web.dto.share.QShareCommonResponse;
@@ -60,24 +61,24 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
 
     @Override
     public List<Share> findByWriterIdAndTypeAndIsExpired(
-        Long writerId, ShareType type, boolean expired, LocalDateTime currentDateTime) {
+        Member writer, ShareType type, boolean expired, LocalDateTime currentDateTime) {
         return queryFactory
             .selectFrom(share)
             .where(
                 share.type.eq(type),
-                share.writer.id.eq(writerId),
+                share.writer.eq(writer),
                 isExpired(expired, currentDateTime)
             ).fetch();
     }
 
     @Override
     public List<Share> findWithEntryByMemberIdAndTypeAndNotWriteByMeAndIsExpired(
-        Long memberId, ShareType type, boolean expired, LocalDateTime currentDateTime) {
+        Member member, ShareType type, boolean expired, LocalDateTime currentDateTime) {
         return queryFactory
             .selectFrom(share)
-            .join(share.entries, entry).on(entry.member.id.eq(memberId))
+            .join(share.entries, entry).on(entry.member.eq(member))
             .where(
-                share.writer.id.ne(memberId),
+                share.writer.ne(member),
                 share.type.eq(type),
                 isExpired(expired, currentDateTime)
             ).fetch();
@@ -85,10 +86,10 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
 
     @Override
     public List<Share> findWithWishByMemberIdAndTypeAndIsExpired(
-        Long memberId, ShareType type, boolean expired, LocalDateTime currentDateTime) {
+        Member member, ShareType type, boolean expired, LocalDateTime currentDateTime) {
         return queryFactory
             .selectFrom(share)
-            .join(share.wishList, wish).on(wish.member.id.eq(memberId))
+            .join(share.wishList, wish).on(wish.member.eq(member))
             .where(
                 share.type.eq(type),
                 isExpired(expired, currentDateTime)

@@ -2,6 +2,7 @@ package louie.hanse.shareplate.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.type.ShareType;
 import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
@@ -15,13 +16,13 @@ public interface CustomShareRepository {
     List<ShareCommonResponse> recommendationAroundMember(ShareRecommendationRequest request);
 
     List<Share> findByWriterIdAndTypeAndIsExpired(
-        Long writerId, ShareType type, boolean expired, LocalDateTime currentDateTime);
+        Member writer, ShareType type, boolean expired, LocalDateTime currentDateTime);
 
     List<Share> findWithEntryByMemberIdAndTypeAndNotWriteByMeAndIsExpired(
-        Long memberId, ShareType type, boolean expired, LocalDateTime currentDateTime);
+        Member member, ShareType type, boolean expired, LocalDateTime currentDateTime);
 
     List<Share> findWithWishByMemberIdAndTypeAndIsExpired(
-        Long memberId, ShareType type, boolean expired, LocalDateTime currentDateTime);
+        Member member, ShareType type, boolean expired, LocalDateTime currentDateTime);
 
 }
 
