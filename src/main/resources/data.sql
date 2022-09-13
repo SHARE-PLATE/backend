@@ -67,7 +67,8 @@ VALUES (1, 2355841047, 1),
 INSERT INTO chat_room
     (id, share_id, type)
 VALUES (1, 1, 'ENTRY'),
-       (2, 2, 'ENTRY');
+       (2, 2, 'ENTRY'),
+       (3, 2, 'QUESTION');
 
 INSERT INTO chat_room_member
     (id, chat_room_id, member_id)
@@ -76,7 +77,9 @@ VALUES (1, 1, 2370842997),
        (3, 1, 2398606895),
        (4, 2, 2370842997),
        (5, 2, 2355841047),
-       (6, 2, 2398606895);
+       (6, 2, 2398606895),
+       (7, 3, 2370842997),
+       (8, 3, 2355841047);
 
 INSERT INTO chat
     (id, contents, written_date_time, chat_room_id, writer_id)
