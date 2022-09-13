@@ -50,13 +50,13 @@ public class EntryService {
     public void cancel(Long shareId, Long memberId) {
         Share share = shareService.findByIdOrElseThrow(shareId);
         if (!isExistEntry(shareId, memberId)) {
-            throw new GlobalException(EntryExceptionType.SHARE_ALREADY_CANCELED);
+            throw new GlobalException(EntryExceptionType.SHARE_NOT_JOINED);
         }
         if (share.isEnd()) {
             throw new GlobalException(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL);
         }
         if (share.isLeftLessThanAnHour()) {
-            throw new GlobalException(EntryExceptionType.CLOSE_TO_THE_APPOINTMENT_TIME);
+            throw new GlobalException(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME);
         }
         entryRepository.existsByMemberIdAndShareId(memberId, shareId);
     }

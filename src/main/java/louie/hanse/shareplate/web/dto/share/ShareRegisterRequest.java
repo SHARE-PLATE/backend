@@ -43,9 +43,10 @@ public class ShareRegisterRequest {
 
     public ShareRegisterRequest(ShareType type,
         List<MultipartFile> images, String title, int price, int originalPrice, int recruitment,
-        String location, String locationGuide, boolean negotiation,
+        String location, String locationGuide, boolean locationNegotiation,
+        boolean priceNegotiation,
         List<String> hashtags, double latitude, double longitude, String description,
-        LocalDateTime appointmentDateTime) {
+        LocalDateTime closedDateTime) {
         this.type = type;
         this.images = images;
         this.title = title;
@@ -54,11 +55,12 @@ public class ShareRegisterRequest {
         this.recruitment = recruitment;
         this.location = location;
         this.locationGuide = locationGuide;
-        this.negotiation = negotiation;
+        this.locationNegotiation = locationNegotiation;
+        this.priceNegotiation = priceNegotiation;
         this.hashtags = hashtags;
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
-        this.appointmentDateTime = appointmentDateTime;
+        this.closedDateTime = closedDateTime;
     }
 }
