@@ -47,16 +47,20 @@ public class ChatRoomService {
 
     public List<ChatRoomListResponse> getList(Long memberId, ChatRoomType type) {
         List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberId(memberId, type);
-        List<ChatRoomListResponse> chatRoomList = new ArrayList<>();
+        List<ChatRoomListResponse> chatRoomListResponses = new ArrayList<>();
         for (ChatRoom chatRoom : chatRooms) {
             int unreadCount = chatRepository.getUnread(memberId, chatRoom.getId());
-            Chat chat = chatRepository
+            Optional<Chat> optionalChat = chatRepository
                 .findTopByChatRoomIdOrderByWrittenDateTimeDesc(chatRoom.getId());
-            ChatRoomListResponse chatRoomListResponse = new ChatRoomListResponse(chatRoom, chat,
-                unreadCount, memberId);
-            chatRoomList.add(chatRoomListResponse);
+
+            optionalChat.ifPresentOrElse(
+                chat -> chatRoomListResponses.add(
+                    new ChatRoomListResponse(chatRoom, chat, unreadCount, memberId)),
+                () -> chatRoomListResponses.add(
+                    new ChatRoomListResponse(chatRoom, unreadCount, memberId))
+            );
         }
-        return chatRoomList;
+        return chatRoomListResponses;
     }
 
     public ChatRoom findByIdOrElseThrow(Long id) {
