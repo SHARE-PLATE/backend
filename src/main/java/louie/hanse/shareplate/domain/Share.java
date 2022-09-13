@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.type.ShareType;
 
 @Getter
@@ -113,8 +115,16 @@ public class Share {
         this.chatRoom = chatRoom;
     }
 
-    public boolean isNotEnd() {
-        if (closedDateTime.compareTo(LocalDateTime.now()) > 0) {
+    public boolean isEnd() {
+        if (closedDateTime.compareTo(LocalDateTime.now()) < 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLeftLessThanAnHour() {
+        LocalDateTime leftAnHour = closedDateTime.minusHours(1);
+        if (leftAnHour.compareTo(LocalDateTime.now()) < 0) {
             return true;
         }
         return false;
@@ -126,5 +136,11 @@ public class Share {
 
     public int getWishCount() {
         return wishList.size();
+    }
+
+    public void recruitmentQuotaExceeded() {
+        if (getCurrentRecruitment() >= getRecruitment()) {
+            throw new GlobalException(EntryExceptionType.SHARE_OVERCAPACITY);
+        }
     }
 }
