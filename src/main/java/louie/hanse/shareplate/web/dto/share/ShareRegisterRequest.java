@@ -40,4 +40,27 @@ public class ShareRegisterRequest {
     public List<String> getHashtags() {
         return hashtags;
     }
+
+    public ShareRegisterRequest(ShareType type,
+        List<MultipartFile> images, String title, int price, int originalPrice, int recruitment,
+        String location, String locationGuide, boolean locationNegotiation,
+        boolean priceNegotiation,
+        List<String> hashtags, double latitude, double longitude, String description,
+        LocalDateTime closedDateTime) {
+        this.type = type;
+        this.images = images;
+        this.title = title;
+        this.price = price;
+        this.originalPrice = originalPrice;
+        this.recruitment = recruitment;
+        this.location = location;
+        this.locationGuide = locationGuide;
+        this.locationNegotiation = locationNegotiation;
+        this.priceNegotiation = priceNegotiation;
+        this.hashtags = hashtags;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
+        this.closedDateTime = closedDateTime;
+    }
 }

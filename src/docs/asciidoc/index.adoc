@@ -112,18 +112,75 @@ include::{snippets}/member-changed-user-information/http-response.adoc[]
 == 쉐어 참가
 
 === Request
-include::{snippets}/entry-share/http-request.adoc[]
+include::{snippets}/entry-request-share/http-request.adoc[]
 
 === Response
-include::{snippets}/entry-share/http-response.adoc[]
+include::{snippets}/entry-request-share/http-response.adoc[]
 
-== 쉐어 참가
+== 유효하지 않은 쉐어 참가
 
 === Request
-include::{snippets}/entry-cancel/http-request.adoc[]
+include::{snippets}/entry-request-invalid-share/http-request.adoc[]
 
 === Response
-include::{snippets}/entry-cancel/http-response.adoc[]
+include::{snippets}/entry-request-invalid-share/http-response.adoc[]
+
+== 이미 참가한 쉐어에 참가
+
+=== Request
+include::{snippets}/entry-re-request-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-re-request-share/http-response.adoc[]
+
+== 모집정원이 초과된 쉐어에 참가
+
+=== Request
+include::{snippets}/entry-request-exceeded-recruitment/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-exceeded-recruitment/http-response.adoc[]
+
+== 마감시간이 지난 쉐어에 참가
+
+=== Request
+include::{snippets}/entry-request-closed-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-closed-share/http-response.adoc[]
+
+== 유효하지 않은 쉐어에 참가 취소
+
+=== Request
+include::{snippets}/entry-request-invalid-cancel-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-invalid-cancel-share/http-response.adoc[]
+
+== 참가 취소한 쉐어에 참가 취소
+
+=== Request
+include::{snippets}/entry-re-request-cancel-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-re-request-cancel-share/http-response.adoc[]
+
+== 한시간 미만 남은 쉐어에 참가 취소
+
+=== Request
+include::{snippets}/entry-request-left-than-an-hour/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-left-than-an-hour/http-response.adoc[]
+
+== 마감시간이 지난 쉐어에 참가 취소
+
+=== Request
+include::{snippets}/entry-request-cancel-closed-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-cancel-closed-share/http-response.adoc[]
+
 
 == 위시 등록
 

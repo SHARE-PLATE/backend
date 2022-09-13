@@ -7,6 +7,8 @@ import louie.hanse.shareplate.domain.ChatRoomMember;
 import louie.hanse.shareplate.domain.Entry;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.repository.ChatRoomMemberRepository;
 import louie.hanse.shareplate.repository.EntryRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,14 @@ public class EntryService {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
 
+        if (share.isEnd()) {
+            throw new GlobalException(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN);
+        }
+        if (isExistEntry(shareId, memberId)) {
+            throw new GlobalException(EntryExceptionType.SHARE_ALREADY_JOINED);
+        }
+        share.recruitmentQuotaExceeded();
+
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
         ChatRoom chatRoom = share.getChatRoom();
@@ -38,6 +48,20 @@ public class EntryService {
 
     @Transactional
     public void cancel(Long shareId, Long memberId) {
-        entryRepository.deleteByMemberIdAndShareId(memberId, shareId);
+        Share share = shareService.findByIdOrElseThrow(shareId);
+        if (!isExistEntry(shareId, memberId)) {
+            throw new GlobalException(EntryExceptionType.SHARE_NOT_JOINED);
+        }
+        if (share.isEnd()) {
+            throw new GlobalException(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL);
+        }
+        if (share.isLeftLessThanAnHour()) {
+            throw new GlobalException(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME);
+        }
+        entryRepository.existsByMemberIdAndShareId(memberId, shareId);
+    }
+
+    private boolean isExistEntry(Long shareId, Long memberId) {
+        return entryRepository.existsByMemberIdAndShareId(memberId, shareId);
     }
 }
