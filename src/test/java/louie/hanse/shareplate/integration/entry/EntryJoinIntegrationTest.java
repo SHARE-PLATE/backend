@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 
 @DisplayName("쉐어 참여 기능 통합테스트")
-public class EntryCreateIntegrationTest extends InitIntegrationTest {
+public class EntryJoinIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;

@@ -24,7 +24,7 @@ public class ChatRoomMemberService {
 
         chatRoomMemberRepository.deleteByChatRoomIdAndMemberId(chatRoomId, memberId);
 
-        if (share.isEnd()) {
+        if (share.isNotEnd()) {
             entryRepository.deleteByMemberIdAndShareId(memberId, share.getId());
         }
     }

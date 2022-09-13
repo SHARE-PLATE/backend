@@ -115,11 +115,15 @@ public class Share {
         this.chatRoom = chatRoom;
     }
 
-    public boolean isEnd() {
-        if (closedDateTime.compareTo(LocalDateTime.now()) < 0) {
+    public boolean isNotEnd() {
+        if (closedDateTime.compareTo(LocalDateTime.now()) > 0) {
             return true;
         }
         return false;
+    }
+
+    public boolean isEnd() {
+        return !isNotEnd();
     }
 
     public boolean isLeftLessThanAnHour() {

@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 
 @DisplayName("쉐어 참여 취소 기능 통합테스트")
-public class EntryDeleteIntegrationTest extends InitIntegrationTest {
+public class EntryCancelIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
@@ -41,7 +41,7 @@ public class EntryDeleteIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 1)
+            .pathParam("id", 3)
 
             .when()
             .delete("/shares/{id}/entry")
