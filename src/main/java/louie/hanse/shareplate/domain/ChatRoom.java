@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,21 +34,26 @@ public class ChatRoom {
     private List<Chat> chats = new ArrayList<>();
 
     @JoinColumn
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Share share;
 
     @Enumerated(EnumType.STRING)
     private ChatRoomType type;
 
     public ChatRoom(Member member, Share share, ChatRoomType type) {
+        this.share = share;
+        this.type = type;
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, this);
         chatRoomMembers.add(chatRoomMember);
-        this.share = share;
-        share.changeChatRoom(this);
-        this.type = type;
+        share.addChatRoom(this);
     }
 
     public void addChatRoomMember(Member member) {
         chatRoomMembers.add(new ChatRoomMember(member, this));
+        share.addChatRoom(this);
+    }
+
+    public boolean isEntry() {
+        return type.isEntry();
     }
 }
