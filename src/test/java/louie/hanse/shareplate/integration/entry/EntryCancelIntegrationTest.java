@@ -35,13 +35,13 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 회원이_쉐어_참가_취소_요청한다() {
-        String accessToken = jwtProvider.createAccessToken(2355841047L);
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
             .filter(document("entry-request-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
+            .pathParam("id", 2)
 
             .when()
             .delete("/shares/{id}/entry")

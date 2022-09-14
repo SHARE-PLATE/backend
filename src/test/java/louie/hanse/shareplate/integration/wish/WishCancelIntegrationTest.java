@@ -1,0 +1,87 @@
+package louie.hanse.shareplate.integration.wish;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
+
+import io.restassured.http.ContentType;
+import louie.hanse.shareplate.exception.type.ShareExceptionType;
+import louie.hanse.shareplate.exception.type.WishExceptionType;
+import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.jwt.JwtProvider;
+import net.minidev.json.JSONObject;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+
+@DisplayName("위시 취소 기능 통합 테스트")
+public class WishCancelIntegrationTest extends InitIntegrationTest {
+
+    @Autowired
+    JwtProvider jwtProvider;
+
+    @Test
+    void 회원이_쉐어의_위시를_취소한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 3);
+
+        given(documentationSpec)
+            .filter(document("wish-request-cancel-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 회원이_이미_위시_취소한_쉐어에_위시_취소를_재요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 3);
+
+        given(documentationSpec)
+            .filter(document("wish-re-request-cancel-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .body("errorCode", equalTo(WishExceptionType.SHARE_NOT_WISH.getErrorCode()))
+            .body("message", equalTo(WishExceptionType.SHARE_NOT_WISH.getMessage()));
+    }
+
+    @Test
+    void 회원이_유효하지_않은_쉐어에_위시_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 222);
+
+        given(documentationSpec)
+                .filter(document("wish-request-cancel-invalid-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
+    }
+
+}
