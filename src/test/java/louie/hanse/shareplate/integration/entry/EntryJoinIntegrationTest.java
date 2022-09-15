@@ -63,7 +63,7 @@ public class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
     }
@@ -82,7 +82,7 @@ public class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.SHARE_ALREADY_JOINED.getStatusCode().value())
             .body("errorCode", equalTo(EntryExceptionType.SHARE_ALREADY_JOINED.getErrorCode()))
             .body("message", equalTo(EntryExceptionType.SHARE_ALREADY_JOINED.getMessage()));
     }
@@ -101,7 +101,7 @@ public class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.SHARE_OVERCAPACITY.getStatusCode().value())
             .body("errorCode", equalTo(EntryExceptionType.SHARE_OVERCAPACITY.getErrorCode()))
             .body("message", equalTo(EntryExceptionType.SHARE_OVERCAPACITY.getMessage()));
     }
@@ -124,7 +124,7 @@ public class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getStatusCode().value())
             .body("errorCode",
                 equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getErrorCode()))
             .body("message",

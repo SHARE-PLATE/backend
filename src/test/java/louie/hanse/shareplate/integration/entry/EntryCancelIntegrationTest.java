@@ -64,7 +64,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
     }
@@ -83,7 +83,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.SHARE_NOT_JOINED.getStatusCode().value())
             .body("errorCode", equalTo(EntryExceptionType.SHARE_NOT_JOINED.getErrorCode()))
             .body("message", equalTo(EntryExceptionType.SHARE_NOT_JOINED.getMessage()));
     }
@@ -106,7 +106,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME.getStatusCode().value())
             .body("errorCode",
                 equalTo(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME.getErrorCode()))
             .body("message",
@@ -131,7 +131,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getStatusCode().value())
             .body("errorCode",
                 equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getErrorCode()))
             .body("message",

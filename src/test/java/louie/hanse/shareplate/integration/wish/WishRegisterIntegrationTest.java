@@ -59,7 +59,7 @@ public class WishRegisterIntegrationTest extends InitIntegrationTest {
             .post("/wish-list")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(WishExceptionType.SHARE_ALREADY_WISH.getStatusCode().value())
             .body("errorCode", equalTo(WishExceptionType.SHARE_ALREADY_WISH.getErrorCode()))
             .body("message", equalTo(WishExceptionType.SHARE_ALREADY_WISH.getMessage()));
     }
@@ -81,6 +81,7 @@ public class WishRegisterIntegrationTest extends InitIntegrationTest {
             .post("/wish-list")
 
             .then()
+            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
     }
@@ -102,6 +103,7 @@ public class WishRegisterIntegrationTest extends InitIntegrationTest {
             .post("/wish-list")
 
             .then()
+            .statusCode(WishExceptionType.WRITER_CAN_NOT_WISH.getStatusCode().value())
             .body("errorCode",
                 equalTo(WishExceptionType.WRITER_CAN_NOT_WISH.getErrorCode()))
             .body("message", equalTo(WishExceptionType.WRITER_CAN_NOT_WISH.getMessage()));

@@ -59,6 +59,7 @@ public class WishCancelIntegrationTest extends InitIntegrationTest {
             .delete("/wish-list")
 
             .then()
+            .statusCode(WishExceptionType.SHARE_NOT_WISH.getStatusCode().value())
             .body("errorCode", equalTo(WishExceptionType.SHARE_NOT_WISH.getErrorCode()))
             .body("message", equalTo(WishExceptionType.SHARE_NOT_WISH.getMessage()));
     }
@@ -71,7 +72,7 @@ public class WishCancelIntegrationTest extends InitIntegrationTest {
         requestParam.put("shareId", 222);
 
         given(documentationSpec)
-                .filter(document("wish-request-cancel-invalid-share"))
+            .filter(document("wish-request-cancel-invalid-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestParam)
@@ -80,6 +81,7 @@ public class WishCancelIntegrationTest extends InitIntegrationTest {
             .delete("/wish-list")
 
             .then()
+            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
     }
