@@ -34,7 +34,7 @@ public class Share {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
-    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShareImage> shareImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -43,10 +43,10 @@ public class Share {
     @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Wish> wishList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hashtag> hashtags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<ChatRoom> chatRooms = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -110,6 +110,10 @@ public class Share {
     public void addShareImage(String shareImageUrl) {
         ShareImage shareImage = new ShareImage(this, shareImageUrl);
         shareImages.add(shareImage);
+    }
+
+    public void addHashtag(String contents) {
+        hashtags.add(new Hashtag(this, contents));
     }
 
     public void addChatRoom(ChatRoom chatRoom) {

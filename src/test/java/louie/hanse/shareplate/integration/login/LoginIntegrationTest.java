@@ -1,30 +1,15 @@
 package louie.hanse.shareplate.integration.login;
 
 import static io.restassured.RestAssured.given;
-import static org.springframework.http.HttpHeaders.CONNECTION;
-import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
-import static org.springframework.http.HttpHeaders.DATE;
-import static org.springframework.http.HttpHeaders.HOST;
-import static org.springframework.http.HttpHeaders.TRANSFER_ENCODING;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.removeHeaders;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
-import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 
 @DisplayName("로그인 기능 통합 테스트")
 class LoginIntegrationTest extends InitIntegrationTest {
