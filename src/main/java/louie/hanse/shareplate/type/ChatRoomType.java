@@ -7,4 +7,8 @@ public enum ChatRoomType {
         name = name.toUpperCase();
         return valueOf(name);
     }
+
+    public boolean isEntry() {
+        return this == ENTRY;
+    }
 }

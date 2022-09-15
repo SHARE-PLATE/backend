@@ -40,7 +40,7 @@ public class EntryService {
 
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
-        ChatRoom chatRoom = share.getChatRoom();
+        ChatRoom chatRoom = share.getEntryChatRoom();
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, chatRoom);
         chatRoomMemberRepository.save(chatRoomMember);
 

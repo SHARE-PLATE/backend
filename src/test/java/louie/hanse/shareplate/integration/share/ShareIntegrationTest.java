@@ -9,7 +9,9 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import java.util.List;
+import io.restassured.builder.MultiPartSpecBuilder;
+import io.restassured.specification.MultiPartSpecification;
+import java.nio.charset.StandardCharsets;
 import louie.hanse.shareplate.config.S3MockConfig;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
@@ -47,20 +49,21 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .contentType(MULTIPART)
             .multiPart("images", "test.txt", "abc".getBytes(), MediaType.TEXT_PLAIN_VALUE)
             .multiPart("images", "test.txt", "def".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .multiPart(createMultiPartSpecification("title", "제목"))
+            .multiPart(createMultiPartSpecification("hashtags", "해시태그1"))
+            .multiPart(createMultiPartSpecification("hashtags", "해시태그2"))
+            .multiPart(createMultiPartSpecification("locationGuide", "강남역 파출소 앞"))
+            .multiPart(createMultiPartSpecification("location", "강남역"))
+            .multiPart(createMultiPartSpecification("description", "설명"))
             .formParam("type", "delivery")
-            .formParam("title", "제목")
             .formParam("price", 10000)
             .formParam("originalPrice", 30000)
             .formParam("recruitment", 3)
             .formParam("locationNegotiation", true)
             .formParam("priceNegotiation", true)
-            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
-            .formParam("locationGuide", "강남역 파출소 앞")
-            .formParam("location", "강남역")
             .formParam("latitude", 37.524159)
             .formParam("longitude", 126.872879)
             .formParam("closedDateTime", "2022-12-30 14:00")
-            .formParam("description", "설명")
 
             .when()
             .post("/shares")
@@ -268,20 +271,21 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .pathParam("id", 3)
             .multiPart("images", "수정된 test1.txt", "abcde".getBytes(), MediaType.TEXT_PLAIN_VALUE)
             .multiPart("images", "수정된 test2.txt", "fhgij".getBytes(), MediaType.TEXT_PLAIN_VALUE)
+            .multiPart(createMultiPartSpecification("title", "수정된 제목"))
+            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그1"))
+            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그2"))
+            .multiPart(createMultiPartSpecification("locationGuide", "강남역 파출소 앞"))
+            .multiPart(createMultiPartSpecification("location", "역삼역"))
+            .multiPart(createMultiPartSpecification("description", "수정된 설명"))
             .formParam("type", "ingredient")
-            .formParam("title", "수정된 제목")
             .formParam("price", 13000)
             .formParam("originalPrice", 26000)
             .formParam("recruitment", 2)
             .formParam("locationNegotiation", true)
             .formParam("priceNegotiation", false)
-            .formParam("hashtags", List.of("해시태그1", "해시태그2"))
-            .formParam("locationGuide", "강남역 파출소 앞")
-            .formParam("location", "역삼역")
             .formParam("latitude", 37.500326)
             .formParam("longitude", 127.036087)
             .formParam("closedDateTime", "2022-12-31 14:00")
-            .formParam("description", "수정된 설명")
 
             .when()
             .put("/shares/{id}")
@@ -344,5 +348,12 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("shares[0].price", equalTo(10000))
             .body("shares[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("shares[0].closedDateTime", equalTo("2023-08-03 16:00"));
+    }
+
+    private static MultiPartSpecification createMultiPartSpecification(String name, Object value) {
+        return new MultiPartSpecBuilder(value)
+            .controlName(name)
+            .charset(StandardCharsets.UTF_8)
+            .build();
     }
 }

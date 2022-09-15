@@ -8,7 +8,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.ChatRoom;
 import louie.hanse.shareplate.domain.Entry;
-import louie.hanse.shareplate.domain.Hashtag;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.exception.GlobalException;
@@ -74,17 +72,14 @@ public class ShareService {
             share.addShareImage(uploadedImageUrl);
         }
 
-        List<Hashtag> hashtags = new ArrayList<>();
         for (String contents : request.getHashtags()) {
-            Hashtag hashtag = new Hashtag(share, contents);
-            hashtags.add(hashtag);
+            share.addHashtag(contents);
         }
 
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
         new ChatRoom(member, share, ChatRoomType.ENTRY);
         shareRepository.save(share);
-        hashtagRepository.saveAll(hashtags);
         return share.getId();
     }
 
@@ -156,13 +151,10 @@ public class ShareService {
             share.addShareImage(uploadImageUrl);
         }
 
-        List<Hashtag> hashtags = new ArrayList<>();
         for (String contents : request.getHashtags()) {
-            Hashtag hashtag = new Hashtag(share, contents);
-            hashtags.add(hashtag);
+            share.addHashtag(contents);
         }
         shareRepository.save(share);
-        hashtagRepository.saveAll(hashtags);
     }
 
     @Transactional

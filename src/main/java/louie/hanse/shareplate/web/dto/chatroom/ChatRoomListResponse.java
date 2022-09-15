@@ -36,4 +36,16 @@ public class ChatRoomListResponse {
         this.unreadCount = unreadCount;
     }
 
+    public ChatRoomListResponse(ChatRoom chatRoom, int unreadCount, Long memberId) {
+        this.id = chatRoom.getId();
+        this.shareThumbnailImageUrl = chatRoom.getShare().getShareImages().get(0).getImageUrl();
+        this.currentRecruitment = chatRoom.getShare().getCurrentRecruitment();
+        this.recruitmentMemberNicknames = chatRoom.getShare().getEntries().stream()
+            .map(Entry::getMember).filter(member -> !member.getId().equals(memberId))
+            .map(Member::getNickname).collect(Collectors.toList());
+        this.recruitmentMemberImageUrls = chatRoom.getShare().getEntries().stream()
+            .map(Entry::getMember).filter(member -> !member.getId().equals(memberId))
+            .map(Member::getThumbnailImageUrl).collect(Collectors.toList());
+        this.unreadCount = unreadCount;
+    }
 }

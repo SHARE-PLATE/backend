@@ -13,10 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.type.ShareType;
@@ -33,7 +34,7 @@ public class Share {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
-    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShareImage> shareImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -42,11 +43,11 @@ public class Share {
     @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Wish> wishList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hashtag> hashtags = new ArrayList<>();
 
-    @OneToOne(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    private ChatRoom chatRoom;
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private ShareType type;
@@ -111,8 +112,12 @@ public class Share {
         shareImages.add(shareImage);
     }
 
-    public void changeChatRoom(ChatRoom chatRoom) {
-        this.chatRoom = chatRoom;
+    public void addHashtag(String contents) {
+        hashtags.add(new Hashtag(this, contents));
+    }
+
+    public void addChatRoom(ChatRoom chatRoom) {
+        this.chatRooms.add(chatRoom);
     }
 
     public boolean isNotEnd() {
@@ -134,12 +139,32 @@ public class Share {
         return false;
     }
 
+    public void isNotWriterThrowException(Member member) {
+        if (isNotWriter(member)) {
+            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
+        }
+    }
+
+
     public int getCurrentRecruitment() {
         return entries.size();
     }
 
     public int getWishCount() {
         return wishList.size();
+    }
+
+    public ChatRoom getEntryChatRoom() {
+        for (ChatRoom chatRoom : chatRooms) {
+            if (chatRoom.isEntry()) {
+                return chatRoom;
+            }
+        }
+        throw new RuntimeException("참여 채팅방을 찾을 수 없습니다.");
+    }
+
+    private boolean isNotWriter(Member member) {
+        return !writer.equals(member);
     }
 
     public void recruitmentQuotaExceeded() {
