@@ -35,13 +35,13 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 회원이_쉐어_참가_취소_요청한다() {
-        String accessToken = jwtProvider.createAccessToken(2355841047L);
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
             .filter(document("entry-request-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
+            .pathParam("id", 2)
 
             .when()
             .delete("/shares/{id}/entry")
@@ -64,7 +64,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
     }
@@ -83,7 +83,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.SHARE_NOT_JOINED.getStatusCode().value())
             .body("errorCode", equalTo(EntryExceptionType.SHARE_NOT_JOINED.getErrorCode()))
             .body("message", equalTo(EntryExceptionType.SHARE_NOT_JOINED.getMessage()));
     }
@@ -106,7 +106,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME.getStatusCode().value())
             .body("errorCode",
                 equalTo(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME.getErrorCode()))
             .body("message",
@@ -131,7 +131,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getStatusCode().value())
             .body("errorCode",
                 equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getErrorCode()))
             .body("message",
