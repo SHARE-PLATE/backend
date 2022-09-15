@@ -185,10 +185,58 @@ include::{snippets}/entry-request-cancel-closed-share/http-response.adoc[]
 == 위시 등록
 
 === Request
-include::{snippets}/wish-list-share/http-request.adoc[]
+include::{snippets}/wish-request-share/http-request.adoc[]
 
 === Response
-include::{snippets}/wish-list-cancel-share/http-response.adoc[]
+include::{snippets}/wish-request-share/http-response.adoc[]
+
+== 위시 등록한 쉐어에 위시 재요청
+
+=== Request
+include::{snippets}/wish-re-request-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-re-request-share/http-response.adoc[]
+
+== 유요하지 않은 쉐어에 위시 요청
+
+=== Request
+include::{snippets}/wish-request-invalid-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-request-invalid-share/http-response.adoc[]
+
+== 자신이 쓴 쉐어에 위시 요청
+
+=== Request
+include::{snippets}/wish-request-by-writer/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-request-by-writer/http-response.adoc[]
+
+== 위시 취소
+
+=== Request
+include::{snippets}/wish-request-cancel-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-request-cancel-share/http-response.adoc[]
+
+== 위시 취소 재요청
+
+=== Request
+include::{snippets}/wish-re-request-cancel-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-re-request-cancel-share/http-response.adoc[]
+
+== 유요하지 않은 쉐어에 위시 취소 요청
+
+=== Request
+include::{snippets}/wish-request-cancel-invalid-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/wish-request-cancel-invalid-share/http-response.adoc[]
 
 == 활동 알림 조회
 
