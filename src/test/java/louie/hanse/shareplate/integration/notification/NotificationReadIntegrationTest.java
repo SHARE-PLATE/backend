@@ -6,9 +6,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.MemberRepository;
@@ -18,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("알림 기능 통합 테스트")
-public class NotificationIntegrationTest extends InitIntegrationTest {
+@DisplayName("알림 조회 기능 통합 테스트")
+class NotificationReadIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     ShareService shareService;
@@ -31,12 +29,12 @@ public class NotificationIntegrationTest extends InitIntegrationTest {
     MemberRepository memberRepository;
 
     @Test
-    void 특정_회원의_활동_알림_리스트를_조회한다() {
+    void 회원이_활동_알림_리스트_조회를_요청한다() {
 
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("notification-activity-list"))
+            .filter(document("notification-request-activity-list"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 
@@ -55,12 +53,31 @@ public class NotificationIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 특정_회원의_키워드_알림_리스트를_조회한다() {
+    void 유효하지_않은_회원이_활동_알림_리스트_조회를_요청한다() {
+
+        String accessToken = jwtProvider.createAccessToken(1L);
+
+        given(documentationSpec)
+            .filter(document("notification-request-activity-list-by-invalid-member"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+
+            .when()
+            .get("/notifications/activity")
+
+            .then()
+            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 회원이_키워드_알림_리스트_조회를_요청한다() {
 
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("notification-keyword-list"))
+            .filter(document("notification-request-keyword-list"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 
@@ -78,41 +95,22 @@ public class NotificationIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 특정_회원의_알림을_단건_삭제한다() {
+    void 유효하지_않은_회원이_키워드_알림_리스트_조회를_요청한다() {
 
-        String accessToken = jwtProvider.createAccessToken(2355841033L);
-
-        given(documentationSpec)
-            .filter(document("notification-delete-only-one"))
-            .contentType(ContentType.JSON)
-            .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
-
-            .when()
-            .delete("/notifications/{id}")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
-    }
-
-    @Test
-    void 특정_회원의_알림을_선택_삭제한다() {
-
-        String accessToken = jwtProvider.createAccessToken(2355841047L);
-
-        Map<String, List<Long>> requestBody = Map.of("idList",
-            new ArrayList<>(List.of(3L, 4L)));
+        String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
-            .filter(document("notification-delete-all"))
+            .filter(document("notification-request-keyword-list-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
 
             .when()
-            .delete("/notifications")
+            .get("/notifications/keyword")
 
             .then()
-            .statusCode(HttpStatus.OK.value());
+            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
     }
+
 }
