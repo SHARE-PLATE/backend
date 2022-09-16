@@ -14,7 +14,7 @@ public enum ShareExceptionType implements ExceptionType {
     OUT_OF_SCOPE_FOR_KOREA("SHARE006", "해당 위도, 경도는 대한민국의 범위를 벗어났습니다.", BAD_REQUEST),
     INCORRECT_TYPE_VALUE("SHARE008", "올바르지 않은 type입니다.", BAD_REQUEST),
     INCORRECT_MINE_VALUE("SHARE009", "올바르지 않은 mine값입니다.", BAD_REQUEST),
-    SHARE_ID_IS_NEGATIVE("SHARE010", "쉐어 id는 양수여야 합니다. 요청한 쉐어 id : {id}", BAD_REQUEST),
+    SHARE_ID_IS_NEGATIVE("SHARE010", "쉐어 id는 양수여야 합니다.", BAD_REQUEST),
     SHARE_NOT_FOUND("SHARE011", "존재하지 않는 쉐어입니다.", BAD_REQUEST),
     IS_NOT_WRITER("SHARE012", "쉐어를 작성한 사람만 쉐어를 편집할 수 있습니다.", FORBIDDEN);
 
