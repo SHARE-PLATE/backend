@@ -159,8 +159,9 @@ public class ShareService {
 
     @Transactional
     public void delete(Long id, Long memberId) {
-        isNotWriterThrowException(id, memberId);
-        Share share = findByIdOrElseThrow(id);
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Share share = findWithWriterByIdOrElseThrow(id);
+        share.isNotWriterThrowException(member);
         shareRepository.delete(share);
     }
 
@@ -170,15 +171,20 @@ public class ShareService {
     }
 
     public List<ShareCommonResponse> recommendationAroundMember(ShareRecommendationRequest request) {
-        List<ShareCommonResponse> shareCommonRespons = shareRepository
+        List<ShareCommonResponse> shareCommonResponses = shareRepository
             .recommendationAroundMember(request);
-        Collections.shuffle(shareCommonRespons);
-        return shareCommonRespons;
+        Collections.shuffle(shareCommonResponses);
+        return shareCommonResponses;
     }
 
     public ShareWriterResponse getWriteByMember(Long writerId) {
         Member writer = memberService.findByIdOrElseThrow(writerId);
         return new ShareWriterResponse(writer);
+    }
+
+    private Share findWithWriterByIdOrElseThrow(Long id) {
+        return shareRepository.findWithWriterById(id)
+            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
     }
 
     private String uploadImage(MultipartFile image) throws IOException {
