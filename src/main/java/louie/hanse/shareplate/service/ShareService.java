@@ -41,6 +41,7 @@ import louie.hanse.shareplate.web.dto.share.ShareWriterResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,8 +73,10 @@ public class ShareService {
             share.addShareImage(uploadedImageUrl);
         }
 
-        for (String contents : request.getHashtags()) {
-            share.addHashtag(contents);
+        if (!ObjectUtils.isEmpty(request.getHashtags())) {
+            for (String contents : request.getHashtags()) {
+                share.addHashtag(contents);
+            }
         }
 
         Entry entry = new Entry(share, member);
@@ -151,8 +154,10 @@ public class ShareService {
             share.addShareImage(uploadImageUrl);
         }
 
-        for (String contents : request.getHashtags()) {
-            share.addHashtag(contents);
+        if (!ObjectUtils.isEmpty(request.getHashtags())) {
+            for (String contents : request.getHashtags()) {
+                share.addHashtag(contents);
+            }
         }
         shareRepository.save(share);
     }
