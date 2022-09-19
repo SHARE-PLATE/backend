@@ -1,4 +1,20 @@
-INSERT INTO members
+DELETE from advertisement;
+DELETE from keyword;
+DELETE from wish;
+DELETE from share_image;
+DELETE from activity_notification;
+DELETE from notification;
+DELETE from hashtag;
+DELETE from entry;
+DELETE from chat_log;
+DELETE from chat;
+DELETE from chat_room_member;
+DELETE from chat_room;
+DELETE from share;
+DELETE from members;
+
+
+    INSERT INTO members
 (id, email, nickname, profile_image_url, thumbnail_image_url, refresh_token)
 VALUES (2370842997, 'dhdustnr0134@naver.com', '정현석',
         'http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_640x640.jpg',
@@ -62,7 +78,8 @@ INSERT INTO wish
     (id, member_id, share_id)
 VALUES (1, 2355841047, 1),
        (2, 2370842997, 2),
-       (3, 2355841047, 3);
+       (3, 2355841047, 3),
+       (4, 2398606895, 4);
 
 INSERT INTO chat_room
     (id, share_id, type)

@@ -13,14 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.exception.GlobalException;
-import louie.hanse.shareplate.exception.type.ShareExceptionType;
-import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
+import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.type.ShareType;
 
 @Getter
@@ -35,7 +33,7 @@ public class Share {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
-    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShareImage> shareImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
