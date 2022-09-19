@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,7 @@ public class Share {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
-    @OneToMany(mappedBy = "share", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<ShareImage> shareImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "share", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -167,7 +168,7 @@ public class Share {
         return !writer.equals(member);
     }
 
-    public void recruitmentQuotaExceeded() {
+    public void recruitmentQuotaExceededThrowException() {
         if (getCurrentRecruitment() >= getRecruitment()) {
             throw new GlobalException(EntryExceptionType.SHARE_OVERCAPACITY);
         }
