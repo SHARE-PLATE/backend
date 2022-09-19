@@ -6,6 +6,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
+import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.exception.type.WishExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
@@ -17,13 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("위시 기능 통합 테스트")
-public class WishRegisterIntegrationTest extends InitIntegrationTest {
+class WishRegisterIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
 
     @Test
-    void 회원이_원하는_쉐어를_위시로_등록한다() {
+    void 회원이_쉐어를_위시_등록을_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         JSONObject requestParam = new JSONObject();
@@ -43,7 +44,29 @@ public class WishRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_이미_위시_등록한_쉐어에_위시_등록을_재요청한다() {
+    void 유효하지_않은_회원이_쉐어를_위시_등록을_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(1L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 3);
+
+        given(documentationSpec)
+            .filter(document("wish-request-share-by-invalid-member"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .post("/wish-list")
+
+            .then()
+            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 회원이_위시_등록한_쉐어에_위시_등록을_재요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         JSONObject requestParam = new JSONObject();

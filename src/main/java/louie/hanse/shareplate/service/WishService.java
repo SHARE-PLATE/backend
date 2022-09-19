@@ -29,8 +29,7 @@ public class WishService {
         if (isExistWish(memberId, shareId)) {
             throw new GlobalException(WishExceptionType.SHARE_ALREADY_WISH);
         }
-
-        if (isWriter(memberId,shareId)) {
+        if (isShareWriter(memberId, shareId)) {
             throw new GlobalException(WishExceptionType.WRITER_CAN_NOT_WISH);
         }
 
@@ -40,6 +39,7 @@ public class WishService {
 
     @Transactional
     public void delete(Long memberId, Long shareId) {
+        memberService.findByIdOrElseThrow(memberId);
         shareService.findByIdOrElseThrow(shareId);
         if (!isExistWish(memberId, shareId)) {
             throw new GlobalException(WishExceptionType.SHARE_NOT_WISH);
@@ -52,7 +52,7 @@ public class WishService {
         return wishRepository.existsByMemberIdAndShareId(memberId, shareId);
     }
 
-    private boolean isWriter(Long memberId, Long shareId) {
+    private boolean isShareWriter(Long memberId, Long shareId) {
         return shareRepository.existsByIdAndWriterId(shareId, memberId);
     }
 }
