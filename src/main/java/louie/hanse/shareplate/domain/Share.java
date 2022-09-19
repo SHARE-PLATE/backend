@@ -17,9 +17,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.exception.GlobalException;
-import louie.hanse.shareplate.exception.type.ShareExceptionType;
-import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
+import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.type.ShareType;
 
 @Getter
@@ -167,7 +166,7 @@ public class Share {
         return !writer.equals(member);
     }
 
-    public void recruitmentQuotaExceeded() {
+    public void recruitmentQuotaExceededThrowException() {
         if (getCurrentRecruitment() >= getRecruitment()) {
             throw new GlobalException(EntryExceptionType.SHARE_OVERCAPACITY);
         }

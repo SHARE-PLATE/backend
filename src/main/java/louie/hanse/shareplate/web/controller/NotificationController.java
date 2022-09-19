@@ -32,13 +32,16 @@ public class NotificationController {
     }
 
     @DeleteMapping("/notifications/{id}")
-    public void deleteOnlyOneNotification(@PathVariable Long id) {
-        notificationService.delete(id);
+    public void deleteOnlyOneNotification(@PathVariable Long id, HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        notificationService.delete(id, memberId);
     }
 
     @DeleteMapping("/notifications")
-    public void deleteSelectionNotification(@RequestBody Map<String, List<Long>> map) {
+    public void deleteSelectionNotification(@RequestBody Map<String, List<Long>> map,
+        HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
         List<Long> idList = map.get("idList");
-        notificationService.deleteAll(idList);
+        notificationService.deleteAll(idList, memberId);
     }
 }

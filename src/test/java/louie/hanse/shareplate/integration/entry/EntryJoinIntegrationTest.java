@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
+import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
@@ -24,7 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 
 @DisplayName("쉐어 참여 기능 통합테스트")
-public class EntryJoinIntegrationTest extends InitIntegrationTest {
+class EntryJoinIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
@@ -47,6 +48,25 @@ public class EntryJoinIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 유효하지_않은_회원이_쉐어에_참가_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(1L);
+
+        given(documentationSpec)
+            .filter(document("entry-request-share-by-invalid-member"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 3)
+
+            .when()
+            .post("/shares/{id}/entry")
+
+            .then()
+            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test

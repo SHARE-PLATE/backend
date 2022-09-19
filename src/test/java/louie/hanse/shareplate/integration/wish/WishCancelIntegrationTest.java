@@ -6,6 +6,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
+import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.exception.type.WishExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
@@ -17,13 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("위시 취소 기능 통합 테스트")
-public class WishCancelIntegrationTest extends InitIntegrationTest {
+class WishCancelIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
 
     @Test
-    void 회원이_쉐어의_위시를_취소한다() {
+    void 회원이_쉐어의_위시를_취소를_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         JSONObject requestParam = new JSONObject();
@@ -43,14 +44,14 @@ public class WishCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_이미_위시_취소한_쉐어에_위시_취소를_재요청한다() {
-        String accessToken = jwtProvider.createAccessToken(2355841047L);
+    void 유효하지_않은_회원이_쉐어의_위시를_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(1L);
 
         JSONObject requestParam = new JSONObject();
         requestParam.put("shareId", 3);
 
         given(documentationSpec)
-            .filter(document("wish-re-request-cancel-share"))
+            .filter(document("wish-request-cancel-share-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestParam)
@@ -59,9 +60,9 @@ public class WishCancelIntegrationTest extends InitIntegrationTest {
             .delete("/wish-list")
 
             .then()
-            .statusCode(WishExceptionType.SHARE_NOT_WISH.getStatusCode().value())
-            .body("errorCode", equalTo(WishExceptionType.SHARE_NOT_WISH.getErrorCode()))
-            .body("message", equalTo(WishExceptionType.SHARE_NOT_WISH.getMessage()));
+            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
@@ -84,6 +85,28 @@ public class WishCancelIntegrationTest extends InitIntegrationTest {
             .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 회원이_위시_등록하지_않은_쉐어에_위시_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 4);
+
+        given(documentationSpec)
+            .filter(document("wish-re-request-cancel-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .statusCode(WishExceptionType.SHARE_NOT_WISH.getStatusCode().value())
+            .body("errorCode", equalTo(WishExceptionType.SHARE_NOT_WISH.getErrorCode()))
+            .body("message", equalTo(WishExceptionType.SHARE_NOT_WISH.getMessage()));
     }
 
 }

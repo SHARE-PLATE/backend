@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.NotificationExceptionType;
 import louie.hanse.shareplate.type.NotificationType;
 
 
@@ -45,5 +47,11 @@ public class Notification {
         this.share = share;
         this.member = member;
         this.type = type;
+    }
+
+    public void isNotMemberThrowException(Member member) {
+        if (!this.member.equals(member)) {
+            throw new GlobalException(NotificationExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_NOTIFICATION);
+        }
     }
 }

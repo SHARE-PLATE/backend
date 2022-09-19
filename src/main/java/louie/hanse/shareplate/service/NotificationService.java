@@ -12,6 +12,8 @@ import louie.hanse.shareplate.domain.Keyword;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Notification;
 import louie.hanse.shareplate.domain.Share;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.NotificationExceptionType;
 import louie.hanse.shareplate.repository.EntryRepository;
 import louie.hanse.shareplate.repository.KeywordRepository;
 import louie.hanse.shareplate.repository.NotificationRepository;
@@ -31,15 +33,16 @@ public class NotificationService {
 
     private static final ZoneOffset seoulZoneOffset = ZoneOffset.of("+9");
 
-    private final TaskScheduler taskScheduler;
-    private final ShareService shareService;
     private final EntryRepository entryRepository;
-    private final MemberService memberService;
     private final NotificationRepository notificationRepository;
     private final KeywordRepository keywordRepository;
+    private final ShareService shareService;
+    private final MemberService memberService;
+    private final TaskScheduler taskScheduler;
     private final MessageSendingOperations messageSendingOperations;
 
     public List<ActivityNotificationResponse> getActivityNotificationList(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         List<ActivityNotification> activityNotifications = notificationRepository
             .findAllActivityNotificationByMemberId(memberId);
 
@@ -49,6 +52,7 @@ public class NotificationService {
     }
 
     public List<KeywordNotificationResponse> getKeywordNotificationList(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         List<Notification> keywordNotifications = notificationRepository
             .findAllKeywordNotificationByMemberId(memberId);
 
@@ -58,12 +62,20 @@ public class NotificationService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id, Long memberId) {
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Notification notification = findWithMemberByIdOrElseThrow(id);
+        notification.isNotMemberThrowException(member);
         notificationRepository.deleteById(id);
     }
 
     @Transactional
-    public void deleteAll(List<Long> idList) {
+    public void deleteAll(List<Long> idList, Long memberId) {
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        for (Long id : idList) {
+            Notification notification = findWithMemberByIdOrElseThrow(id);
+            notification.isNotMemberThrowException(member);
+        }
         notificationRepository.deleteAllByIdInBatch(idList);
     }
 
@@ -149,5 +161,10 @@ public class NotificationService {
             messageSendingOperations.convertAndSend(
                 "/queue/notifications/keywords/" + keywordId, responses.get(i));
         }
+    }
+
+    private Notification findWithMemberByIdOrElseThrow(Long id) {
+        return notificationRepository.findWithMemberById(id).orElseThrow(
+            () -> new GlobalException(NotificationExceptionType.NOTIFICATION_NOT_FOUND));
     }
 }
