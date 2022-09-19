@@ -2,6 +2,7 @@ package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.IS_NOT_WRITER;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_ID_IS_NEGATIVE;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -32,6 +33,24 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 요청한_쉐어_id_값이_음수인_경우_요청이_실패한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("share-delete"))
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", -1)
+
+            .when()
+            .delete("/shares/{id}")
+
+            .then()
+            .statusCode(SHARE_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(SHARE_ID_IS_NEGATIVE.getMessage()));
     }
 
     @Test
