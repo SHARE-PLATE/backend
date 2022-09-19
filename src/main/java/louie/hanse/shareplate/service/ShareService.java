@@ -41,6 +41,7 @@ import louie.hanse.shareplate.web.dto.share.ShareWriterResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,8 +73,10 @@ public class ShareService {
             share.addShareImage(uploadedImageUrl);
         }
 
-        for (String contents : request.getHashtags()) {
-            share.addHashtag(contents);
+        if (!ObjectUtils.isEmpty(request.getHashtags())) {
+            for (String contents : request.getHashtags()) {
+                share.addHashtag(contents);
+            }
         }
 
         Entry entry = new Entry(share, member);
@@ -151,16 +154,19 @@ public class ShareService {
             share.addShareImage(uploadImageUrl);
         }
 
-        for (String contents : request.getHashtags()) {
-            share.addHashtag(contents);
+        if (!ObjectUtils.isEmpty(request.getHashtags())) {
+            for (String contents : request.getHashtags()) {
+                share.addHashtag(contents);
+            }
         }
         shareRepository.save(share);
     }
 
     @Transactional
     public void delete(Long id, Long memberId) {
-        isNotWriterThrowException(id, memberId);
-        Share share = findByIdOrElseThrow(id);
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Share share = findWithWriterByIdOrElseThrow(id);
+        share.isNotWriterThrowException(member);
         shareRepository.delete(share);
     }
 
@@ -170,15 +176,20 @@ public class ShareService {
     }
 
     public List<ShareCommonResponse> recommendationAroundMember(ShareRecommendationRequest request) {
-        List<ShareCommonResponse> shareCommonRespons = shareRepository
+        List<ShareCommonResponse> shareCommonResponses = shareRepository
             .recommendationAroundMember(request);
-        Collections.shuffle(shareCommonRespons);
-        return shareCommonRespons;
+        Collections.shuffle(shareCommonResponses);
+        return shareCommonResponses;
     }
 
     public ShareWriterResponse getWriteByMember(Long writerId) {
         Member writer = memberService.findByIdOrElseThrow(writerId);
         return new ShareWriterResponse(writer);
+    }
+
+    private Share findWithWriterByIdOrElseThrow(Long id) {
+        return shareRepository.findWithWriterById(id)
+            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
     }
 
     private String uploadImage(MultipartFile image) throws IOException {

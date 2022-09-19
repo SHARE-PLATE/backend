@@ -3,6 +3,7 @@ package louie.hanse.shareplate.web.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.NotificationService;
 import louie.hanse.shareplate.service.ShareService;
@@ -16,6 +17,7 @@ import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
 import louie.hanse.shareplate.web.dto.share.ShareWriterResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/shares")
 @RestController
+@Validated
 public class ShareController {
 
     private final ShareService shareService;
@@ -68,7 +71,8 @@ public class ShareController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id, HttpServletRequest request) {
+    public void delete(@PathVariable @Positive(message = "쉐어 id는 양수여야 합니다.") Long id
+        , HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         shareService.delete(id, memberId);
     }

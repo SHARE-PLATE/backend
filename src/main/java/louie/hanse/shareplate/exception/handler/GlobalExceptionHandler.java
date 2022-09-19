@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ValidationException;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
@@ -32,6 +33,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new GlobalExceptionResponse(globalException);
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<GlobalExceptionResponse> validationExceptionResponse(ValidationException ex) {
+        String message = getMessage(ex);
+        ExceptionType exceptionType = findExceptionType(message);
+        return ResponseEntity.status(exceptionType.getStatusCode())
+            .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
+    }
+
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers,
         HttpStatus status, WebRequest request) {
@@ -53,12 +62,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ExceptionType findExceptionType(String message) {
         List<ExceptionType> exceptionTypes = createExceptionTypes();
         for (ExceptionType exceptionType : exceptionTypes) {
-            if (exceptionType.getMessage().equals(message)) {
+            if (message.contains(exceptionType.getMessage())) {
                 return exceptionType;
             }
         }
 //        TODO : ExceptionType을 찾지 못하는 경우 예외 처리
         return null;
+    }
+
+    private static String getMessage(ValidationException ex) {
+        return ex.getMessage();
     }
 
     private static String getMessage(BindException ex) {
