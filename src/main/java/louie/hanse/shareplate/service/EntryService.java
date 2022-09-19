@@ -36,7 +36,7 @@ public class EntryService {
         if (isExistEntry(shareId, memberId)) {
             throw new GlobalException(EntryExceptionType.SHARE_ALREADY_JOINED);
         }
-        share.recruitmentQuotaExceeded();
+        share.recruitmentQuotaExceededThrowException();
 
         Entry entry = new Entry(share, member);
         entryRepository.save(entry);
@@ -48,6 +48,7 @@ public class EntryService {
 
     @Transactional
     public void cancel(Long shareId, Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
         if (!isExistEntry(shareId, memberId)) {
             throw new GlobalException(EntryExceptionType.SHARE_NOT_JOINED);
@@ -58,7 +59,7 @@ public class EntryService {
         if (share.isLeftLessThanAnHour()) {
             throw new GlobalException(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME);
         }
-        entryRepository.existsByMemberIdAndShareId(memberId, shareId);
+        entryRepository.deleteByMemberIdAndShareId(memberId, shareId);
     }
 
     private boolean isExistEntry(Long shareId, Long memberId) {

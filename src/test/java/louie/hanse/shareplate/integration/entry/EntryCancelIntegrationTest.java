@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
+import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
@@ -24,7 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 
 @DisplayName("쉐어 참여 취소 기능 통합테스트")
-public class EntryCancelIntegrationTest extends InitIntegrationTest {
+class EntryCancelIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
@@ -51,11 +52,30 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 유효하지_않은_회원이_쉐어_참가_취소_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(1L);
+
+        given(documentationSpec)
+            .filter(document("entry-request-cancel"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", 2)
+
+            .when()
+            .delete("/shares/{id}/entry")
+
+            .then()
+            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
     void 회원이_유효하지_않은_쉐어에_참가_취소_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("entry-request-invalid-cancel-share"))
+            .filter(document("entry-request-invalid-cancel-share-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 2222)
@@ -70,7 +90,7 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_참가_취소한_쉐어에_취소_재요청을_한다() {
+    void 회원이_참가되어_있지_않은_쉐어에_참가_취소를_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
@@ -131,7 +151,8 @@ public class EntryCancelIntegrationTest extends InitIntegrationTest {
             .delete("/shares/{id}/entry")
 
             .then()
-            .statusCode(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getStatusCode().value())
+            .statusCode(
+                EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getStatusCode().value())
             .body("errorCode",
                 equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getErrorCode()))
             .body("message",
