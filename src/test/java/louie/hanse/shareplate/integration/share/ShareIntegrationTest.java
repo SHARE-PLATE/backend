@@ -1,12 +1,9 @@
 package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.MULTIPART;
-import static louie.hanse.shareplate.integration.share.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
@@ -18,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
 @Import(S3MockConfig.class)
 @DisplayName("쉐어 기능 통합 테스트")
@@ -114,40 +110,6 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("locationGuide", equalTo("강남역 1번 출구"))
             .body("hashtags", hasSize(2))
             .body("hashtags[0]", equalTo("해시태그 내용 1"));
-    }
-
-    @Test
-    void 본인이_등록한_쉐어를_편집한다() {
-        String accessToken = jwtProvider.createAccessToken(2398606895L);
-
-        given(documentationSpec)
-            .filter(document("share-edit-put"))
-            .contentType(MULTIPART)
-            .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
-            .multiPart("images", "수정된 test1.txt", "abcde".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart("images", "수정된 test2.txt", "fhgij".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart(createMultiPartSpecification("title", "수정된 제목"))
-            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그1"))
-            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그2"))
-            .multiPart(createMultiPartSpecification("locationGuide", "강남역 파출소 앞"))
-            .multiPart(createMultiPartSpecification("location", "역삼역"))
-            .multiPart(createMultiPartSpecification("description", "수정된 설명"))
-            .formParam("type", "ingredient")
-            .formParam("price", 13000)
-            .formParam("originalPrice", 26000)
-            .formParam("recruitment", 2)
-            .formParam("locationNegotiation", true)
-            .formParam("priceNegotiation", false)
-            .formParam("latitude", 37.500326)
-            .formParam("longitude", 127.036087)
-            .formParam("closedDateTime", "2022-12-31 14:00")
-
-            .when()
-            .put("/shares/{id}")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
     }
 
     @Test
