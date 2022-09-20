@@ -2,6 +2,7 @@ package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.MULTIPART;
+import static louie.hanse.shareplate.integration.share.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -9,15 +10,9 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import io.restassured.builder.MultiPartSpecBuilder;
-import io.restassured.specification.MultiPartSpecification;
-import java.nio.charset.StandardCharsets;
 import louie.hanse.shareplate.config.S3MockConfig;
-import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
-import louie.hanse.shareplate.repository.MemberRepository;
-import louie.hanse.shareplate.service.ShareService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,47 +25,7 @@ import org.springframework.http.MediaType;
 class ShareIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    ShareService shareService;
-
-    @Autowired
     JwtProvider jwtProvider;
-
-    @Autowired
-    MemberRepository memberRepository;
-
-    @Test
-    void 음식_공유를_하기_위해_쉐어를_등록한다() {
-        Member member = memberRepository.findAll().get(0);
-        String accessToken = jwtProvider.createAccessToken(member.getId());
-
-        given(documentationSpec)
-            .filter(document("share-register-post"))
-            .header(AUTHORIZATION, accessToken)
-            .contentType(MULTIPART)
-            .multiPart("images", "test.txt", "abc".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart("images", "test.txt", "def".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart(createMultiPartSpecification("title", "제목"))
-            .multiPart(createMultiPartSpecification("hashtags", "해시태그1"))
-            .multiPart(createMultiPartSpecification("hashtags", "해시태그2"))
-            .multiPart(createMultiPartSpecification("locationGuide", "강남역 파출소 앞"))
-            .multiPart(createMultiPartSpecification("location", "강남역"))
-            .multiPart(createMultiPartSpecification("description", "설명"))
-            .formParam("type", "delivery")
-            .formParam("price", 10000)
-            .formParam("originalPrice", 30000)
-            .formParam("recruitment", 3)
-            .formParam("locationNegotiation", true)
-            .formParam("priceNegotiation", true)
-            .formParam("latitude", 37.524159)
-            .formParam("longitude", 126.872879)
-            .formParam("closedDateTime", "2022-12-30 14:00")
-
-            .when()
-            .post("/shares")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
-    }
 
     @Test
     void 검색한_키워드가_포함된_회원_주변의_쉐어를_조회한다() {
@@ -120,10 +75,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 내가_신청한_쉐어를_조회한다() {
-        Long memberId = memberRepository.findById(2355841047L)
-            .orElseThrow().getId();
-
-        String accessToken = jwtProvider.createAccessToken(memberId);
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
             .filter(document("share-search-mine-entry-get"))
@@ -153,10 +105,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 내가_등록한_쉐어를_조회한다() {
-        Long memberId = memberRepository.findById(2370842997L)
-            .orElseThrow().getId();
-
-        String accessToken = jwtProvider.createAccessToken(memberId);
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .filter(document("share-search-mine-writer-get"))
@@ -186,10 +135,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 내가_찜한_쉐어를_조회한다() {
-        Long memberId = memberRepository.findById(2370842997L)
-            .orElseThrow().getId();
-
-        String accessToken = jwtProvider.createAccessToken(memberId);
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .filter(document("share-search-mine-wish-get"))
@@ -316,12 +262,5 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .body("shares[0].price", equalTo(10000))
             .body("shares[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("shares[0].closedDateTime", equalTo("2023-08-03 16:00"));
-    }
-
-    private static MultiPartSpecification createMultiPartSpecification(String name, Object value) {
-        return new MultiPartSpecBuilder(value)
-            .controlName(name)
-            .charset(StandardCharsets.UTF_8)
-            .build();
     }
 }
