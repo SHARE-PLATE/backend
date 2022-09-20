@@ -9,7 +9,8 @@ public enum WishExceptionType implements ExceptionType {
     SHARE_ALREADY_WISH("WISH001", "이미 찜한 쉐어입니다.", BAD_REQUEST),
     SHARE_NOT_WISH("WISH002", "찜하지 않은 쉐어입니다.", BAD_REQUEST),
     WRITER_CAN_NOT_WISH("WISH003", "내가 등록한 쉐어에는 찜할 수 없습니다.", BAD_REQUEST),
-    WRITER_CAN_NOT_WISH_CANCEL("WISH004", "내가 등록한 쉐어에는 찜 취소 할 수 없습니다.", BAD_REQUEST);
+    WRITER_CAN_NOT_WISH_CANCEL("WISH004", "내가 등록한 쉐어에는 찜 취소 할 수 없습니다.", BAD_REQUEST),
+    EMPTY_WISH_INFO("WISH005", "요청한 위시정보 필드값이 비어있습니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;
