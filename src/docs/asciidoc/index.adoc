@@ -152,10 +152,10 @@ include::{snippets}/entry-request-closed-share/http-response.adoc[]
 == 유효하지 않은 쉐어에 참가 취소
 
 === Request
-include::{snippets}/entry-request-invalid-cancel-share/http-request.adoc[]
+include::{snippets}/entry-request-invalid-share/http-request.adoc[]
 
 === Response
-include::{snippets}/entry-request-invalid-cancel-share/http-response.adoc[]
+include::{snippets}/entry-request-invalid-share/http-response.adoc[]
 
 == 참가 취소한 쉐어에 참가 취소
 
@@ -241,34 +241,34 @@ include::{snippets}/wish-request-cancel-invalid-share/http-response.adoc[]
 == 활동 알림 조회
 
 === Request
-include::{snippets}/notification-activity-list/http-request.adoc[]
+include::{snippets}/notification-request-activity-list/http-request.adoc[]
 
 === Response
-include::{snippets}/notification-activity-list/http-response.adoc[]
+include::{snippets}/notification-request-keyword-list/http-response.adoc[]
 
 == 키워드 알림 조회
 
 === Request
-include::{snippets}/notification-keyword-list/http-request.adoc[]
+include::{snippets}/notification-request-keyword-list/http-request.adoc[]
 
 === Response
-include::{snippets}/notification-keyword-list/http-response.adoc[]
+include::{snippets}/notification-request-keyword-list/http-response.adoc[]
 
 == 알림 단건 삭제
 
 === Request
-include::{snippets}/notification-delete-only-one/http-request.adoc[]
+include::{snippets}/notification-request-delete-only-one/http-request.adoc[]
 
 === Response
-include::{snippets}/notification-delete-only-one/http-response.adoc[]
+include::{snippets}/notification-request-delete-only-one/http-response.adoc[]
 
 == 알림 선택 삭제
 
 === Request
-include::{snippets}/notification-delete-all/http-request.adoc[]
+include::{snippets}/notification-request-delete-selection/http-request.adoc[]
 
 === Response
-include::{snippets}/share-not-writer-delete/http-response.adoc[]
+include::{snippets}/notification-request-delete-selection/http-response.adoc[]
 
 == 회원 로그아웃
 
@@ -309,3 +309,11 @@ include::{snippets}/chatRoom-detail-of-member/http-response.adoc[]
 //
 //=== Response
 //include::{snippets}/chatRoom-for-inquire-in-question/http-response.adoc[]
+
+== 키워드 주소 삭제
+
+=== Request
+include::{snippets}/keyword-request-delete-location/http-request.adoc[]
+
+=== Response
+include::{snippets}/keyword-request-delete-location/http-response.adoc[]
