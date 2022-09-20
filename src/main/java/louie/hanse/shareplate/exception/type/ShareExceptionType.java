@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 public enum ShareExceptionType implements ExceptionType {
     EMPTY_SHARE_INFO("SHARE001", "요청한 쉐어정보 값이 비어있습니다.", BAD_REQUEST),
     IMAGE_LIMIT_EXCEEDED("SHARE002", "이미지 5개를 초과하였습니다.", BAD_REQUEST),
-    NOT_SUPPORT_IMAGE_TYPE("SHARE003", "이미지 형식의 파일이 아닙니다.", BAD_REQUEST),
+    NOT_SUPPORT_IMAGE_TYPE("SHARE003", "쉐어 이미지 형식의 파일이 아닙니다.", BAD_REQUEST),
     SHARE_INFO_IS_NEGATIVE("SHARE004", "요청값은 양수여야 합니다.", BAD_REQUEST),
     PAST_CLOSED_DATE_TIME("SHARE005", "약속 시간은 현재 시간 이후로 설정해야 합니다.", BAD_REQUEST),
     OUT_OF_SCOPE_FOR_KOREA("SHARE006", "해당 위도, 경도는 대한민국의 범위를 벗어났습니다.", BAD_REQUEST),
