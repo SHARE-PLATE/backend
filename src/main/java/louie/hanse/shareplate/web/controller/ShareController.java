@@ -3,6 +3,8 @@ package louie.hanse.shareplate.web.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.NotificationService;
@@ -36,7 +38,7 @@ public class ShareController {
     private final NotificationService notificationService;
 
     @PostMapping
-    public void register(ShareRegisterRequest shareRegisterRequest, HttpServletRequest request)
+    public void register(@Valid ShareRegisterRequest shareRegisterRequest, HttpServletRequest request)
         throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");
         Long shareId = shareService.register(shareRegisterRequest, memberId);
@@ -57,7 +59,7 @@ public class ShareController {
     }
 
     @GetMapping("/{id}")
-    public ShareDetailResponse getDetail(@PathVariable Long id, HttpServletRequest request) {
+    public ShareDetailResponse getDetail(@PathVariable(required = false) @NotNull Long id, HttpServletRequest request) {
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         return shareService.getDetail(id, accessToken);
     }
