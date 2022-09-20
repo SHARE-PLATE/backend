@@ -317,3 +317,11 @@ include::{snippets}/keyword-request-delete-location/http-request.adoc[]
 
 === Response
 include::{snippets}/keyword-request-delete-location/http-response.adoc[]
+
+== 키워드 주소 조회
+
+=== Request
+include::{snippets}/keyword-request-keyword-location/http-request.adoc[]
+
+=== Response
+include::{snippets}/keyword-request-keyword-location/http-response.adoc[]

@@ -22,4 +22,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
         @Param("latitude1") double latitude1, @Param("latitude2") double latitude2);
 
     void deleteAllByMemberIdAndLocation(Long memberId, String location);
+
+    List<Keyword> findAllByMemberIdAndLocation(Long memberId, String location);
 }
