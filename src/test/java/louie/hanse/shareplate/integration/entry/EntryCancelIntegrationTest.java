@@ -42,13 +42,51 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 2)
+            .pathParam("shareId", 2)
 
             .when()
-            .delete("/shares/{id}/entry")
+            .delete("/shares/{shareId}/entry")
 
             .then()
             .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 회원이_쉐어_id_값을_빈값으로_참가_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
+
+        given(documentationSpec)
+            .filter(document("entry-request-cancel-empty-of-share-id"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("shareId", " ")
+
+            .when()
+            .delete("/shares/{shareId}/entry")
+
+            .then()
+            .statusCode(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getMessage()));
+    }
+
+    @Test
+    void 회원이_쉐어_id_값을_음수로_참가_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
+
+        given(documentationSpec)
+            .filter(document("entry-request-cancel-negative-of-share-id"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("shareId", -2)
+
+            .when()
+            .delete("/shares/{shareId}/entry")
+
+            .then()
+            .statusCode(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getMessage()));
     }
 
     @Test
@@ -59,10 +97,10 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 2)
+            .pathParam("shareId", 2)
 
             .when()
-            .delete("/shares/{id}/entry")
+            .delete("/shares/{shareId}/entry")
 
             .then()
             .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
@@ -78,10 +116,10 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-invalid-cancel-share-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 2222)
+            .pathParam("shareId", 2222)
 
             .when()
-            .delete("/shares/{id}/entry")
+            .delete("/shares/{shareId}/entry")
 
             .then()
             .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
@@ -97,10 +135,10 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-re-request-cancel-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 4)
+            .pathParam("shareId", 4)
 
             .when()
-            .delete("/shares/{id}/entry")
+            .delete("/shares/{shareId}/entry")
 
             .then()
             .statusCode(EntryExceptionType.SHARE_NOT_JOINED.getStatusCode().value())
@@ -120,10 +158,10 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-left-than-an-hour"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", shareId)
+            .pathParam("shareId", shareId)
 
             .when()
-            .delete("/shares/{id}/entry")
+            .delete("/shares/{shareId}/entry")
 
             .then()
             .statusCode(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME.getStatusCode().value())
@@ -145,10 +183,10 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-cancel-closed-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", shareId)
+            .pathParam("shareId", shareId)
 
             .when()
-            .delete("/shares/{id}/entry")
+            .delete("/shares/{shareId}/entry")
 
             .then()
             .statusCode(
