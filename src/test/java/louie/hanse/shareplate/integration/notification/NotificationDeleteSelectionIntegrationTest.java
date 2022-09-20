@@ -41,7 +41,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             new ArrayList<>(List.of(3L, 4L)));
 
         given(documentationSpec)
-            .filter(document("notification-request-delete-all"))
+            .filter(document("notification-request-delete-selection"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -53,34 +53,55 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             .statusCode(HttpStatus.OK.value());
     }
 
-//    @Test
-//    void 회원이_알림_id_값을_음수로_선택_삭제_요청한다() {
-//
-//        String accessToken = jwtProvider.createAccessToken(2355841033L);
-//
-//        Map<String, List<Long>> requestBody = Map.of("idList",
-//            new ArrayList<>(List.of(-3L, 4L)));
-//
-//        given(documentationSpec)
-//            .filter(document("notification-request-delete-all-by-negative-id"))
-//            .contentType(ContentType.JSON)
-//            .header(AUTHORIZATION, accessToken)
-//            .body(requestBody)
-//
-//            .when()
-//            .delete("/notifications")
-//
-//            .then()
-//            .statusCode(
-//                NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE
-//                    .getStatusCode().value())
-//            .body("errorCode",
-//                equalTo(
-//                    NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getErrorCode()))
-//            .body("message",
-//                equalTo(
-//                    NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getMessage()));
-//    }
+    @Test
+    void 회원이_알림_id_값을_빈값으로_선택_삭제를_요청한다() {
+
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+        List<Long> idList = new ArrayList<>();
+        idList.add(null);
+        idList.add(1L);
+
+        Map<String, List<Long>> requestBody = Map.of("idList", idList);
+
+        given(documentationSpec)
+            .filter(document("notification-request-delete-selection"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestBody)
+
+            .then()
+            .statusCode(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getStatusCode().value())
+            .body("errorCode",
+                equalTo(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getErrorCode()))
+            .body("message",
+                equalTo(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getMessage()));
+    }
+
+    @Test
+    void 회원이_알림_id_값을_음수로_선택_삭제_요청한다() {
+
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        Map<String, List<Long>> requestBody = Map.of("idList",
+            new ArrayList<>(List.of(3L, -4L)));
+
+        given(documentationSpec)
+            .filter(document("notification-request-delete-negative-selection"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestBody)
+
+            .when()
+            .delete("/notifications")
+
+            .then()
+            .statusCode(
+                NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode",
+                equalTo(NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message",
+                equalTo(NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getMessage()));
+    }
 
     @Test
     void 유효하지_않은_회원이_알림을_선택_삭제_요청한다() {
@@ -91,7 +112,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             new ArrayList<>(List.of(1L, 3L)));
 
         given(documentationSpec)
-            .filter(document("notification-request-delete-all-invalid-member"))
+            .filter(document("notification-request-delete-selection-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -114,7 +135,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             new ArrayList<>(List.of(3444444L, 433333L)));
 
         given(documentationSpec)
-            .filter(document("notification-request-delete-invalid-all"))
+            .filter(document("notification-request-delete-invalid-selection"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -140,7 +161,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             new ArrayList<>(List.of(3L, 4L)));
 
         given(documentationSpec)
-            .filter(document("notification-request-delete-all-by-other-member"))
+            .filter(document("notification-request-delete-selection-by-other-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
