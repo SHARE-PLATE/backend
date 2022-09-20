@@ -1,6 +1,7 @@
 package louie.hanse.shareplate.web.controller;
 
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.KeywordService;
@@ -29,7 +30,8 @@ public class KeywordController {
     }
 
     @PostMapping
-    public KeywordRegisterResponse register(@RequestBody KeywordRegisterRequest keywordRegisterRequest,
+    public KeywordRegisterResponse register(
+        @RequestBody KeywordRegisterRequest keywordRegisterRequest,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return keywordService.register(keywordRegisterRequest, memberId);
@@ -38,5 +40,12 @@ public class KeywordController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         keywordService.delete(id);
+    }
+
+    @DeleteMapping
+    public void deleteAll(@RequestBody Map<String, String> map, HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        String location = map.get("location");
+        keywordService.deleteAll(memberId, location);
     }
 }

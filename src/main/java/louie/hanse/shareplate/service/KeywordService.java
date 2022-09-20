@@ -35,4 +35,9 @@ public class KeywordService {
     public List<KeywordListResponse> getKeywords(Long memberId) {
         return keywordRepository.getKeywords(memberId);
     }
+
+    @Transactional
+    public void deleteAll(Long memberId, String location) {
+        keywordRepository.deleteAllByMemberIdAndLocation(memberId, location);
+    }
 }
