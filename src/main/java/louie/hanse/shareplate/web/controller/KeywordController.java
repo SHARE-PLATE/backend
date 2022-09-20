@@ -43,9 +43,9 @@ public class KeywordController {
     }
 
     @DeleteMapping
-    public void deleteKeyword(@RequestBody Map<String, String> map, HttpServletRequest request) {
+    public void deleteAll(@RequestBody Map<String, String> map, HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         String location = map.get("location");
-        keywordService.deleteKeyword(memberId, location);
+        keywordService.deleteAll(memberId, location);
     }
 }

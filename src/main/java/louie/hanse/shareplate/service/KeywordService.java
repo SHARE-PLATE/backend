@@ -37,7 +37,7 @@ public class KeywordService {
     }
 
     @Transactional
-    public void deleteKeyword(Long memberId, String location) {
+    public void deleteAll(Long memberId, String location) {
         keywordRepository.deleteAllByMemberIdAndLocation(memberId, location);
     }
 }
