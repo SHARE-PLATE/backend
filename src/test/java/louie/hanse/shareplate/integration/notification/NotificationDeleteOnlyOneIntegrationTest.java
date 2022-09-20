@@ -48,6 +48,51 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 회원이_알림_id_값을_빈값으로_단건_삭제를_요청한다() {
+
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("notification-request-delete-empty-only-one"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", " ")
+
+            .when()
+            .delete("/notifications/{id}")
+
+            .then()
+            .statusCode(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getStatusCode().value())
+            .body("errorCode",
+                equalTo(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getErrorCode()))
+            .body("message",
+                equalTo(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getMessage()));
+    }
+
+    @Test
+    void 회원이_알림_id_값을_음수로_단건_삭제_요청한다() {
+
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("notification-request-delete-negative-of-only-one"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", -5)
+
+            .when()
+            .delete("/notifications/{id}")
+
+            .then()
+            .statusCode(
+                NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode",
+                equalTo(NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message",
+                equalTo(NotificationExceptionType.NOTIFICATION_ID_IS_NEGATIVE.getMessage()));
+    }
+
+    @Test
     void 유효하지_않은_회원이_알림을_단건_삭제_요청한다() {
 
         String accessToken = jwtProvider.createAccessToken(1L);

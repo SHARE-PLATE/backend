@@ -44,6 +44,50 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 회원이_쉐어_id_값을_빈값으로_찜_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(1L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", null);
+
+        given(documentationSpec)
+            .filter(document("wish-request-cancel-empty-of-share-id"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .statusCode(WishExceptionType.EMPTY_WISH_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(WishExceptionType.EMPTY_WISH_INFO.getErrorCode()))
+            .body("message", equalTo(WishExceptionType.EMPTY_WISH_INFO.getMessage()));
+    }
+
+    @Test
+    void 회원이_쉐어_id_값을_음수로_찜_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(1L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", -3);
+
+        given(documentationSpec)
+                .filter(document("wish-request-cancel-negative-of-share-id"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .statusCode(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getMessage()));
+    }
+
+    @Test
     void 유효하지_않은_회원이_쉐어의_위시를_취소를_요청한다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 

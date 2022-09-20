@@ -41,14 +41,54 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
+            .pathParam("shareId", 3)
 
             .when()
-            .post("/shares/{id}/entry")
+            .post("/shares/{shareId}/entry")
 
             .then()
             .statusCode(HttpStatus.OK.value());
     }
+
+
+    @Test
+    void 회원이_쉐어_id_값을_빈값으로_참가를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("entry-request-empty-of-share-id"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("shareId", " ")
+
+            .when()
+            .post("/shares/{shareId}/entry")
+
+            .then()
+            .statusCode(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getMessage()));
+    }
+
+    @Test
+    void 회원이_쉐어_id_값을_음수로_참가를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("entry-request-negative-of-share-id"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("shareId", -3)
+
+            .when()
+            .post("/shares/{shareId}/entry")
+
+            .then()
+            .statusCode(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getMessage()));
+    }
+
 
     @Test
     void 유효하지_않은_회원이_쉐어에_참가_요청한다() {
@@ -58,10 +98,10 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-share-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
+            .pathParam("shareId", 3)
 
             .when()
-            .post("/shares/{id}/entry")
+            .post("/shares/{shareId}/entry")
 
             .then()
             .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
@@ -77,10 +117,10 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-invalid-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 2222)
+            .pathParam("shareId", 2222)
 
             .when()
-            .post("/shares/{id}/entry")
+            .post("/shares/{shareId}/entry")
 
             .then()
             .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
@@ -96,10 +136,10 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-re-request-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 1)
+            .pathParam("shareId", 1)
 
             .when()
-            .post("/shares/{id}/entry")
+            .post("/shares/{shareId}/entry")
 
             .then()
             .statusCode(EntryExceptionType.SHARE_ALREADY_JOINED.getStatusCode().value())
@@ -115,10 +155,10 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-exceeded-recruitment"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 1)
+            .pathParam("shareId", 1)
 
             .when()
-            .post("/shares/{id}/entry")
+            .post("/shares/{shareId}/entry")
 
             .then()
             .statusCode(EntryExceptionType.SHARE_OVERCAPACITY.getStatusCode().value())
@@ -138,10 +178,10 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .filter(document("entry-request-closed-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .pathParam("id", shareId)
+            .pathParam("shareId", shareId)
 
             .when()
-            .post("/shares/{id}/entry")
+            .post("/shares/{shareId}/entry")
 
             .then()
             .statusCode(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getStatusCode().value())

@@ -11,7 +11,9 @@ import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.ExceptionType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
+import louie.hanse.shareplate.exception.type.NotificationExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
+import louie.hanse.shareplate.exception.type.WishExceptionType;
 import louie.hanse.shareplate.web.dto.exception.GlobalExceptionResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,8 +36,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<GlobalExceptionResponse> validationExceptionResponse(ValidationException ex) {
-        String message = getMessage(ex);
+    public ResponseEntity<GlobalExceptionResponse> validationExceptionResponse(
+        ValidationException validationException) {
+        String message = getMessage(validationException);
         ExceptionType exceptionType = findExceptionType(message);
         return ResponseEntity.status(exceptionType.getStatusCode())
             .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
@@ -88,6 +91,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Arrays.stream(MemberExceptionType.values()).collect(Collectors.toList()));
         exceptionTypes.addAll(
             Arrays.stream(ShareExceptionType.values()).collect(Collectors.toList()));
+        exceptionTypes.addAll(
+            Arrays.stream(WishExceptionType.values()).collect(Collectors.toList()));
+        exceptionTypes.addAll(
+            Arrays.stream(NotificationExceptionType.values()).collect(Collectors.toList()));
         return exceptionTypes;
     }
 }
