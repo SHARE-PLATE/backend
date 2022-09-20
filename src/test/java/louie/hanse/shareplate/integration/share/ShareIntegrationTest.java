@@ -64,7 +64,7 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 36.6576769)
-            .param("longitude", 128.3007637)
+            .param("long천itude", 128.3007637)
 
             .when()
             .get("/shares/recommendation")
