@@ -14,6 +14,8 @@ public class ShareCommonResponse {
     private String title;
     private String location;
     private int price;
+    private int currentRecruitment;
+    private int finalRecruitment;
     private LocalDateTime createdDateTime;
     private LocalDateTime closedDateTime;
 
@@ -24,6 +26,8 @@ public class ShareCommonResponse {
         this.title = share.getTitle();
         this.location = share.getLocation();
         this.price = share.getPrice();
+        this.currentRecruitment = share.getCurrentRecruitment();
+        this.finalRecruitment = share.getRecruitment();
         this.createdDateTime = share.getCreatedDateTime();
         this.closedDateTime = share.getClosedDateTime();
     }
