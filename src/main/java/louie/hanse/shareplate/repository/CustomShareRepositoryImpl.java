@@ -64,7 +64,7 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
         return queryFactory
             .selectFrom(share)
             .where(
-                share.type.eq(type),
+                typeEq(type),
                 share.writer.id.eq(writerId),
                 isExpired(expired, currentDateTime)
             ).fetch();
@@ -78,7 +78,7 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
             .join(share.entries, entry).on(entry.member.id.eq(memberId))
             .where(
                 share.writer.id.ne(memberId),
-                share.type.eq(type),
+                typeEq(type),
                 isExpired(expired, currentDateTime)
             ).fetch();
     }
@@ -90,7 +90,7 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
             .selectFrom(share)
             .join(share.wishList, wish).on(wish.member.id.eq(memberId))
             .where(
-                share.type.eq(type),
+                typeEq(type),
                 isExpired(expired, currentDateTime)
             ).fetch();
     }
