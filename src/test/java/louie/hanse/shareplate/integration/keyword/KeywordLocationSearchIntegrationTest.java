@@ -34,8 +34,10 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value())
-            .body("[0].id", equalTo(6))
-            .body("[0].contents", equalTo("햄버거"));
+            .body("longitude", equalTo(127.100136F))
+            .body("latitude", equalTo(37.51326F))
+            .body("keywords[0].id", equalTo(6))
+            .body("keywords[0].contents", equalTo("햄버거"));
     }
 
 }

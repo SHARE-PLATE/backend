@@ -1,13 +1,12 @@
 package louie.hanse.shareplate.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Keyword;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.repository.KeywordRepository;
-import louie.hanse.shareplate.web.dto.keyword.KeywordDetailResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
+import louie.hanse.shareplate.web.dto.keyword.KeywordLocationListResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterRequest;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterResponse;
 import org.springframework.stereotype.Service;
@@ -43,11 +42,8 @@ public class KeywordService {
         keywordRepository.deleteAllByMemberIdAndLocation(memberId, location);
     }
 
-    public List<KeywordDetailResponse> getLocations(Long memberId, String location) {
-        List<Keyword> keywordList = keywordRepository.findAllByMemberIdAndLocation(memberId,
-            location);
-        return keywordList.stream()
-            .map(KeywordDetailResponse::new)
-            .collect(Collectors.toList());
+    public KeywordLocationListResponse getLocations(Long memberId, String location) {
+        List<Keyword> keywords = keywordRepository.findAllByMemberIdAndLocation(memberId, location);
+        return new KeywordLocationListResponse(keywords);
     }
 }
