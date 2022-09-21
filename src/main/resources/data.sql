@@ -13,8 +13,7 @@ DELETE from chat_room;
 DELETE from share;
 DELETE from members;
 
-
-    INSERT INTO members
+INSERT INTO members
 (id, email, nickname, profile_image_url, thumbnail_image_url, refresh_token)
 VALUES (2370842997, 'dhdustnr0134@naver.com', '정현석',
         'http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_640x640.jpg',
@@ -46,7 +45,11 @@ VALUES (1, '2023-08-03-16-00', '2022-08-03-16-00', '떡볶이 쉐어 설명', 36
         3000, 3, '잠실역에서 양파 구매할사람 모집합니다.', 'INGREDIENT', 2398606895, true, true, '잠실역 3번 출구', false),
        (4, '2023-06-03-16-00', '2022-07-03-16-00', '햄버거 쉐어 설명', 37.5132612, 127.1001336, '잠실역',
         24000, 8000, 3, '잠실역에서 햄버거 먹을 사람 모집합니다.', 'DELIVERY', 2355841033, false, false,
-        '잠실역 3번 출구', false);
+        '잠실역 3번 출구', false),
+       (5, '2021-05-02-11-00', '2021-04-12-11-30', '당근 쉐어 설명', 37.511624, 127.085585, '잠실새내역',
+        6000, 3000, 2, '당근 쉐어할사람 모집합니다.', 'INGREDIENT', 2370842997, true, false, '잠실새내역 1번 출구', false),
+       (6, '2023-05-05-11-00', '2022-07-12-11-30', '양배추 쉐어 설명', 37.653229, 127.244452, '평내호평역',
+        13500, 4500, 3, '양배추 쉐어할사람 모집합니다.', 'INGREDIENT', 2370842997, true, true, '평내호평역 2번 출구', true);
 
 INSERT INTO share_image
     (id, share_id, image_url)
@@ -61,7 +64,11 @@ VALUES (1, 1,
        (5, 3,
         'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%91%E1%85%A1.jpeg'),
        (6, 4,
-        'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg');
+        'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg'),
+       (7, 5,
+        'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/%E1%84%83%E1%85%A1%E1%86%BC%E1%84%80%E1%85%B3%E1%86%AB.jpeg'),
+       (8, 6,
+        'https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%87%E1%85%A2%E1%84%8E%E1%85%AE.jpeg');
 
 INSERT INTO entry
     (id, member_id, share_id)
@@ -72,7 +79,10 @@ VALUES (1, 2370842997, 1),
        (5, 2398606895, 2),
        (6, 2370842997, 2),
        (7, 2398606895, 3),
-       (8, 2355841047, 3);
+       (8, 2355841047, 3),
+       (9, 2355841033, 4),
+       (10, 2370842997, 5),
+       (11, 2370842997, 6);
 
 INSERT INTO wish
     (id, member_id, share_id)
@@ -87,7 +97,9 @@ VALUES (1, 1, 'ENTRY'),
        (2, 2, 'ENTRY'),
        (3, 3, 'ENTRY'),
        (4, 4, 'ENTRY'),
-       (5, 2, 'QUESTION');
+       (5, 2, 'QUESTION'),
+       (6, 5, 'ENTRY'),
+       (7, 6, 'ENTRY');
 
 INSERT INTO chat_room_member
     (id, chat_room_id, member_id)
@@ -102,7 +114,9 @@ VALUES (1, 1, 2370842997),
        (9, 4, 2355841033),
        (10, 4, 2398606895),
        (11, 5, 2355841047),
-       (12, 5, 2398606895);
+       (12, 5, 2398606895),
+       (13, 6, 2370842997),
+       (14, 7, 2370842997);
 
 INSERT INTO chat
     (id, contents, written_date_time, chat_room_id, writer_id)
