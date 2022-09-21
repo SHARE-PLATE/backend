@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.KeywordService;
-import louie.hanse.shareplate.web.dto.keyword.KeywordDetailResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
+import louie.hanse.shareplate.web.dto.keyword.KeywordLocationListResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterRequest;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +32,7 @@ public class KeywordController {
     }
 
     @GetMapping("/location")
-    public List<KeywordDetailResponse> getLocations(@RequestParam("location") String location,
+    public KeywordLocationListResponse getLocations(@RequestParam("location") String location,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return keywordService.getLocations(memberId, location);
