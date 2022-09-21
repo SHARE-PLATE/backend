@@ -1,5 +1,7 @@
 package louie.hanse.shareplate.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import louie.hanse.shareplate.domain.ChatRoom;
@@ -60,6 +62,12 @@ public class EntryService {
             throw new GlobalException(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME);
         }
         entryRepository.deleteByMemberIdAndShareId(memberId, shareId);
+    }
+
+    public List<Long> getIdList(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
+        return entryRepository.findAllByMemberId(memberId)
+            .stream().map(Entry::getId).collect(Collectors.toList());
     }
 
     private boolean isExistEntry(Long shareId, Long memberId) {

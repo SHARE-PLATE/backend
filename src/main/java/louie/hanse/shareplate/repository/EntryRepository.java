@@ -22,4 +22,5 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
         + "join fetch s.shareImages si ")
     List<Entry> findAllByShareId(Long shareId);
 
+    List<Entry> findAllByMemberId(Long memberId);
 }
