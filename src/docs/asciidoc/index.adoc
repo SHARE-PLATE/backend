@@ -181,6 +181,21 @@ include::{snippets}/entry-request-cancel-closed-share/http-request.adoc[]
 === Response
 include::{snippets}/entry-request-cancel-closed-share/http-response.adoc[]
 
+== 회원의 entryId 조회
+
+=== Request
+include::{snippets}/entry-request-entry-id/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-entry-id/http-response.adoc[]
+
+== 유효하지 않은 회원의 entryId 조회
+
+=== Request
+include::{snippets}/entry-request-cancel-closed-share/http-request.adoc[]
+
+=== Response
+include::{snippets}/entry-request-cancel-closed-share/http-response.adoc[]
 
 == 위시 등록
 
