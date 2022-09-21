@@ -53,7 +53,7 @@ public class ShareController {
 
     @GetMapping("/mine")
     public List<ShareSearchResponse> searchMine(
-        ShareMineSearchRequest shareMineSearchRequest, HttpServletRequest request) {
+        @Valid ShareMineSearchRequest shareMineSearchRequest, HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return shareService.searchMine(shareMineSearchRequest, memberId);
     }
