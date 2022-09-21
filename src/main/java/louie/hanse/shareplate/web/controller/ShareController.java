@@ -65,9 +65,9 @@ public class ShareController {
     }
 
     @PutMapping("/{id}")
-    public void edit(@PathVariable Long id, ShareEditRequest shareEditRequest,
-        HttpServletRequest request)
-        throws IOException {
+    public void edit(@PathVariable(required = false) @NotNull(message = "PathVariable의 shareId가 비어있습니다.")
+    @Positive(message = "쉐어 id는 양수여야 합니다.") Long id, @Valid ShareEditRequest shareEditRequest,
+        HttpServletRequest request) throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");
         shareService.edit(shareEditRequest, id, memberId);
     }
