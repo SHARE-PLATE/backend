@@ -11,6 +11,7 @@ public class SharePreviewResponse {
     private String title;
     private int price;
     private int originalPrice;
+    private boolean cancel;
     private int currentRecruitment;
     private int finalRecruitment;
 
@@ -20,6 +21,7 @@ public class SharePreviewResponse {
         this.title = share.getTitle();
         this.price = share.getPrice();
         this.originalPrice = share.getOriginalPrice();
+        this.cancel = share.isCancel();
         this.currentRecruitment = share.getCurrentRecruitment();
         this.finalRecruitment = share.getRecruitment();
     }

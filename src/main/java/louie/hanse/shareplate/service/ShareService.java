@@ -163,11 +163,11 @@ public class ShareService {
     }
 
     @Transactional
-    public void delete(Long id, Long memberId) {
+    public void cancel(Long id, Long memberId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = findWithWriterByIdOrElseThrow(id);
         share.isNotWriterThrowException(member);
-        shareRepository.delete(share);
+        share.cancel();
     }
 
     public Share findByIdOrElseThrow(Long id) {

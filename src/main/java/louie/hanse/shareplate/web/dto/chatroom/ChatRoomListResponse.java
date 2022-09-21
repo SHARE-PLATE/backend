@@ -15,6 +15,7 @@ public class ChatRoomListResponse {
     private Long id;
     private String shareThumbnailImageUrl;
     private int currentRecruitment;
+    private boolean cancel;
     private String recentMessage;
     private LocalDateTime recentMessageDataTime;
     private List<String> recruitmentMemberNicknames;
@@ -25,6 +26,7 @@ public class ChatRoomListResponse {
         this.id = chatRoom.getId();
         this.shareThumbnailImageUrl = chatRoom.getShare().getShareImages().get(0).getImageUrl();
         this.currentRecruitment = chatRoom.getShare().getCurrentRecruitment();
+        this.cancel = chatRoom.getShare().isCancel();
         this.recentMessage = chat.getContents();
         this.recentMessageDataTime = chat.getWrittenDateTime();
         this.recruitmentMemberNicknames = chatRoom.getShare().getEntries().stream()
@@ -40,6 +42,7 @@ public class ChatRoomListResponse {
         this.id = chatRoom.getId();
         this.shareThumbnailImageUrl = chatRoom.getShare().getShareImages().get(0).getImageUrl();
         this.currentRecruitment = chatRoom.getShare().getCurrentRecruitment();
+        this.cancel = chatRoom.getShare().isCancel();
         this.recruitmentMemberNicknames = chatRoom.getShare().getEntries().stream()
             .map(Entry::getMember).filter(member -> !member.getId().equals(memberId))
             .map(Member::getNickname).collect(Collectors.toList());

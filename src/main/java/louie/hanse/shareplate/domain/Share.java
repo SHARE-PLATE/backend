@@ -51,6 +51,7 @@ public class Share {
     @Enumerated(EnumType.STRING)
     private ShareType type;
 
+    private boolean cancel;
     private String title;
     private int price;
     private int originalPrice;
@@ -170,5 +171,9 @@ public class Share {
         if (getCurrentRecruitment() >= getRecruitment()) {
             throw new GlobalException(EntryExceptionType.SHARE_OVERCAPACITY);
         }
+    }
+
+    public void cancel() {
+        cancel = true;
     }
 }
