@@ -73,10 +73,10 @@ public class ShareController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable @Positive(message = "쉐어 id는 양수여야 합니다.") Long id
+    public void cancel(@PathVariable @Positive(message = "쉐어 id는 양수여야 합니다.") Long id
         , HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
-        shareService.delete(id, memberId);
+        shareService.cancel(id, memberId);
     }
 
     @GetMapping("/recommendation")
