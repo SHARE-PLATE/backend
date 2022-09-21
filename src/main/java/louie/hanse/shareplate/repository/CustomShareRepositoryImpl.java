@@ -34,6 +34,8 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
             .where(
                 typeEq(request.getType()),
                 titleContains(request.getKeyword()),
+                share.cancel.eq(false),
+                share.closedDateTime.gt(LocalDateTime.now()),
                 share.latitude.between(calculateStartLatitude(latitude),
                     calculateEndLatitude(latitude)),
                 share.longitude.between(calculateStartLongitude(longitude),
@@ -50,6 +52,8 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
             .from(share)
             .where(
                 titleContains(request.getKeyword()),
+                share.cancel.eq(false),
+                share.closedDateTime.gt(LocalDateTime.now()),
                 share.latitude.between(calculateStartLatitude(latitude),
                     calculateEndLatitude(latitude)),
                 share.longitude.between(calculateStartLongitude(longitude),
