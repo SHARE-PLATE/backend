@@ -176,4 +176,16 @@ public class Share {
     public void cancel() {
         cancel = true;
     }
+
+    public void isClosedThrowException() {
+        if (closedDateTime.isBefore(LocalDateTime.now())) {
+            throw new GlobalException(ShareExceptionType.SHARE_IS_CLOSED);
+        }
+    }
+
+    public void isCanceledThrowException() {
+        if (cancel) {
+            throw new GlobalException(ShareExceptionType.SHARE_IS_CANCELED);
+        }
+    }
 }

@@ -146,9 +146,13 @@ public class ShareService {
 
     @Transactional
     public void edit(ShareEditRequest request, Long id, Long memberId) throws IOException {
-        isNotWriterThrowException(id, memberId);
-        Member writer = memberService.findByIdOrElseThrow(memberId);
-        Share share = request.toEntity(id, writer);
+        Share findShare = findWithWriterByIdOrElseThrow(id);
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        findShare.isNotWriterThrowException(member);
+        findShare.isClosedThrowException();
+        findShare.isCanceledThrowException();
+
+        Share share = request.toEntity(id, member);
         for (MultipartFile image : request.getImages()) {
             String uploadImageUrl = uploadImage(image);
             share.addShareImage(uploadImageUrl);
@@ -211,13 +215,4 @@ public class ShareService {
         return amazonS3Client.getUrl(bucket, key).toString();
     }
 
-    private void isNotWriterThrowException(Long id, Long memberId) {
-        if (isNotWriter(id, memberId)) {
-            throw new GlobalException(ShareExceptionType.IS_NOT_WRITER);
-        }
-    }
-
-    private boolean isNotWriter(Long id, Long memberId) {
-        return !shareRepository.existsByIdAndWriterId(id, memberId);
-    }
 }

@@ -1,12 +1,9 @@
 package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.MULTIPART;
-import static louie.hanse.shareplate.integration.share.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
@@ -18,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
 @Import(S3MockConfig.class)
 @DisplayName("쉐어 기능 통합 테스트")
@@ -117,40 +113,6 @@ class ShareIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 본인이_등록한_쉐어를_편집한다() {
-        String accessToken = jwtProvider.createAccessToken(2398606895L);
-
-        given(documentationSpec)
-            .filter(document("share-edit-put"))
-            .contentType(MULTIPART)
-            .header(AUTHORIZATION, accessToken)
-            .pathParam("id", 3)
-            .multiPart("images", "수정된 test1.txt", "abcde".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart("images", "수정된 test2.txt", "fhgij".getBytes(), MediaType.TEXT_PLAIN_VALUE)
-            .multiPart(createMultiPartSpecification("title", "수정된 제목"))
-            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그1"))
-            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그2"))
-            .multiPart(createMultiPartSpecification("locationGuide", "강남역 파출소 앞"))
-            .multiPart(createMultiPartSpecification("location", "역삼역"))
-            .multiPart(createMultiPartSpecification("description", "수정된 설명"))
-            .formParam("type", "ingredient")
-            .formParam("price", 13000)
-            .formParam("originalPrice", 26000)
-            .formParam("recruitment", 2)
-            .formParam("locationNegotiation", true)
-            .formParam("priceNegotiation", false)
-            .formParam("latitude", 37.500326)
-            .formParam("longitude", 127.036087)
-            .formParam("closedDateTime", "2022-12-31 14:00")
-
-            .when()
-            .put("/shares/{id}")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
-    }
-
-    @Test
     void 특정_사용자가_작성한_쉐어를_조회한다() {
         given(documentationSpec)
             .param("writerId", 2370842997L)
@@ -163,8 +125,8 @@ class ShareIntegrationTest extends InitIntegrationTest {
             .statusCode(HttpStatus.OK.value())
             .body("writer", equalTo("정현석"))
             .body("thumbnailUrl", containsString("http://"))
-            .body("shareCount", equalTo(1))
-            .body("shares", hasSize(1))
+            .body("shareCount", equalTo(3))
+            .body("shares", hasSize(3))
             .body("shares[0].id", equalTo(1))
             .body("shares[0].thumbnailUrl", containsString("https://"))
             .body("shares[0].title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))

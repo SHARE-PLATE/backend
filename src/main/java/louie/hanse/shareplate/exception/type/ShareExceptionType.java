@@ -17,7 +17,9 @@ public enum ShareExceptionType implements ExceptionType {
     SHARE_ID_IS_NEGATIVE("SHARE010", "쉐어 id는 양수여야 합니다.", BAD_REQUEST),
     SHARE_NOT_FOUND("SHARE011", "존재하지 않는 쉐어입니다.", BAD_REQUEST),
     IS_NOT_WRITER("SHARE012", "쉐어를 작성한 사람만 쉐어를 편집할 수 있습니다.", FORBIDDEN),
-    PATH_VARIABLE_EMPTY_SHARE_ID("SHARE012", "PathVariable의 shareId가 비어있습니다.", BAD_REQUEST);
+    PATH_VARIABLE_EMPTY_SHARE_ID("SHARE013", "PathVariable의 shareId가 비어있습니다.", BAD_REQUEST),
+    SHARE_IS_CLOSED("SHARE014", "마감된 쉐어입니다.", BAD_REQUEST),
+    SHARE_IS_CANCELED("SHARE015", "취소된 쉐어입니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;
