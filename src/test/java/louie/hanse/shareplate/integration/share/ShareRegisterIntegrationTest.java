@@ -7,7 +7,7 @@ import static louie.hanse.shareplate.exception.type.ShareExceptionType.IMAGE_LIM
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.NOT_SUPPORT_IMAGE_TYPE;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.OUT_OF_SCOPE_FOR_KOREA;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.PAST_CLOSED_DATE_TIME;
-import static louie.hanse.shareplate.integration.share.ShareIntegrationTestUtils.createMultiPartSpecification;
+import static louie.hanse.shareplate.integration.share.utils.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
