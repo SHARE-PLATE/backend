@@ -31,7 +31,13 @@ public class ChatRoomService {
 
     @Transactional
     public ChatRoomDetailResponse getDetail(Long id, Long memberId) {
-        ChatRoom chatRoom = findByIdOrElseThrow(id);
+        Optional<ChatRoomMember> chatRoomMemberOptional = chatRoomMemberRepository
+            .findByChatRoomIdAndMemberId(id, memberId);
+        if (chatRoomMemberOptional.isEmpty()) {
+            throw new GlobalException(ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND);
+        }
+        ChatRoomMember chatRoomMember = chatRoomMemberOptional.get();
+        ChatRoom chatRoom = chatRoomMember.getChatRoom();
         Member member = memberService.findByIdOrElseThrow(memberId);
         Optional<ChatLog> chatLogOptional = chatLogRepository.findByMemberIdAndChatRoomId(
             memberId, id);
@@ -42,7 +48,7 @@ public class ChatRoomService {
             ChatLog chatLog = new ChatLog(member, chatRoom);
             chatLogRepository.save(chatLog);
         }
-        return new ChatRoomDetailResponse(chatRoom, member);
+        return new ChatRoomDetailResponse(chatRoomMember, member);
     }
 
     public List<ChatRoomListResponse> getList(Long memberId, ChatRoomType type) {

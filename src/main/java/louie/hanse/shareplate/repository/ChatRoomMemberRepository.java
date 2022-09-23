@@ -19,4 +19,12 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
     void deleteByChatRoomIdAndMemberId(Long chatRoomId, Long memberId);
 
     List<ChatRoomMember> findAllByMemberId(Long memberId);
+
+    @Query("select crm from ChatRoomMember crm "
+        + "join crm.chatRoom cr on cr.type = :type "
+        + "where crm.member.id = :memberId ")
+    List<ChatRoomMember> findAllByMemberIdAndChatRoomType(
+        @Param("memberId") Long memberId, @Param("type") ChatRoomType type);
+
+    Optional<ChatRoomMember> findByChatRoomIdAndMemberId(Long chatRoomId, Long memberId);
 }

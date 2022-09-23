@@ -60,6 +60,7 @@ class ChatRoomIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value())
+            .body("chatRoomMemberId", equalTo(1))
             .body("share.id", equalTo(1))
             .body("share.thumbnailImageUrl", equalTo("https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg"))
             .body("share.title  ", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
