@@ -36,6 +36,7 @@ public class ChatRoomService {
 
     @Transactional
     public ChatRoomDetailResponse getDetail(Long id, Long memberId) {
+        Member member = memberService.findByIdOrElseThrow(memberId);
         Optional<ChatRoomMember> chatRoomMemberOptional = chatRoomMemberRepository
             .findByChatRoomIdAndMemberId(id, memberId);
         if (chatRoomMemberOptional.isEmpty()) {
@@ -43,7 +44,6 @@ public class ChatRoomService {
         }
         ChatRoomMember chatRoomMember = chatRoomMemberOptional.get();
         ChatRoom chatRoom = chatRoomMember.getChatRoom();
-        Member member = memberService.findByIdOrElseThrow(memberId);
         Optional<ChatLog> chatLogOptional = chatLogRepository.findByMemberIdAndChatRoomId(
             memberId, id);
         if (chatLogOptional.isPresent()) {
