@@ -10,6 +10,7 @@ import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.ExceptionType;
+import louie.hanse.shareplate.exception.type.KeywordExceptionType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.NotificationExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
@@ -95,6 +96,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Arrays.stream(WishExceptionType.values()).collect(Collectors.toList()));
         exceptionTypes.addAll(
             Arrays.stream(NotificationExceptionType.values()).collect(Collectors.toList()));
+        exceptionTypes.addAll(
+            Arrays.stream(KeywordExceptionType.values()).collect(Collectors.toList()));
         return exceptionTypes;
     }
 }
