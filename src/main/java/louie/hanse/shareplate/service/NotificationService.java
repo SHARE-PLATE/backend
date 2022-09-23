@@ -121,9 +121,8 @@ public class NotificationService {
         notificationRepository.saveAll(activityNotifications);
 
         for (int i = 0; i < entries.size(); i++) {
-            Long entryMemberId = entries.get(i).getMember().getId();
             messageSendingOperations.convertAndSend(
-                "/queue/notifications/entries/" + entryMemberId, responses.get(i));
+                "/queue/notifications/entries/" + entries.get(i).getId(), responses.get(i));
         }
     }
 
