@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.ChatExceptionType;
 import louie.hanse.shareplate.type.ChatRoomType;
 
 @Entity
@@ -55,5 +57,11 @@ public class ChatRoom {
 
     public boolean isEntry() {
         return type.isEntry();
+    }
+
+    public void shareIsCancelThrowException() {
+        if (share.isCancel()) {
+            new GlobalException(ChatExceptionType.CAN_NOT_WRITE_CHAT);
+        }
     }
 }

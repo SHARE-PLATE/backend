@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.type.ShareType;
@@ -145,6 +146,9 @@ public class Share {
         }
     }
 
+    public boolean isWriter(Member member) {
+        return !isNotWriter(member);
+    }
 
     public int getCurrentRecruitment() {
         return entries.size();
@@ -186,6 +190,16 @@ public class Share {
     public void isCanceledThrowException() {
         if (cancel) {
             throw new GlobalException(ShareExceptionType.SHARE_IS_CANCELED);
+        }
+    }
+
+    public boolean isNotCancel() {
+        return !cancel;
+    }
+
+    public void isWriterAndIsNotCancelThrowException(Member member) {
+        if (isWriter(member) && isNotCancel()) {
+            throw new GlobalException(ChatRoomExceptionType.SHARE_WRITER_CANNOT_LEAVE);
         }
     }
 }
