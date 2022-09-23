@@ -24,4 +24,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
     void deleteAllByMemberIdAndLocation(Long memberId, String location);
 
     List<Keyword> findAllByMemberIdAndLocation(Long memberId, String location);
+
+//    Optional<List<Keyword>> findAllByMemberIdAndLocation(Long memberId, String location);;
 }

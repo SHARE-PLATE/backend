@@ -1,17 +1,20 @@
 package louie.hanse.shareplate.web.dto.keyword;
 
 import com.querydsl.core.annotations.QueryProjection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Keyword;
 
 @Getter
+@NoArgsConstructor
 public class KeywordLocationListResponse {
 
-    private double longitude;
-    private double latitude;
-    private List<KeywordDetailResponse> keywords;
+    private Double longitude;
+    private Double latitude;
+    private List<KeywordDetailResponse> keywords = new ArrayList<>();
 
     @QueryProjection
     public KeywordLocationListResponse(List<Keyword> keywords) {
@@ -21,5 +24,4 @@ public class KeywordLocationListResponse {
             .map(KeywordDetailResponse::new)
             .collect(Collectors.toList());
     }
-
 }
