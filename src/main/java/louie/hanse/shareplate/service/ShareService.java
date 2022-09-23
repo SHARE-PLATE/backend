@@ -116,6 +116,9 @@ public class ShareService {
     }
 
     public ShareDetailResponse getDetail(Long id, String accessToken) {
+        Share share = findByIdOrElseThrow(id);
+        share.isCanceledThrowException();
+
         boolean check = true;
         Long memberId = null;
         try {
@@ -135,8 +138,6 @@ public class ShareService {
             wish = wishRepository.existsByMemberIdAndShareId(memberId, id);
             entry = entryRepository.existsByMemberIdAndShareId(memberId, id);
         }
-
-        Share share = findByIdOrElseThrow(id);
 
         if (check && !entry) {
             entry = shareRepository.existsByIdAndWriterId(id, memberId);
