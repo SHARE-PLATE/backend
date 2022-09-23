@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.EntryService;
 import louie.hanse.shareplate.service.NotificationService;
+import louie.hanse.shareplate.type.ActivityType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class EntryController {
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         entryService.entry(shareId, memberId);
-        notificationService.saveActivityNotificationAndSend(shareId, memberId);
+        notificationService.saveActivityNotificationAndSend(shareId, memberId, ActivityType.ENTRY);
     }
 
     @DeleteMapping("/shares/{shareId}/entry")
@@ -46,6 +47,7 @@ public class EntryController {
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         entryService.cancel(shareId, memberId);
+        notificationService.saveActivityNotificationAndSend(shareId, memberId, ActivityType.ENTRY_CANCEL);
     }
 
 }
