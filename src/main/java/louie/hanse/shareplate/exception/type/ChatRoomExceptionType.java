@@ -5,7 +5,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import org.springframework.http.HttpStatus;
 
 public enum ChatRoomExceptionType implements ExceptionType {
-    SHARE_WRITER_CANNOT_LEAVE("CHATROOM001", "쉐어 작성자는 채팅을 나갈 수 없습니다.", BAD_REQUEST);
+    SHARE_WRITER_CANNOT_LEAVE("CHATROOM001", "쉐어 작성자는 채팅을 나갈 수 없습니다.", BAD_REQUEST),
+    CHAT_ROOM_NOT_FOUND("CHATROOM005", "존재하지 않는 채팅방입니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;
