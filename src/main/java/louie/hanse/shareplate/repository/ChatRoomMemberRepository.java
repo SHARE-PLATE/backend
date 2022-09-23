@@ -1,7 +1,9 @@
 package louie.hanse.shareplate.repository;
 
 import java.util.List;
+import java.util.Optional;
 import louie.hanse.shareplate.domain.ChatRoomMember;
+import louie.hanse.shareplate.type.ChatRoomType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

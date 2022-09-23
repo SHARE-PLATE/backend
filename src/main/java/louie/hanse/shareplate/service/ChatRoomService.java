@@ -7,10 +7,14 @@ import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Chat;
 import louie.hanse.shareplate.domain.ChatLog;
 import louie.hanse.shareplate.domain.ChatRoom;
+import louie.hanse.shareplate.domain.ChatRoomMember;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
 import louie.hanse.shareplate.repository.ChatLogRepository;
 import louie.hanse.shareplate.repository.ChatRepository;
+import louie.hanse.shareplate.repository.ChatRoomMemberRepository;
 import louie.hanse.shareplate.repository.ChatRoomRepository;
 import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomDetailResponse;
@@ -24,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatRoomMemberRepository chatRoomMemberRepository;
     private final ChatLogRepository chatLogRepository;
     private final ChatRepository chatRepository;
     private final MemberService memberService;
@@ -52,18 +57,20 @@ public class ChatRoomService {
     }
 
     public List<ChatRoomListResponse> getList(Long memberId, ChatRoomType type) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberId(memberId, type);
+        List<ChatRoomMember> chatRoomMembers = chatRoomMemberRepository
+            .findAllByMemberIdAndChatRoomType(memberId, type);
         List<ChatRoomListResponse> chatRoomListResponses = new ArrayList<>();
-        for (ChatRoom chatRoom : chatRooms) {
+        for (ChatRoomMember chatRoomMember : chatRoomMembers) {
+            ChatRoom chatRoom = chatRoomMember.getChatRoom();
             int unreadCount = chatRepository.getUnread(memberId, chatRoom.getId());
             Optional<Chat> optionalChat = chatRepository
                 .findTopByChatRoomIdOrderByWrittenDateTimeDesc(chatRoom.getId());
 
             optionalChat.ifPresentOrElse(
                 chat -> chatRoomListResponses.add(
-                    new ChatRoomListResponse(chatRoom, chat, unreadCount, memberId)),
+                    new ChatRoomListResponse(chatRoomMember, chat, unreadCount, memberId)),
                 () -> chatRoomListResponses.add(
-                    new ChatRoomListResponse(chatRoom, unreadCount, memberId))
+                    new ChatRoomListResponse(chatRoomMember, unreadCount, memberId))
             );
         }
         return chatRoomListResponses;

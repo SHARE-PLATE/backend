@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import louie.hanse.shareplate.domain.Chat;
 import louie.hanse.shareplate.domain.ChatRoom;
+import louie.hanse.shareplate.domain.ChatRoomMember;
 import louie.hanse.shareplate.domain.Entry;
 import louie.hanse.shareplate.domain.Member;
 
@@ -13,6 +14,7 @@ import louie.hanse.shareplate.domain.Member;
 public class ChatRoomListResponse {
 
     private Long id;
+    private Long chatRoomMemberId;
     private String shareThumbnailImageUrl;
     private int currentRecruitment;
     private boolean cancel;
@@ -22,8 +24,11 @@ public class ChatRoomListResponse {
     private List<String> recruitmentMemberImageUrls;
     private int unreadCount;
 
-    public ChatRoomListResponse(ChatRoom chatRoom, Chat chat, int unreadCount, Long memberId) {
+    public ChatRoomListResponse(ChatRoomMember chatRoomMember, Chat chat, int unreadCount,
+        Long memberId) {
+        ChatRoom chatRoom = chatRoomMember.getChatRoom();
         this.id = chatRoom.getId();
+        this.chatRoomMemberId = chatRoomMember.getId();
         this.shareThumbnailImageUrl = chatRoom.getShare().getShareImages().get(0).getImageUrl();
         this.currentRecruitment = chatRoom.getShare().getCurrentRecruitment();
         this.cancel = chatRoom.getShare().isCancel();
@@ -38,8 +43,10 @@ public class ChatRoomListResponse {
         this.unreadCount = unreadCount;
     }
 
-    public ChatRoomListResponse(ChatRoom chatRoom, int unreadCount, Long memberId) {
+    public ChatRoomListResponse(ChatRoomMember chatRoomMember, int unreadCount, Long memberId) {
+        ChatRoom chatRoom = chatRoomMember.getChatRoom();
         this.id = chatRoom.getId();
+        this.chatRoomMemberId = chatRoomMember.getId();
         this.shareThumbnailImageUrl = chatRoom.getShare().getShareImages().get(0).getImageUrl();
         this.currentRecruitment = chatRoom.getShare().getCurrentRecruitment();
         this.cancel = chatRoom.getShare().isCancel();
