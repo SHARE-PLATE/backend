@@ -49,6 +49,12 @@
       ws.subscribe("/queue/notifications/entries/7", function (message) {
         var messageContents = JSON.parse(message.body);
       });
+      ws.subscribe("/queue/notifications/entries/8", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
+      ws.subscribe("/queue/notifications/entries/12", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
     });
   }
   connect();
