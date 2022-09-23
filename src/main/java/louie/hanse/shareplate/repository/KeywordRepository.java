@@ -25,5 +25,4 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
 
     List<Keyword> findAllByMemberIdAndLocation(Long memberId, String location);
 
-//    Optional<List<Keyword>> findAllByMemberIdAndLocation(Long memberId, String location);;
 }
