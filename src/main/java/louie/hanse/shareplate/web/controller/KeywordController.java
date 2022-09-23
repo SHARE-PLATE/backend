@@ -3,12 +3,14 @@ package louie.hanse.shareplate.web.controller;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.KeywordService;
 import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordLocationListResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterRequest;
 import louie.hanse.shareplate.web.dto.keyword.KeywordRegisterResponse;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/keywords")
 @RestController
+@Validated
 public class KeywordController {
 
     private final KeywordService keywordService;
@@ -40,7 +43,7 @@ public class KeywordController {
 
     @PostMapping
     public KeywordRegisterResponse register(
-        @RequestBody KeywordRegisterRequest keywordRegisterRequest,
+        @RequestBody @Valid KeywordRegisterRequest keywordRegisterRequest,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return keywordService.register(keywordRegisterRequest, memberId);

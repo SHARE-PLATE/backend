@@ -1,4 +1,4 @@
-package louie.hanse.shareplate.validator;
+package louie.hanse.shareplate.validator.share;
 
 import java.util.List;
 import javax.validation.ConstraintValidator;
