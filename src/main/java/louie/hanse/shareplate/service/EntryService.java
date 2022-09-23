@@ -32,6 +32,7 @@ public class EntryService {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
 
+        share.isCanceledThrowException();
         if (share.isEnd()) {
             throw new GlobalException(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN);
         }
@@ -52,6 +53,8 @@ public class EntryService {
     public void cancel(Long shareId, Long memberId) {
         memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
+
+        share.isCanceledThrowException();
         if (!isExistEntry(shareId, memberId)) {
             throw new GlobalException(EntryExceptionType.SHARE_NOT_JOINED);
         }
