@@ -1,5 +1,6 @@
 package louie.hanse.shareplate.repository;
 
+import java.util.List;
 import louie.hanse.shareplate.domain.ChatRoomMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
         @Param("chatRoomId") Long chatRoomId, @Param("memberId") Long memberId);
 
     void deleteByChatRoomIdAndMemberId(Long chatRoomId, Long memberId);
+
+    List<ChatRoomMember> findAllByMemberId(Long memberId);
 }
