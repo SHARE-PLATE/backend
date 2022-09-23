@@ -2,6 +2,7 @@ package louie.hanse.shareplate.integration.keyword;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
@@ -38,6 +39,26 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
             .body("latitude", equalTo(37.51326F))
             .body("keywords[0].id", equalTo(6))
             .body("keywords[0].contents", equalTo("햄버거"));
+    }
+
+    @Test
+    void 내가_등록한_키워드에_등록하지_않았던_주소를_조회한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        given(documentationSpec)
+            .filter(document("keyword-request-new-location"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .param("location", "가정동")
+
+            .when()
+            .get("/keywords/location")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("longitude", equalTo(null))
+            .body("latitude", equalTo(null))
+            .body("keywords", hasSize(0));
     }
 
 }

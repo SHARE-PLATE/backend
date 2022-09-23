@@ -1,28 +1,25 @@
 package louie.hanse.shareplate.integration.entry;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.integration.entry.utils.EntryIntegrationTestUtils.getShareRegisterRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.List;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.ShareService;
-import louie.hanse.shareplate.type.ShareType;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.mock.web.MockMultipartFile;
 
 @DisplayName("쉐어 참여 취소 기능 통합테스트")
 class EntryCancelIntegrationTest extends InitIntegrationTest {
@@ -147,6 +144,27 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 회원이_취소된_쉐어에_참가_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+
+
+        given(documentationSpec)
+            .filter(document("entry-re-request-cancel-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("shareId", 6)
+
+            .when()
+            .delete("/shares/{shareId}/entry")
+
+            .then()
+            .statusCode(ShareExceptionType.SHARE_IS_CANCELED.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_IS_CANCELED.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_IS_CANCELED.getMessage()));
+    }
+
+    @Test
     void 회원이_한시간_미만_남은_쉐어에_참가_취소_요청한다() throws IOException {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
@@ -176,7 +194,6 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().minusHours(3));
-
         Long shareId = shareService.register(request, 2355841047L);
 
         given(documentationSpec)
@@ -196,18 +213,4 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
             .body("message",
                 equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_CANCEL.getMessage()));
     }
-
-    private ShareRegisterRequest getShareRegisterRequest(LocalDateTime closedDateTime) {
-        MockMultipartFile image = new MockMultipartFile(
-            "이미지", "test.txt".getBytes(StandardCharsets.UTF_8));
-
-        ShareRegisterRequest request = new ShareRegisterRequest(ShareType.DELIVERY,
-            List.of(image),
-            "테스트를 위한 제목", 3000, 12000, 3,
-            "강남역", "코드스쿼드", true, false, List.of("피자", "도미노피자"),
-            37.498095, 127.027610, "도미노 피자에 대해서 어쩌구",
-            closedDateTime);
-        return request;
-    }
-
 }
