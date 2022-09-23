@@ -59,7 +59,9 @@ public class ShareController {
     }
 
     @GetMapping("/{id}")
-    public ShareDetailResponse getDetail(@PathVariable(required = false) @NotNull Long id, HttpServletRequest request) {
+    public ShareDetailResponse getDetail(@PathVariable(required = false)
+    @NotNull(message = "PathVariable의 shareId가 비어있습니다.")
+    @Positive(message = "쉐어 id는 양수여야 합니다.") Long id, HttpServletRequest request) {
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         return shareService.getDetail(id, accessToken);
     }
