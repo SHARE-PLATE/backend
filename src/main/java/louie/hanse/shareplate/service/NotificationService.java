@@ -104,7 +104,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public void saveActivityNotificationAndSend(Long shareId, Long memberId) {
+    public void saveActivityNotificationAndSend(Long shareId, Long memberId, ActivityType activityType) {
         Share share = shareService.findByIdOrElseThrow(shareId);
         Member member = memberService.findByIdOrElseThrow(memberId);
         List<Entry> entries = entryRepository.findAllByShareIdAndMemberId(shareId,
@@ -114,7 +114,7 @@ public class NotificationService {
         List<ActivityNotificationResponse> responses = new ArrayList<>();
         for (Entry entry : entries) {
             ActivityNotification activityNotification = new ActivityNotification(share,
-                entry.getMember(), NotificationType.ACTIVITY, ActivityType.ENTRY, member);
+                entry.getMember(), NotificationType.ACTIVITY, activityType, member);
             activityNotifications.add(activityNotification);
             responses.add(new ActivityNotificationResponse(activityNotification));
         }
