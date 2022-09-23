@@ -59,7 +59,7 @@ public class ChatRoom {
         return type.isEntry();
     }
 
-    public void shareIsCancelAndCanNotChatThrowException() {
+    public void shareIsCancelThrowException() {
         if (share.isCancel()) {
             new GlobalException(ChatExceptionType.CAN_NOT_WRITE_CHAT);
         }
