@@ -34,6 +34,7 @@ public class Chat {
     private LocalDateTime writtenDateTime = LocalDateTime.now();
 
     public Chat(ChatRoom chatRoom, Member writer, String contents) {
+        chatRoom.shareIsCancelAndCanNotChatThrowException();
         this.chatRoom = chatRoom;
         this.writer = writer;
         this.contents = contents;
