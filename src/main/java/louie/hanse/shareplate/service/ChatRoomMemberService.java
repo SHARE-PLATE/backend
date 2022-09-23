@@ -8,6 +8,7 @@ import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.repository.ChatRoomMemberRepository;
 import louie.hanse.shareplate.repository.EntryRepository;
+import louie.hanse.shareplate.web.dto.chatRoomMember.ChatRoomMemberListResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +36,10 @@ public class ChatRoomMemberService {
         }
     }
 
-    public List<Long> getIdList(Long memberId) {
+    public List<ChatRoomMemberListResponse> getChatRoomMemberList(Long memberId) {
         return chatRoomMemberRepository
             .findAllByMemberId(memberId).stream()
-            .map(ChatRoomMember::getId)
+            .map(ChatRoomMemberListResponse::new)
             .collect(Collectors.toList());
     }
 }

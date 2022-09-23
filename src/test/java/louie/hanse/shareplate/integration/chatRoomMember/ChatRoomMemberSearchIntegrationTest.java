@@ -31,6 +31,6 @@ class ChatRoomMemberSearchIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value())
-            .body("idList", hasSize(5));
+            .body("", hasSize(5));
     }
 }
