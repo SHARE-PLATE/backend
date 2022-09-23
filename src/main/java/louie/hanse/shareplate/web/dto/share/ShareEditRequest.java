@@ -12,9 +12,9 @@ import lombok.Setter;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.type.ShareType;
-import louie.hanse.shareplate.validator.ValidLatitude;
-import louie.hanse.shareplate.validator.ValidLongitude;
-import louie.hanse.shareplate.validator.ValidShareImage;
+import louie.hanse.shareplate.validator.share.ValidShareImage;
+import louie.hanse.shareplate.validator.share.ValidShareLatitude;
+import louie.hanse.shareplate.validator.share.ValidShareLongitude;
 import org.springframework.web.multipart.MultipartFile;
 
 @Setter
@@ -56,11 +56,11 @@ public class ShareEditRequest {
 
     private List<@Valid @NotEmpty(message = "요청한 쉐어정보 값이 비어있습니다.") String> hashtags;
 
-    @ValidLatitude
+    @ValidShareLatitude
     @NotNull(message = "요청한 쉐어정보 값이 비어있습니다.")
     private Double latitude;
 
-    @ValidLongitude
+    @ValidShareLongitude
     @NotNull(message = "요청한 쉐어정보 값이 비어있습니다.")
     private Double longitude;
 

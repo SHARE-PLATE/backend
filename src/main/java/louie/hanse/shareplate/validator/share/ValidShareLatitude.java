@@ -1,4 +1,4 @@
-package louie.hanse.shareplate.validator;
+package louie.hanse.shareplate.validator.share;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,11 +9,13 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE,
+    ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {LongitudeValidator.class})
-public @interface ValidLongitude {
-    String message() default "해당 위도, 경도는 대한민국의 범위를 벗어났습니다.";
+@Constraint(validatedBy = {ShareLatitudeValidator.class})
+public @interface ValidShareLatitude {
+
+    String message() default "";
 
     Class<?>[] groups() default {};
 
