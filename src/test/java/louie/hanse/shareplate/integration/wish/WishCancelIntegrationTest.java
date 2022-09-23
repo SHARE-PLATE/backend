@@ -153,4 +153,27 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
             .body("message", equalTo(WishExceptionType.SHARE_NOT_WISH.getMessage()));
     }
 
+    @Test
+    void 회원이_취소된_쉐어에_위시_취소를_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
+
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("shareId", 6);
+
+        given(documentationSpec)
+            .filter(document("wish-re-request-cancel-share"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestParam)
+
+            .when()
+            .delete("/wish-list")
+
+            .then()
+            .statusCode(ShareExceptionType.SHARE_IS_CANCELED.getStatusCode().value())
+            .body("errorCode", equalTo(ShareExceptionType.SHARE_IS_CANCELED.getErrorCode()))
+            .body("message", equalTo(ShareExceptionType.SHARE_IS_CANCELED.getMessage()));
+    }
+
+
 }

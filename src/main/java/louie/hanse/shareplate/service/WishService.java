@@ -26,6 +26,7 @@ public class WishService {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
 
+        share.isCanceledThrowException();
         if (isExistWish(memberId, shareId)) {
             throw new GlobalException(WishExceptionType.SHARE_ALREADY_WISH);
         }
@@ -40,7 +41,9 @@ public class WishService {
     @Transactional
     public void delete(Long memberId, Long shareId) {
         memberService.findByIdOrElseThrow(memberId);
-        shareService.findByIdOrElseThrow(shareId);
+        Share share = shareService.findByIdOrElseThrow(shareId);
+
+        share.isCanceledThrowException();
         if (!isExistWish(memberId, shareId)) {
             throw new GlobalException(WishExceptionType.SHARE_NOT_WISH);
         }
