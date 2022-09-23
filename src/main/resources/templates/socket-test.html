@@ -30,7 +30,7 @@
     methods : {
       sendMessage: function() {
         ws.send("/app/chatrooms/1/chat", {
-          Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjA4MDM0MjYsImlhdCI6MTY2MDc5OTgyNiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.x-2eYffb7wDbjJuB6I38shlr4Zjqe9RyfkBBRDNOxLo'
+          Authorization: 'Access-Token'
         }, JSON.stringify({contents: vm.$data.message}));
       }
     }
@@ -40,7 +40,10 @@
   var ws = Stomp.over(socket);
   function connect() {
     ws.connect({}, function (frame) {
-      ws.subscribe("/topic/chatrooms/1", function (message) {
+      ws.subscribe("/topic/chatroom-members/1", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
+      ws.subscribe("/topic/chatroom-members/2", function (message) {
         var messageContents = JSON.parse(message.body);
       });
       ws.subscribe("/queue/notifications/entries/7", function (message) {
