@@ -18,8 +18,8 @@ public class ActivityNotificationResponse {
     private ActivityType activityType;
 
     public ActivityNotificationResponse(ActivityNotification activityNotification) {
-        this.recruitmentMemberNickname = activityNotification.getActivityType().equals(ActivityType.ENTRY) ?
-                activityNotification.getEntryMember().getNickname() : null;
+        this.recruitmentMemberNickname = activityNotification.isDeadLine() ?
+            null : activityNotification.getEntryMember().getNickname();
         this.notificationCreatedDateTime = activityNotification.getCreatedDateTime();
         this.shareTitle = activityNotification.getShare().getTitle();
         this.shareThumbnailImageUrl = activityNotification.getShare().getShareImages().get(0)

@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.NotificationService;
 import louie.hanse.shareplate.service.ShareService;
+import louie.hanse.shareplate.type.ActivityType;
 import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
@@ -75,10 +76,11 @@ public class ShareController {
     }
 
     @DeleteMapping("/{id}")
-    public void cancel(@PathVariable @Positive(message = "쉐어 id는 양수여야 합니다.") Long id
-        , HttpServletRequest request) {
+    public void cancel(@PathVariable @Positive(message = "쉐어 id는 양수여야 합니다.") Long id,
+        HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         shareService.cancel(id, memberId);
+        notificationService.saveActivityNotificationAndSend(id, memberId, ActivityType.SHARE_CANCEL);
     }
 
     @GetMapping("/recommendation")

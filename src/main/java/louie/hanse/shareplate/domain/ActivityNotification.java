@@ -36,4 +36,8 @@ public class ActivityNotification extends Notification {
         super(share, member, type);
         this.activityType = activityType;
     }
+
+    public boolean isDeadLine() {
+        return activityType.isDeadLine();
+    }
 }
