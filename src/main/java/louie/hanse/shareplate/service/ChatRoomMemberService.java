@@ -1,5 +1,7 @@
 package louie.hanse.shareplate.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.ChatRoomMember;
 import louie.hanse.shareplate.domain.Share;
@@ -27,5 +29,12 @@ public class ChatRoomMemberService {
         if (share.isNotEnd()) {
             entryRepository.deleteByMemberIdAndShareId(memberId, share.getId());
         }
+    }
+
+    public List<Long> getIdList(Long memberId) {
+        return chatRoomMemberRepository
+            .findAllByMemberId(memberId).stream()
+            .map(ChatRoomMember::getId)
+            .collect(Collectors.toList());
     }
 }

@@ -1,10 +1,10 @@
-package louie.hanse.shareplate.integration.share;
+package louie.hanse.shareplate.integration.share.utils;
 
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.specification.MultiPartSpecification;
 import java.nio.charset.StandardCharsets;
 
-class ShareIntegrationTestUtils {
+public class ShareIntegrationTestUtils {
 
     public static MultiPartSpecification createMultiPartSpecification(String name, Object value) {
         return new MultiPartSpecBuilder(value)

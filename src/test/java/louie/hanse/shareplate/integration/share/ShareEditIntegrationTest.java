@@ -14,7 +14,7 @@ import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_INF
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_IS_CANCELED;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_IS_CLOSED;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
-import static louie.hanse.shareplate.integration.share.ShareIntegrationTestUtils.createMultiPartSpecification;
+import static louie.hanse.shareplate.integration.share.utils.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
