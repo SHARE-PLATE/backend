@@ -48,7 +48,7 @@ public class ShareController {
 
     @GetMapping
     public List<ShareSearchResponse> searchAroundMember(
-        ShareSearchRequest shareSearchRequest) {
+        @Valid ShareSearchRequest shareSearchRequest) {
         return shareService.searchAroundMember(shareSearchRequest);
     }
 
