@@ -4,7 +4,6 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import louie.hanse.shareplate.config.S3MockConfig;
@@ -22,21 +21,6 @@ class ShareIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     JwtProvider jwtProvider;
-
-    @Test
-    void 검색한_키워드가_포함된_회원_주변의_쉐어를_추천한다() {
-        given(documentationSpec)
-            .filter(document("share-recommendation-get"))
-            .accept(APPLICATION_JSON_VALUE)
-            .param("latitude", 36.6576769)
-            .param("long천itude", 128.3007637)
-
-            .when()
-            .get("/shares/recommendation")
-
-            .then()
-            .statusCode(HttpStatus.OK.value());
-    }
 
     @Test
     void 특정_사용자가_작성한_쉐어를_조회한다() {
