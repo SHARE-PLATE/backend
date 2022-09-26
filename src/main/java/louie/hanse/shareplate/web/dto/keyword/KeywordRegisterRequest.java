@@ -11,7 +11,7 @@ import louie.hanse.shareplate.validator.keyword.ValidKeywordLongitude;
 public class KeywordRegisterRequest {
 
     @NotBlank(message = "요청한 키워드정보 필드값이 비어있습니다.")
-    private String keyword;
+    private String contents;
 
     @NotBlank(message = "요청한 키워드정보 필드값이 비어있습니다.")
     private String location;
@@ -23,6 +23,6 @@ public class KeywordRegisterRequest {
     private Double longitude;
 
     public Keyword toEntity(Member member) {
-        return new Keyword(member, keyword, location, latitude, longitude);
+        return new Keyword(member, contents, location, latitude, longitude);
     }
 }

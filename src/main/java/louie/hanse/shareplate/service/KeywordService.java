@@ -25,6 +25,11 @@ public class KeywordService {
     @Transactional
     public KeywordRegisterResponse register(KeywordRegisterRequest request, Long memberId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
+        boolean existKeyword = keywordRepository.existsByMemberIdAndContentsAndLocation(memberId,
+            request.getContents(), request.getLocation());
+        if (existKeyword) {
+            throw new GlobalException(KeywordExceptionType.DUPLICATE_KEYWORD);
+        }
         Keyword keyword = request.toEntity(member);
         keywordRepository.save(keyword);
         return new KeywordRegisterResponse(keyword);

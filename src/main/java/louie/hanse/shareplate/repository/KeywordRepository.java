@@ -29,4 +29,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
     @Query("select k from Keyword k join fetch k.member where k.id = :id")
     Optional<Keyword> findWithMemberById(@Param("id") Long id);
 
+    boolean existsByMemberIdAndContentsAndLocation(Long memberId, String contents, String location);
+
 }
