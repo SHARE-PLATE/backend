@@ -37,7 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
             .addPathPatterns("/members", "/members/location", "/shares", "/shares/mine",
                 "/shares/{id}", "/shares/{id}/entry", "/entries", "/wish-list", "/chatrooms/{id}",
                 "/chat-logs/update-read-time", "/chats/unread", "/chatroom-members",
-                "/chatrooms", "/keywords", "/keywords/location", "/notifications/activity", "/notifications/keyword",
+                "/chatrooms", "/keywords", "/keywords/{id}","/keywords/location", "/notifications/activity", "/notifications/keyword",
                 "/notifications/{id}", "/notifications")
             .excludePathPatterns("/shares/recommendation", "/shares/writer");
 

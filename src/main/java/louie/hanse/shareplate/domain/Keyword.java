@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.KeywordExceptionType;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,4 +40,9 @@ public class Keyword {
         this.longitude = longitude;
     }
 
+    public void isNotMemberThrowException(Member member) {
+        if (!this.member.equals(member)) {
+            throw new GlobalException(KeywordExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD);
+        }
+    }
 }
