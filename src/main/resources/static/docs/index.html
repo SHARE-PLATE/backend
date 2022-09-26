@@ -693,8 +693,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDAsImlhdCI6MTY2Mzk1ODUwMCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.ec5r4WbAmsuW7RZHpnb3Fe-NgBO8lJes3NjEWp4YEuA
-Content-Type: multipart/form-data; boundary="F0lK3Z7-vz2PF48VtFcmgarGhOzQ5Ga"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzODksImlhdCI6MTY2NDE5NTc4OSwibWVtYmVySWQiOjIzNTU4NDEwMzN9.Gx1OaDVNcCI-cgA0SfsdTawZo0VBPtZVeBJxEhbK7Fc
+Content-Type: multipart/form-data; boundary="-KUCzUrJhwR4PQNpjcUxDRr6URwboUHlAmZo"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=test1.jpg
@@ -813,7 +813,7 @@ Content-Type: application/json
 <h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares?type=delivery&amp;keyword=%EB%96%A1%EB%B3%B6%EC%9D%B4&amp;latitude=36.6576769&amp;longitude=128.3007637 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares?type=delivery&amp;keyword=%20%20%20&amp;latitude=36.6576769&amp;longitude=128.3007637 HTTP/1.1
 Accept: application/json</code></pre>
 </div>
 </div>
@@ -822,24 +822,13 @@ Accept: application/json</code></pre>
 <h3 id="_response_2"><a class="link" href="#_response_2">Response</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
 Content-Type: application/json
 
-[ {
-  "id" : 1,
-  "thumbnailUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
-  "title" : "강남역에서 떡볶이 먹을 사람 모집합니다.",
-  "location" : "강남역",
-  "latitude" : 36.6576769,
-  "longitude" : 128.3007637,
-  "price" : 10000,
-  "originalPrice" : 30000,
-  "currentRecruitment" : 3,
-  "finalRecruitment" : 3,
-  "writerId" : 2370842997,
-  "createdDateTime" : "2022-08-03 16:00",
-  "closedDateTime" : "2023-08-03 16:00"
-} ]</code></pre>
+{
+  "errorCode" : "SHARE001",
+  "message" : "요청한 쉐어정보 값이 비어있습니다."
+}</code></pre>
 </div>
 </div>
 </div>
@@ -886,7 +875,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=entry&amp;shareType=delivery&amp;isExpired=false HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwOTgsImlhdCI6MTY2Mzk1ODQ5OCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.hYeuJIde52_RLOMfED6cbLPqe2S1Yyjfo8Qe1B2AdCo</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzODcsImlhdCI6MTY2NDE5NTc4NywibWVtYmVySWQiOjIzNTU4NDEwNDd9.GH9JS2YoyMZksTbJiS4q-ERQuZxjRwoWhtICLeq0LZ4</code></pre>
 </div>
 </div>
 </div>
@@ -925,7 +914,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=writer&amp;shareType=delivery&amp;isExpired=false HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwOTgsImlhdCI6MTY2Mzk1ODQ5OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.b0yTKI06oV4bJXGHB1HHraOVbiJPUoBf0t4koJeW_yc</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzODcsImlhdCI6MTY2NDE5NTc4NywibWVtYmVySWQiOjIzNzA4NDI5OTd9.OQrxbASybDrxWkTJudw-lNUnqm7HCOnp1e3gnvM1BVk</code></pre>
 </div>
 </div>
 </div>
@@ -964,7 +953,7 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /shares/mine?mineType=wish&amp;shareType=ddddddd&amp;isExpired=false HTTP/1.1
 Accept: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwOTgsImlhdCI6MTY2Mzk1ODQ5OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.b0yTKI06oV4bJXGHB1HHraOVbiJPUoBf0t4koJeW_yc</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzODcsImlhdCI6MTY2NDE5NTc4NywibWVtYmVySWQiOjIzNzA4NDI5OTd9.OQrxbASybDrxWkTJudw-lNUnqm7HCOnp1e3gnvM1BVk</code></pre>
 </div>
 </div>
 </div>
@@ -1020,8 +1009,8 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /shares/3 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODgsImlhdCI6MTY2Mzk1ODQ4OCwibWVtYmVySWQiOjIzNTU4NDEwMzN9._-N5Bwv6266nkW47bwFRDOWN_obPWIqRXjJwupJeVfQ
-Content-Type: multipart/form-data; boundary="QXRiSgYRSsVKzN9rjn_gTZC4Qn9ZF7-EH9VVbe"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNzcsImlhdCI6MTY2NDE5NTc3NywibWVtYmVySWQiOjIzNTU4NDEwMzN9.e8jBu1gvV7OIOJ_OVdcAB_iNMMEbPzoNR5iiN7ujPDc
+Content-Type: multipart/form-data; boundary="i4pwBMmrieTWO31QlTfxtUuXRgFah2PqSI5Wfk4"; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=images; filename=test1.jpg
@@ -1141,7 +1130,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/1000000000 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODMsImlhdCI6MTY2Mzk1ODQ4MywibWVtYmVySWQiOjIzNTU4NDEwMzN9.kl9uw8AZvXxt0S7ZxeVZCai7rnY4C4Eq27nLIOfzDgE</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNzIsImlhdCI6MTY2NDE5NTc3MiwibWVtYmVySWQiOjIzNTU4NDEwMzN9.UnZN22M2-V0Z--D1jQYuvX8I6L4QfVYoOf9ChQHQoKA</code></pre>
 </div>
 </div>
 </div>
@@ -1173,7 +1162,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/4 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODQsImlhdCI6MTY2Mzk1ODQ4NCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.bqbJ0LyJWX8Zz8Gcm4QChUJx4a-dmUtA6LwbfuYCPak</code></pre>
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNzMsImlhdCI6MTY2NDE5NTc3MywibWVtYmVySWQiOjIzNTU4NDEwMzN9.tDQCJ68tkmJSdvm4ayxuPC71ezLBTTCJeo819AuuHt8</code></pre>
 </div>
 </div>
 </div>
@@ -1195,7 +1184,7 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4i
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODAsImlhdCI6MTY2Mzk1ODQ4MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.NxHC75giJH1Lz4tzgfl80gG80iHJtIZNGZWKtZWNOQQ
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjgsImlhdCI6MTY2NDE5NTc2OCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Ic3cwMKX3i_wBws7gByv2yf8R_fxdsZ3zsR2Bu7Wn-0
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1225,7 +1214,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /members HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODAsImlhdCI6MTY2Mzk1ODQ4MCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.CCa3tWSXAwE-wnTcQwEMo5Q8DiUnbghB_Pm4PblZMpM
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjgsImlhdCI6MTY2NDE5NTc2OCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.drH-zS9L4SoLcj_Vvqw1jCALnOB2yITigY6TzJQlYp0
 Content-Type: application/json
 
 {
@@ -1254,7 +1243,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/3/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzcsImlhdCI6MTY2Mzk1ODQ3NywibWVtYmVySWQiOjIzNTU4NDEwMzN9.Fnz7w15dTGle2oQA8mR9H9scx41rUJbxCODZezmZSuI
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjUsImlhdCI6MTY2NDE5NTc2NSwibWVtYmVySWQiOjIzNTU4NDEwMzN9.24LUEMBuTWaJhrtgOW50x92On_c_MmmcJBBGqiQaCpA
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1277,7 +1266,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/2222/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzYsImlhdCI6MTY2Mzk1ODQ3NiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.cE69FPrgGpoGf1wLWTiLwnKC-S1svVl6-vEZOjDOScU
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjMsImlhdCI6MTY2NDE5NTc2MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.oNsOOLBdXs_4eHGWr-ojPMWvUnboE-9PIIypyDt9TEA
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1306,7 +1295,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/1/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzcsImlhdCI6MTY2Mzk1ODQ3NywibWVtYmVySWQiOjIzNTU4NDEwNDd9.OMjTWTy9pZ6Wryd_7Yq0J8qI27uoIowSdzB1z5D5hMk
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjQsImlhdCI6MTY2NDE5NTc2NCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.vC2ZYGl_Uv6riwo_vPZz8dn_YPuli7nICUSvj-vGpy0
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1335,7 +1324,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/1/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzYsImlhdCI6MTY2Mzk1ODQ3NiwibWVtYmVySWQiOjIzNTU4NDEwMzN9.AALU7qFVEhD2DAckCxvqF_dtOuzgTz2iz9gV5Tu4BU0
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjMsImlhdCI6MTY2NDE5NTc2MywibWVtYmVySWQiOjIzNTU4NDEwMzN9.wh3lVn8TDEjuanCPoYUf4oqNysIx_7TovmyE0wescgE
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1364,7 +1353,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/9/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzcsImlhdCI6MTY2Mzk1ODQ3NywibWVtYmVySWQiOjIzNTU4NDEwMzN9.Fnz7w15dTGle2oQA8mR9H9scx41rUJbxCODZezmZSuI
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjQsImlhdCI6MTY2NDE5NTc2NCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.p8MaVtwWLmZTvuQ37vZHLWPW5YZxjpmnqCJAIvxDQrk
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1393,7 +1382,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /shares/2222/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzYsImlhdCI6MTY2Mzk1ODQ3NiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.cE69FPrgGpoGf1wLWTiLwnKC-S1svVl6-vEZOjDOScU
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjMsImlhdCI6MTY2NDE5NTc2MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.oNsOOLBdXs_4eHGWr-ojPMWvUnboE-9PIIypyDt9TEA
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1422,7 +1411,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/4/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzUsImlhdCI6MTY2Mzk1ODQ3NSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.UxVQsAjrf6QH_HqcTEtJyIKsoTdwWLx6nlMRTSFxOyg
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjIsImlhdCI6MTY2NDE5NTc2MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Rj0qegL5XnZch-pZHXCM5nztD_2dLeWVJ-FVwbrNiyU
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1451,7 +1440,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/7/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzMsImlhdCI6MTY2Mzk1ODQ3MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.xuN5wFOqVDBn-4UZTXGACTKaPID3QkZwAD00l8y9Ukc
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjAsImlhdCI6MTY2NDE5NTc2MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.uOMzCCHSiFO9r25RUFFFI9UHiTwZP9Z4I3U_9M1oqFg
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1480,7 +1469,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/8/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzQsImlhdCI6MTY2Mzk1ODQ3NCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.pQna_tj3gCcJxHkIqKCkV-7BkEWSitGCIcDMqp6h_vk
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjEsImlhdCI6MTY2NDE5NTc2MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.-7vNpHoUt-87wgtnpFWeH6Vmur4YcDAvlYp4Sw-1PbA
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1509,7 +1498,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /entries HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzgsImlhdCI6MTY2Mzk1ODQ3OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.WfwUFnLsHgnSMyo2mXzFFEnYx-KzrXnybV2y43Bi6CY
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjUsImlhdCI6MTY2NDE5NTc2NSwibWVtYmVySWQiOjIzNzA4NDI5OTd9.OgvWEua7TLD9ibGnq6GYVt7AjknoH6DEYCrtYy8Fv9s
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1537,7 +1526,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /shares/8/entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzQsImlhdCI6MTY2Mzk1ODQ3NCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.pQna_tj3gCcJxHkIqKCkV-7BkEWSitGCIcDMqp6h_vk
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjEsImlhdCI6MTY2NDE5NTc2MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.-7vNpHoUt-87wgtnpFWeH6Vmur4YcDAvlYp4Sw-1PbA
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1566,7 +1555,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDEsImlhdCI6MTY2Mzk1ODUwMSwibWVtYmVySWQiOjIzNTU4NDEwMzN9.CGUGCPuzIZbuRlMKzHJ6K223P0uloYCK1D4Dc9UN6cg
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTEsImlhdCI6MTY2NDE5NTc5MSwibWVtYmVySWQiOjIzNTU4NDEwMzN9.hKEcBLFu_W-7dNnBD9Ydh5GIFN3OCn7xHgzca1LLtBE
 Content-Type: application/json
 
 {
@@ -1593,7 +1582,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDIsImlhdCI6MTY2Mzk1ODUwMiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Bg6fnVHF-0scUKVQeIeluexEAyF2igeKXTNBMty3pKI
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTEsImlhdCI6MTY2NDE5NTc5MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.WDQ3gvdHo6hTdwrPjOvdH1jYk7xDSy_75U8mSVkZsPc
 Content-Type: application/json
 
 {
@@ -1626,7 +1615,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDEsImlhdCI6MTY2Mzk1ODUwMSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.AsVohwzTA_vMzPAX_sl6ZJLSNY7r09WvfQMQ_FdJsyA
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTEsImlhdCI6MTY2NDE5NTc5MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.WDQ3gvdHo6hTdwrPjOvdH1jYk7xDSy_75U8mSVkZsPc
 Content-Type: application/json
 
 {
@@ -1659,7 +1648,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDIsImlhdCI6MTY2Mzk1ODUwMiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.Bg6fnVHF-0scUKVQeIeluexEAyF2igeKXTNBMty3pKI
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTIsImlhdCI6MTY2NDE5NTc5MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.4fubwAxzD61BqptqdLZnptmIbOu04Li8LuS5qNpAnuQ
 Content-Type: application/json
 
 {
@@ -1692,7 +1681,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDAsImlhdCI6MTY2Mzk1ODUwMCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.GWZAGScd3ft1zWMxxEYjZKM7rx8GTRyintRtEB70SFM
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTAsImlhdCI6MTY2NDE5NTc5MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.BQCBztb0Y_rYuhR5_BJSw1ZiwvT7CShDrzfdrXi4wnU
 Content-Type: application/json
 
 {
@@ -1719,7 +1708,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDEsImlhdCI6MTY2Mzk1ODUwMSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.AsVohwzTA_vMzPAX_sl6ZJLSNY7r09WvfQMQ_FdJsyA
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTEsImlhdCI6MTY2NDE5NTc5MSwibWVtYmVySWQiOjIzNTU4NDEwNDd9.WDQ3gvdHo6hTdwrPjOvdH1jYk7xDSy_75U8mSVkZsPc
 Content-Type: application/json
 
 {
@@ -1752,7 +1741,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /wish-list HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIxMDAsImlhdCI6MTY2Mzk1ODUwMCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.GWZAGScd3ft1zWMxxEYjZKM7rx8GTRyintRtEB70SFM
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzOTAsImlhdCI6MTY2NDE5NTc5MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.BQCBztb0Y_rYuhR5_BJSw1ZiwvT7CShDrzfdrXi4wnU
 Content-Type: application/json
 
 {
@@ -1785,7 +1774,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notifications/activity HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODMsImlhdCI6MTY2Mzk1ODQ4MywibWVtYmVySWQiOjIzNTU4NDEwNDd9.j7bLMBmuZTUx6BwtsWPymyYG_8ComIoFIIEkFgePKM4
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNzIsImlhdCI6MTY2NDE5NTc3MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.3OHv7NrajPSPm78xxQYcPZkG9E2QurnP9ZvgZAt8i6Q
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1817,7 +1806,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notifications/keyword HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODMsImlhdCI6MTY2Mzk1ODQ4MywibWVtYmVySWQiOjIzNzA4NDI5OTd9.oA9mI4h79Oxr2XswltvEXpvKMuO4MGNv84gA1CdISzk
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNzIsImlhdCI6MTY2NDE5NTc3MiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.U9Z2DTY24mplf4DqosGvbfN5SYp9kbEQMOQnxR1K5qw
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1849,7 +1838,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /notifications/5 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODAsImlhdCI6MTY2Mzk1ODQ4MCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.CCa3tWSXAwE-wnTcQwEMo5Q8DiUnbghB_Pm4PblZMpM
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjksImlhdCI6MTY2NDE5NTc2OSwibWVtYmVySWQiOjIzNTU4NDEwMzN9.a2RaBW2Iv74RZ59PteagPhQGBJmnvDlVRzYMv1uajuQ
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1872,7 +1861,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /notifications HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODIsImlhdCI6MTY2Mzk1ODQ4MiwibWVtYmVySWQiOjIzNTU4NDEwNDd9.lRNXxwxKt0nO7eEVXB1DT5--xg_iZRSoqbL2pDTeCac
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDQ3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNzAsImlhdCI6MTY2NDE5NTc3MCwibWVtYmVySWQiOjIzNTU4NDEwNDd9.TE9f0N-DGqBcKi70y_catWMj2FgmPKaJqKjhk9_Ws24
 Content-Type: application/json
 
 {
@@ -1899,7 +1888,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /logout HTTP/1.1
-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODAsImlhdCI6MTY2Mzk1ODQ4MCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.CCa3tWSXAwE-wnTcQwEMo5Q8DiUnbghB_Pm4PblZMpM
+Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzU1ODQxMDMzIiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjgsImlhdCI6MTY2NDE5NTc2OCwibWVtYmVySWQiOjIzNTU4NDEwMzN9.drH-zS9L4SoLcj_Vvqw1jCALnOB2yITigY6TzJQlYp0
 Refresh-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM1NTg0MTAzMyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjo5OTk5OTk5OTk5OSwiaWF0IjoxNjYxMTMxMTgxLCJtZW1iZXJJZCI6MjM1NTg0MTAzM30.NmdUynRyknjHpQJ0zbvoCNzVjjF4JNSB7Uhnql8cZF0
 Content-Type: application/json</code></pre>
 </div>
@@ -1923,7 +1912,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /login/verification HTTP/1.1
-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwODAsImlhdCI6MTY2Mzk1ODQ4MCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.s06gDpp2Ihumbwk2qOHiFFzmdv_tnIBztOYf1ccXj7Q
+Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjgsImlhdCI6MTY2NDE5NTc2OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.nw07I-rcE8x_iZK5xRQ3BG6XDyrw3iIlCF50NnC2ZMg
 Refresh-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoLVRva2VuIiwiYXVkIjoiMjM3MDg0Mjk5NyIsImlzcyI6ImxvdWllMXNlIiwiZXhwIjo5OTk5OTk5OTk5OSwiaWF0IjoxNjYxMTMxMTgxLCJtZW1iZXJJZCI6MjM3MDg0Mjk5N30.YocTTr79m94e3fkMK3HiGe5U96WtHT4pvognZpeIS8A
 Content-Type: application/json</code></pre>
 </div>
@@ -1947,7 +1936,7 @@ Content-Type: application/json</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /chatrooms?type=entry HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNjcsImlhdCI6MTY2Mzk1ODQ2NywibWVtYmVySWQiOjIzNzA4NDI5OTd9.UpyvorRrPjMjDdK5crQi7l_YjwbqI7J1yfcQUYsd9QE
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNTMsImlhdCI6MTY2NDE5NTc1MywibWVtYmVySWQiOjIzNzA4NDI5OTd9.uFsSmeaXHYYyIFgqSHZoJjxue-kmeFE78Oi3P0dUDt0
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -1961,6 +1950,7 @@ Content-Type: application/json
 
 [ {
   "id" : 1,
+  "chatRoomMemberId" : 1,
   "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
   "currentRecruitment" : 3,
   "cancel" : false,
@@ -1971,6 +1961,7 @@ Content-Type: application/json
   "unreadCount" : 1
 }, {
   "id" : 2,
+  "chatRoomMemberId" : 4,
   "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/louie1se/%E1%84%8E%E1%85%B5%E1%84%8F%E1%85%B5%E1%86%AB1.jpeg",
   "currentRecruitment" : 3,
   "cancel" : false,
@@ -1981,6 +1972,7 @@ Content-Type: application/json
   "unreadCount" : 4
 }, {
   "id" : 3,
+  "chatRoomMemberId" : 7,
   "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%91%E1%85%A1.jpeg",
   "currentRecruitment" : 2,
   "cancel" : false,
@@ -1991,6 +1983,7 @@ Content-Type: application/json
   "unreadCount" : 0
 }, {
   "id" : 6,
+  "chatRoomMemberId" : 13,
   "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/%E1%84%83%E1%85%A1%E1%86%BC%E1%84%80%E1%85%B3%E1%86%AB.jpeg",
   "currentRecruitment" : 1,
   "cancel" : false,
@@ -2001,6 +1994,7 @@ Content-Type: application/json
   "unreadCount" : 0
 }, {
   "id" : 7,
+  "chatRoomMemberId" : 14,
   "shareThumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%87%E1%85%A2%E1%84%8E%E1%85%AE.jpeg",
   "currentRecruitment" : 1,
   "cancel" : true,
@@ -2023,7 +2017,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /chatrooms/1 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzAsImlhdCI6MTY2Mzk1ODQ3MCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.htioXLJfqogq0wSKqNGDRl0xK9dYrgFmz3RyOa8VDgU
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNTYsImlhdCI6MTY2NDE5NTc1NiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.zMvZRoL3Qc5PE_80NxRDBdsAXozajCvKlRldwU9EsYU
 Content-Type: application/json</code></pre>
 </div>
 </div>
@@ -2036,6 +2030,7 @@ Content-Type: application/json</code></pre>
 Content-Type: application/json
 
 {
+  "chatRoomMemberId" : 1,
   "share" : {
     "id" : 1,
     "thumbnailImageUrl" : "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg",
@@ -2085,7 +2080,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /keywords HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzgsImlhdCI6MTY2Mzk1ODQ3OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.WfwUFnLsHgnSMyo2mXzFFEnYx-KzrXnybV2y43Bi6CY
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjYsImlhdCI6MTY2NDE5NTc2NiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.OYq9NPr6cRwCf6bbSSFPQ5uCqWekSXDwh5UyU2MQrig
 Content-Type: application/json
 
 {
@@ -2112,7 +2107,7 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /keywords/location?location=%EB%B0%A9%EC%9D%B4%EB%8F%99 HTTP/1.1
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjM5NjIwNzgsImlhdCI6MTY2Mzk1ODQ3OCwibWVtYmVySWQiOjIzNzA4NDI5OTd9.WfwUFnLsHgnSMyo2mXzFFEnYx-KzrXnybV2y43Bi6CY
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3MtVG9rZW4iLCJhdWQiOiIyMzcwODQyOTk3IiwiaXNzIjoibG91aWUxc2UiLCJleHAiOjE2NjQxOTkzNjYsImlhdCI6MTY2NDE5NTc2NiwibWVtYmVySWQiOjIzNzA4NDI5OTd9.OYq9NPr6cRwCf6bbSSFPQ5uCqWekSXDwh5UyU2MQrig
 Content-Type: application/json</code></pre>
 </div>
 </div>

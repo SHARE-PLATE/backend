@@ -27,10 +27,10 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         Map<String, Object> requestBody = Map.of(
-            "location", "목동",
+            "location", "청담동",
             "latitude", 37.524159,
             "longitude", 126.872879,
-            "keyword", "떡볶이"
+            "contents", "떡볶이"
         );
 
         given(documentationSpec)
@@ -52,7 +52,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         Map<String, Object> requestBody = Map.of(
             "location", "목동",
             "longitude", 126.872879,
-            "keyword", "떡볶이"
+            "contents", "떡볶이"
         );
 
         given(documentationSpec)
@@ -77,7 +77,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
             "location", "목동",
             "latitude", 37.524159,
             "longitude", 126.872879,
-            "keyword", "떡볶이"
+            "contents", "떡볶이"
         );
 
         given(documentationSpec)
@@ -95,6 +95,31 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 중복으로_키워드를_등록한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        Map<String, Object> requestBody = Map.of(
+            "location", "목동",
+            "latitude", 37.524159,
+            "longitude", 126.872879,
+            "contents", "떡볶이"
+        );
+
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestBody)
+
+            .when()
+            .post("/keywords")
+
+            .then()
+            .statusCode(KeywordExceptionType.DUPLICATE_KEYWORD.getStatusCode().value())
+            .body("errorCode", equalTo(KeywordExceptionType.DUPLICATE_KEYWORD.getErrorCode()))
+            .body("message", equalTo(KeywordExceptionType.DUPLICATE_KEYWORD.getMessage()));
+    }
+
+    @Test
     void 대한민국_위도_경도가_아닌_지역을_키워드로_등록한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
@@ -102,7 +127,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
             "location", "목동",
             "latitude", 30.524159,
             "longitude", 126.872879,
-            "keyword", "떡볶이"
+            "contents", "떡볶이"
         );
 
         given(documentationSpec)

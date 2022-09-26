@@ -1,6 +1,7 @@
 package louie.hanse.shareplate.repository;
 
 import java.util.List;
+import java.util.Optional;
 import louie.hanse.shareplate.domain.Keyword;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +25,10 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
     void deleteAllByMemberIdAndLocation(Long memberId, String location);
 
     List<Keyword> findAllByMemberIdAndLocation(Long memberId, String location);
+
+    @Query("select k from Keyword k join fetch k.member where k.id = :id")
+    Optional<Keyword> findWithMemberById(@Param("id") Long id);
+
+    boolean existsByMemberIdAndContentsAndLocation(Long memberId, String contents, String location);
 
 }

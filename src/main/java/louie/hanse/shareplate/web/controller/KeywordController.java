@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.KeywordService;
 import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
@@ -50,8 +52,11 @@ public class KeywordController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        keywordService.delete(id);
+    public void delete(
+        @PathVariable(required = false) @NotNull(message = "PathVariable의 keywordId가 비어있습니다.") @Positive(message = "키워드 id는 양수여야 합니다.") Long id,
+        HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        keywordService.delete(id, memberId);
     }
 
     @DeleteMapping

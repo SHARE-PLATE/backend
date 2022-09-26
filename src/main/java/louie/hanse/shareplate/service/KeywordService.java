@@ -4,6 +4,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Keyword;
 import louie.hanse.shareplate.domain.Member;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.KeywordExceptionType;
 import louie.hanse.shareplate.repository.KeywordRepository;
 import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordLocationListResponse;
@@ -23,23 +25,31 @@ public class KeywordService {
     @Transactional
     public KeywordRegisterResponse register(KeywordRegisterRequest request, Long memberId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
+        boolean existKeyword = keywordRepository.existsByMemberIdAndContentsAndLocation(memberId,
+            request.getContents(), request.getLocation());
+        if (existKeyword) {
+            throw new GlobalException(KeywordExceptionType.DUPLICATE_KEYWORD);
+        }
         Keyword keyword = request.toEntity(member);
         keywordRepository.save(keyword);
         return new KeywordRegisterResponse(keyword);
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id, Long memberId) {
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Keyword keyword = findWithMemberByIdOrElseThrow(id);
+        keyword.isNotMemberThrowException(member);
         keywordRepository.deleteById(id);
-    }
-
-    public List<KeywordListResponse> getKeywords(Long memberId) {
-        return keywordRepository.getKeywords(memberId);
     }
 
     @Transactional
     public void deleteAll(Long memberId, String location) {
         keywordRepository.deleteAllByMemberIdAndLocation(memberId, location);
+    }
+
+    public List<KeywordListResponse> getKeywords(Long memberId) {
+        return keywordRepository.getKeywords(memberId);
     }
 
     public KeywordLocationListResponse getLocations(Long memberId, String location) {
@@ -49,5 +59,10 @@ public class KeywordService {
             return new KeywordLocationListResponse();
         }
         return new KeywordLocationListResponse(keywords);
+    }
+
+    private Keyword findWithMemberByIdOrElseThrow(Long id) {
+        return keywordRepository.findWithMemberById(id).orElseThrow(
+            () -> new GlobalException(KeywordExceptionType.KEYWORD_NOT_FOUND));
     }
 }
