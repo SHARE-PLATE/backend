@@ -44,6 +44,26 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    void 내가_등록한_키워드에_등록하지_않았던_주소를_조회한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        given(documentationSpec)
+            .filter(document("keyword-request-new-location"))
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .param("location", "가정동")
+
+            .when()
+            .get("/keywords/location")
+
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .body("longitude", equalTo(null))
+            .body("latitude", equalTo(null))
+            .body("keywords", hasSize(0));
+    }
+
+    @Test
     void RequestParam값을_빈값으로_하여_조회한다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
@@ -58,11 +78,11 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(
-                KeywordExceptionType.REQUEST_PARAM_EMPTY_LOCATION_VALUE.getStatusCode().value())
+                KeywordExceptionType.EMPTY_KEYWORD_INFO.getStatusCode().value())
             .body("errorCode",
-                equalTo(KeywordExceptionType.REQUEST_PARAM_EMPTY_LOCATION_VALUE.getErrorCode()))
+                equalTo(KeywordExceptionType.EMPTY_KEYWORD_INFO.getErrorCode()))
             .body("message",
-                equalTo(KeywordExceptionType.REQUEST_PARAM_EMPTY_LOCATION_VALUE.getMessage()));
+                equalTo(KeywordExceptionType.EMPTY_KEYWORD_INFO.getMessage()));
     }
 
     @Test
@@ -84,24 +104,6 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
             .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
     }
 
-    @Test
-    void 내가_등록한_키워드에_등록하지_않았던_주소를_조회한다() {
-        String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        given(documentationSpec)
-            .filter(document("keyword-request-new-location"))
-            .contentType(ContentType.JSON)
-            .header(AUTHORIZATION, accessToken)
-            .param("location", "가정동")
-
-            .when()
-            .get("/keywords/location")
-
-            .then()
-            .statusCode(HttpStatus.OK.value())
-            .body("longitude", equalTo(null))
-            .body("latitude", equalTo(null))
-            .body("keywords", hasSize(0));
-    }
 
 }
