@@ -49,10 +49,12 @@ public class KeywordService {
     }
 
     public List<KeywordListResponse> getKeywords(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         return keywordRepository.getKeywords(memberId);
     }
 
     public KeywordLocationListResponse getLocations(Long memberId, String location) {
+        memberService.findByIdOrElseThrow(memberId);
         List<Keyword> keywords = keywordRepository.findAllByMemberIdAndLocation(memberId, location);
 
         if (keywords.isEmpty()) {

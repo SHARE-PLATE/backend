@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,8 @@ public class KeywordController {
     }
 
     @GetMapping("/location")
-    public KeywordLocationListResponse getLocations(@RequestParam("location") String location,
+    public KeywordLocationListResponse getLocations(
+        @NotBlank(message = "요청한 키워드정보 필드값이 비어있습니다.") @RequestParam(value = "location", required = false) String location,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return keywordService.getLocations(memberId, location);
