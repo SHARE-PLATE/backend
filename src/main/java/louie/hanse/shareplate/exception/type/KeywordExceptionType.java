@@ -11,7 +11,8 @@ public enum KeywordExceptionType implements ExceptionType {
     KEYWORD_NOT_FOUND("KEYWORD003", "존재하지 않는 키워드입니다.", BAD_REQUEST),
     PATH_VARIABLE_EMPTY_NOTIFICATION_ID("KEYWORD004", "PathVariable의 keywordId가 비어있습니다.", BAD_REQUEST),
     OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD("KEYWORD005", "다른 사용자의 키워드를 삭제할 수 없습니다.", FORBIDDEN),
-    DUPLICATE_KEYWORD("KEYWORD006", "이미 등록된 키워드입니다.", BAD_REQUEST);
+    DUPLICATE_KEYWORD("KEYWORD006", "이미 등록된 키워드입니다.", BAD_REQUEST),
+    REQUEST_PARAM_EMPTY_LOCATION_VALUE("KEYWORD007", "ReqeustParam의 location 값이 비어있습니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;

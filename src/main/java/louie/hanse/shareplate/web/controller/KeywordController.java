@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.KeywordExceptionType;
 import louie.hanse.shareplate.service.KeywordService;
 import louie.hanse.shareplate.web.dto.keyword.KeywordListResponse;
 import louie.hanse.shareplate.web.dto.keyword.KeywordLocationListResponse;
@@ -37,8 +39,12 @@ public class KeywordController {
     }
 
     @GetMapping("/location")
-    public KeywordLocationListResponse getLocations(@RequestParam("location") String location,
+    public KeywordLocationListResponse getLocations(
+        @RequestParam(value = "location", required = false) String location,
         HttpServletRequest request) {
+        if (location.isBlank()) {
+            throw new GlobalException(KeywordExceptionType.REQUEST_PARAM_EMPTY_LOCATION_VALUE);
+        }
         Long memberId = (Long) request.getAttribute("memberId");
         return keywordService.getLocations(memberId, location);
     }

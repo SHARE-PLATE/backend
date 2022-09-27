@@ -54,6 +54,7 @@ public class KeywordService {
     }
 
     public KeywordLocationListResponse getLocations(Long memberId, String location) {
+        memberService.findByIdOrElseThrow(memberId);
         List<Keyword> keywords = keywordRepository.findAllByMemberIdAndLocation(memberId, location);
 
         if (keywords.isEmpty()) {
