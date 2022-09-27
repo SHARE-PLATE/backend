@@ -85,7 +85,7 @@ public class ShareController {
 
     @GetMapping("/recommendation")
     public List<ShareCommonResponse> recommendationAroundMember(
-        ShareRecommendationRequest request) {
+        @Valid ShareRecommendationRequest request) {
         return shareService.recommendationAroundMember(request);
     }
 

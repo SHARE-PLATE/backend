@@ -1,8 +1,6 @@
 package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
-import static louie.hanse.shareplate.exception.type.ShareExceptionType.EMPTY_SHARE_INFO;
-import static louie.hanse.shareplate.exception.type.ShareExceptionType.INCORRECT_TYPE_VALUE;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.OUT_OF_SCOPE_FOR_KOREA;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -52,44 +50,6 @@ class ShareSearchIntegrationTest extends InitIntegrationTest {
             .body("[0].writerId", equalTo(2370842997L))
             .body("[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("[0].closedDateTime", equalTo("2023-08-03 16:00"));
-    }
-
-    @Test
-    void 키워드를_입력하지_않는_경우_예외가_발생한다() {
-        given(documentationSpec)
-            .filter(document("share-search-get"))
-            .accept(APPLICATION_JSON_VALUE)
-            .param("type", "delivery")
-            .param("keyword", "   ")
-            .param("latitude", 36.6576769)
-            .param("longitude", 128.3007637)
-
-            .when()
-            .get("/shares")
-
-            .then()
-            .statusCode(EMPTY_SHARE_INFO.getStatusCode().value())
-            .body("errorCode", equalTo(EMPTY_SHARE_INFO.getErrorCode()))
-            .body("message", equalTo(EMPTY_SHARE_INFO.getMessage()));
-    }
-
-    @Test
-    void 유효하지_않은_타입을_입력하지_않는_경우_예외가_발생한다() {
-        given(documentationSpec)
-            .filter(document("share-search-get"))
-            .accept(APPLICATION_JSON_VALUE)
-            .param("type", "ttttttt")
-            .param("keyword", "햄버거")
-            .param("latitude", 36.6576769)
-            .param("longitude", 128.3007637)
-
-            .when()
-            .get("/shares")
-
-            .then()
-            .statusCode(INCORRECT_TYPE_VALUE.getStatusCode().value())
-            .body("errorCode", equalTo(INCORRECT_TYPE_VALUE.getErrorCode()))
-            .body("message", equalTo(INCORRECT_TYPE_VALUE.getMessage()));
     }
 
     @Test
