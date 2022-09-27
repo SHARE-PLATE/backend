@@ -49,6 +49,7 @@ public class KeywordService {
     }
 
     public List<KeywordListResponse> getKeywords(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         return keywordRepository.getKeywords(memberId);
     }
 
