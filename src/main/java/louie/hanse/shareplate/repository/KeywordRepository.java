@@ -31,4 +31,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
 
     boolean existsByMemberIdAndContentsAndLocation(Long memberId, String contents, String location);
 
+    boolean existsByMemberIdAndLocation(Long memberId, String location);
+
 }
