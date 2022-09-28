@@ -45,6 +45,11 @@ public class KeywordService {
 
     @Transactional
     public void deleteAll(Long memberId, String location) {
+        memberService.findByIdOrElseThrow(memberId);
+        boolean existKeyword = keywordRepository.existsByMemberIdAndLocation(memberId, location);
+        if (!existKeyword) {
+            throw new GlobalException(KeywordExceptionType.KEYWORD_NOT_FOUND);
+        }
         keywordRepository.deleteAllByMemberIdAndLocation(memberId, location);
     }
 
@@ -55,12 +60,17 @@ public class KeywordService {
 
     public KeywordLocationListResponse getLocations(Long memberId, String location) {
         memberService.findByIdOrElseThrow(memberId);
-        List<Keyword> keywords = keywordRepository.findAllByMemberIdAndLocation(memberId, location);
+        List<Keyword> keywords = findAllByMemberIdAndLocation(memberId, location);
 
         if (keywords.isEmpty()) {
             return new KeywordLocationListResponse();
         }
         return new KeywordLocationListResponse(keywords);
+    }
+
+    private List<Keyword> findAllByMemberIdAndLocation(Long memberId, String location) {
+        return keywordRepository.findAllByMemberIdAndLocation(
+            memberId, location);
     }
 
     private Keyword findWithMemberByIdOrElseThrow(Long id) {

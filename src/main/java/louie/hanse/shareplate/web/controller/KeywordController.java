@@ -62,7 +62,9 @@ public class KeywordController {
     }
 
     @DeleteMapping
-    public void deleteAll(@RequestBody Map<String, String> map, HttpServletRequest request) {
+    public void deleteAll(
+        @RequestBody(required = false) @Valid Map<String, @Valid @NotNull(message = "요청한 키워드정보 필드값이 비어있습니다.") String> map,
+        HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         String location = map.get("location");
         keywordService.deleteAll(memberId, location);
