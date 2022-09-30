@@ -36,6 +36,7 @@ class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
             .body("imageUrls[0]", containsString("https://"))
             .body("imageUrls[1]", containsString("https://"))
             .body("writer", equalTo("정현석"))
+            .body("writerId", equalTo(2370842997L))
             .body("writerThumbnailImageUrl", equalTo(
                 "http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
             .body("title", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))

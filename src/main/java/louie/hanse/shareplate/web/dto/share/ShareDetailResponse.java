@@ -16,6 +16,7 @@ public class ShareDetailResponse {
     private Long id;
     private List<String> imageUrls;
     private String writer;
+    private Long writerId;
     private String writerThumbnailImageUrl;
     private String title;
     private List<String> hashtags;
@@ -43,6 +44,7 @@ public class ShareDetailResponse {
             .map(ShareImage::getImageUrl)
             .collect(Collectors.toList());
         this.writer = share.getWriter().getNickname();
+        this.writerId = share.getWriter().getId();
         this.writerThumbnailImageUrl = share.getWriter().getThumbnailImageUrl();
         this.title = share.getTitle();
         this.location = share.getLocation();
