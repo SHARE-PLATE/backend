@@ -11,9 +11,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.type.ShareType;
-import louie.hanse.shareplate.web.dto.share.QShareCommonResponse;
-import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
+import louie.hanse.shareplate.web.dto.share.QShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -48,7 +48,7 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
         ShareRecommendationRequest request) {
         double latitude = request.getLatitude();
         double longitude = request.getLongitude();
-        return queryFactory.select(new QShareCommonResponse(share))
+        return queryFactory.select(new QShareRecommendationResponse(share))
             .from(share)
             .where(
                 titleContains(request.getKeyword()),
