@@ -7,6 +7,7 @@ import louie.hanse.shareplate.domain.Share;
 public class SharePreviewResponse {
 
     private Long id;
+    private Long writerId;
     private String thumbnailImageUrl;
     private String title;
     private int price;
@@ -17,6 +18,7 @@ public class SharePreviewResponse {
 
     public SharePreviewResponse(Share share) {
         this.id = share.getId();
+        this.writerId = share.getWriter().getId();
         this.thumbnailImageUrl = share.getShareImages().get(0).getImageUrl();
         this.title = share.getTitle();
         this.price = share.getPrice();
