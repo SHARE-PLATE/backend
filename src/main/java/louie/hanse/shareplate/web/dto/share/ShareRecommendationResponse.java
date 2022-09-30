@@ -7,9 +7,10 @@ import lombok.Getter;
 import louie.hanse.shareplate.domain.Share;
 
 @Getter
-public class ShareCommonResponse {
+public class ShareRecommendationResponse {
 
     private Long id;
+    private Long writerId;
     private String thumbnailUrl;
     private String title;
     private String location;
@@ -20,8 +21,9 @@ public class ShareCommonResponse {
     private LocalDateTime closedDateTime;
 
     @QueryProjection
-    public ShareCommonResponse(Share share) {
+    public ShareRecommendationResponse(Share share) {
         this.id = share.getId();
+        this.writerId = share.getWriter().getId();
         this.thumbnailUrl = share.getShareImages().get(0).getImageUrl();
         this.title = share.getTitle();
         this.location = share.getLocation();

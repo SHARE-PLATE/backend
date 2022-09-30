@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.NotificationService;
 import louie.hanse.shareplate.service.ShareService;
 import louie.hanse.shareplate.type.ActivityType;
-import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
@@ -84,7 +84,7 @@ public class ShareController {
     }
 
     @GetMapping("/recommendation")
-    public List<ShareCommonResponse> recommendationAroundMember(
+    public List<ShareRecommendationResponse> recommendationAroundMember(
         @Valid ShareRecommendationRequest request) {
         return shareService.recommendationAroundMember(request);
     }

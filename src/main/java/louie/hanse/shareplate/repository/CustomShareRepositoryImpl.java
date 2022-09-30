@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Share;
 import louie.hanse.shareplate.type.ShareType;
 import louie.hanse.shareplate.web.dto.share.QShareCommonResponse;
-import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import org.springframework.util.ObjectUtils;
@@ -44,7 +44,7 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
     }
 
     @Override
-    public List<ShareCommonResponse> recommendationAroundMember(
+    public List<ShareRecommendationResponse> recommendationAroundMember(
         ShareRecommendationRequest request) {
         double latitude = request.getLatitude();
         double longitude = request.getLongitude();
