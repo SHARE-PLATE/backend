@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("알림 조회 기능 통합 테스트")
-class NotificationReadIntegrationTest extends InitIntegrationTest {
+class NotificationSearchIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     ShareService shareService;
@@ -49,6 +49,7 @@ class NotificationReadIntegrationTest extends InitIntegrationTest {
             .body("[0].shareThumbnailImageUrl", equalTo(
                 "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/louie1se/%E1%84%8E%E1%85%B5%E1%84%8F%E1%85%B5%E1%86%AB1.jpeg"))
             .body("[0].shareId", equalTo(2))
+            .body("[0].writerId", equalTo(2355841047L))
             .body("[0].activityType", equalTo("ENTRY"));
     }
 
@@ -74,7 +75,7 @@ class NotificationReadIntegrationTest extends InitIntegrationTest {
     @Test
     void 회원이_키워드_알림_리스트_조회를_요청한다() {
 
-        String accessToken = jwtProvider.createAccessToken(2370842997L);
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
             .filter(document("notification-request-keyword-list"))
@@ -88,6 +89,7 @@ class NotificationReadIntegrationTest extends InitIntegrationTest {
             .statusCode(HttpStatus.OK.value())
             .body("[0].shareLocation", equalTo("강남역"))
             .body("[0].shareId", equalTo(1))
+            .body("[0].writerId", equalTo(2370842997L))
             .body("[0].shareTitle", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
             .body("[0].shareThumbnailImageUrl", equalTo(
                 "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg"))
