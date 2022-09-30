@@ -29,7 +29,7 @@ import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.type.ShareType;
-import louie.hanse.shareplate.web.dto.share.ShareCommonResponse;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
@@ -180,11 +180,11 @@ public class ShareService {
             .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
     }
 
-    public List<ShareCommonResponse> recommendationAroundMember(ShareRecommendationRequest request) {
-        List<ShareCommonResponse> shareCommonResponses = shareRepository
+    public List<ShareRecommendationResponse> recommendationAroundMember(ShareRecommendationRequest request) {
+        List<ShareRecommendationResponse> shareRecommendationResponses = shareRepository
             .recommendationAroundMember(request);
-        Collections.shuffle(shareCommonResponses);
-        return shareCommonResponses;
+        Collections.shuffle(shareRecommendationResponses);
+        return shareRecommendationResponses;
     }
 
     public ShareWriterResponse getWriteByMember(Long writerId) {

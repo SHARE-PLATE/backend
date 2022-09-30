@@ -27,7 +27,7 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
     void 등록한_키워드_주소_삭제를_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, String> requestBody = Collections.singletonMap("location", "방이를");
+        Map<String, String> requestBody = Collections.singletonMap("location", "방이동");
 
         given(documentationSpec)
             .contentType(ContentType.JSON)

@@ -15,6 +15,7 @@ public class ActivityNotificationResponse {
     private String shareTitle;
     private String shareThumbnailImageUrl;
     private Long shareId;
+    private Long writerId;
     private ActivityType activityType;
 
     public ActivityNotificationResponse(ActivityNotification activityNotification) {
@@ -25,6 +26,7 @@ public class ActivityNotificationResponse {
         this.shareThumbnailImageUrl = activityNotification.getShare().getShareImages().get(0)
             .getImageUrl();
         this.shareId = activityNotification.getShare().getId();
+        this.writerId = activityNotification.getShare().getWriter().getId();
         this.activityType = activityNotification.getActivityType();
     }
 }

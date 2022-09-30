@@ -12,7 +12,7 @@ public class ShareWriterResponse {
     private String writer;
     private String thumbnailUrl;
     private int shareCount;
-    private List<ShareCommonResponse> shares;
+    private List<ShareRecommendationResponse> shares;
 
     public ShareWriterResponse(Member writer) {
         List<Share> shares = writer.getShares();
@@ -20,7 +20,7 @@ public class ShareWriterResponse {
         this.thumbnailUrl = writer.getThumbnailImageUrl();
         this.shareCount = shares.size();
         this.shares = shares.stream()
-            .map(ShareCommonResponse::new)
+            .map(ShareRecommendationResponse::new)
             .collect(Collectors.toList());
     }
 }
