@@ -12,12 +12,11 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long>, CustomK
     List<Keyword> findByMemberId(Long memberId);
 
     @Query("select k from Keyword k "
-        + "join k.member m "
+        + "join k.member m on m.id <> :memberId "
         + "where :title like concat('%', k.contents, '%') and "
         + "k.longitude between :longitude1 and :longitude2 and "
-        + "k.latitude between :latitude1 and :latitude2 and "
-        + "m.id <> :memberId")
-    List<Keyword> findAllByContainsContentsAndAroundShareV2(
+        + "k.latitude between :latitude1 and :latitude2 ")
+    List<Keyword> findAllByContainsContentsAndNotMemberIdAndAroundShare(
         @Param("memberId") Long memberId, @Param("title") String title,
         @Param("longitude1") double longitude1, @Param("longitude2") double longitude2,
         @Param("latitude1") double latitude1, @Param("latitude2") double latitude2);
