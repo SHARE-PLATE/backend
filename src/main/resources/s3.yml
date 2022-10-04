@@ -11,4 +11,5 @@ cloud:
     stack:
       auto: false
 
-file.upload.location: louie1se
+file.upload.location.share: louie1se
+file.upload.location.member : louie1se/member

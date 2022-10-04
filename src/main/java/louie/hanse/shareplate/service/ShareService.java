@@ -1,17 +1,11 @@
 package louie.hanse.shareplate.service;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +22,12 @@ import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.type.ShareType;
-import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
+import louie.hanse.shareplate.uploader.FileUpload;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareRecommendationRequest;
+import louie.hanse.shareplate.web.dto.share.ShareRecommendationResponse;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
@@ -49,25 +44,22 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ShareService {
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
-
-    @Value("${file.upload.location}")
-    private String fileUploadLocation;
+    @Value("${file.upload.location.share}")
+    private String fileUploadLocationShare;
 
     private final MemberService memberService;
     private final ShareRepository shareRepository;
     private final WishRepository wishRepository;
     private final EntryRepository entryRepository;
-    private final AmazonS3 amazonS3Client;
     private final JwtProvider jwtProvider;
+    private final FileUpload fileUpload;
 
     @Transactional
     public Long register(ShareRegisterRequest request, Long memberId) throws IOException {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
-            String uploadedImageUrl = uploadImage(image);
+            String uploadedImageUrl = fileUpload.uploadImage(image, fileUploadLocationShare);
             share.addShareImage(uploadedImageUrl);
         }
 
@@ -153,7 +145,7 @@ public class ShareService {
 
         Share share = request.toEntity(id, member);
         for (MultipartFile image : request.getImages()) {
-            String uploadImageUrl = uploadImage(image);
+            String uploadImageUrl = fileUpload.uploadImage(image, fileUploadLocationShare);
             share.addShareImage(uploadImageUrl);
         }
 
@@ -193,25 +185,6 @@ public class ShareService {
     private Share findWithWriterByIdOrElseThrow(Long id) {
         return shareRepository.findWithWriterById(id)
             .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
-    }
-
-    private String uploadImage(MultipartFile image) throws IOException {
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(image.getContentType());
-        objectMetadata.setContentLength(image.getSize());
-
-        String originalImageName = image.getOriginalFilename();
-        String ext = originalImageName.substring(originalImageName.lastIndexOf(".") + 1);
-
-        String storeFileName = UUID.randomUUID() + "." + ext;
-        String key = fileUploadLocation + "/" + storeFileName;
-
-        try (InputStream inputStream = image.getInputStream()) {
-            amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        }
-
-        return amazonS3Client.getUrl(bucket, key).toString();
     }
 
 }
