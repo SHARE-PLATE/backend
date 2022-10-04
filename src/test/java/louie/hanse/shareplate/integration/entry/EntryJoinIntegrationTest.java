@@ -13,7 +13,6 @@ import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import louie.hanse.shareplate.integration.entry.utils.EntryIntegrationTestUtils;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.ShareService;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
@@ -188,7 +187,6 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().minusHours(2));
-        EntryIntegrationTestUtils.getShareRegisterRequest(LocalDateTime.now().minusHours(2));
         Long shareId = shareService.register(request, 2355841033L);
 
         given(documentationSpec)

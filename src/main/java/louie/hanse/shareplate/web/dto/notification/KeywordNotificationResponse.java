@@ -2,8 +2,10 @@ package louie.hanse.shareplate.web.dto.notification;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.Notification;
 
+@NoArgsConstructor
 @Getter
 public class KeywordNotificationResponse {
 
