@@ -16,13 +16,16 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
+import louie.hanse.shareplate.config.S3MockConfig;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 
+@Import(S3MockConfig.class)
 @DisplayName("쉐어 등록 통합 테스트")
 class ShareRegisterIntegrationTest extends InitIntegrationTest {
 

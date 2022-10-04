@@ -23,6 +23,7 @@ import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.EntryRepository;
+import louie.hanse.shareplate.repository.HashtagRepository;
 import louie.hanse.shareplate.repository.ShareRepository;
 import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.ChatRoomType;
@@ -57,6 +58,7 @@ public class ShareService {
 
     private final MemberService memberService;
     private final ShareRepository shareRepository;
+    private final HashtagRepository hashtagRepository;
     private final WishRepository wishRepository;
     private final EntryRepository entryRepository;
     private final AmazonS3 amazonS3Client;

@@ -84,7 +84,7 @@ public class NotificationService {
         Share share = shareService.findByIdOrElseThrow(shareId);
         double longitude = share.getLongitude();
         double latitude = share.getLatitude();
-        List<Keyword> keywords = keywordRepository.findAllByContainsContentsAndNotMemberIdAndAroundShare(
+        List<Keyword> keywords = keywordRepository.findAllByContainsContentsAndAroundShareV2(
             memberId, share.getTitle(), longitude - 2, longitude + 2,
             latitude - 2, latitude + 2);
 
