@@ -8,12 +8,17 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import io.restassured.http.ContentType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("참여 조회 기능 통합테스트")
 class EntrySearchIntegrationTest extends InitIntegrationTest {
+
+    @Autowired
+    JwtProvider jwtProvider;
 
     @Test
     void 회원의_entryId를_요청한다() {

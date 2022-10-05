@@ -14,13 +14,18 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import louie.hanse.shareplate.integration.InitSocketIntegrationTest;
+import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.web.dto.notification.KeywordNotificationResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("웹소켓 키워드 알림 통합 테스트")
 class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest {
+
+    @Autowired
+    JwtProvider jwtProvider;
 
 //    TODO : shareId 검증하도록 구현
     @Test
