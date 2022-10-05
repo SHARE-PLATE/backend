@@ -13,6 +13,7 @@ import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.ShareService;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +23,9 @@ import org.springframework.http.HttpStatus;
 
 @DisplayName("쉐어 참여 기능 통합테스트")
 class EntryJoinIntegrationTest extends InitIntegrationTest {
+
+    @Autowired
+    JwtProvider jwtProvider;
 
     @Autowired
     ShareService shareService;

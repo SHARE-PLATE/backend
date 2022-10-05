@@ -10,12 +10,17 @@ import louie.hanse.shareplate.exception.type.KeywordExceptionType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("키워드 등록 통합 테스트")
 class KeywordRegisterIntegrationTest extends InitIntegrationTest {
+
+    @Autowired
+    JwtProvider jwtProvider;
 
     @Test
     void 새로_생긴_쉐어에_대한_알림을_받을_수_있도록_키워드를_등록한다() {

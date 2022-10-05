@@ -9,6 +9,7 @@ import io.restassured.http.ContentType;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.NotificationExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.service.ShareService;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +22,9 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     ShareService shareService;
+
+    @Autowired
+    JwtProvider jwtProvider;
 
     @Autowired
     MemberRepository memberRepository;

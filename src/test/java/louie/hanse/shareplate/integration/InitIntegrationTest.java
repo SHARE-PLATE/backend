@@ -13,12 +13,10 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import louie.hanse.shareplate.config.S3MockConfig;
-import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
@@ -36,9 +34,6 @@ public class InitIntegrationTest {
 
     @LocalServerPort
     int port;
-
-    @Autowired
-    protected JwtProvider jwtProvider;
 
     protected RequestSpecification documentationSpec;
 
