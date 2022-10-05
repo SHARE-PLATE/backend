@@ -1,6 +1,8 @@
 package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.EMPTY_SHARE_INFO;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -36,5 +38,35 @@ class ShareWriterSearchIntegrationTest extends InitIntegrationTest {
             .body("shares[0].price", equalTo(10000))
             .body("shares[0].createdDateTime", equalTo("2022-08-03 16:00"))
             .body("shares[0].closedDateTime", equalTo("2023-08-03 16:00"));
+    }
+
+    @Test
+    void 만약_writerId를_입력하지_않았다면_예외를_발생시킨다() {
+        given(documentationSpec)
+            .param("writerId", " ")
+            .filter(document("share-write-by-member-get"))
+
+            .when()
+            .get("/shares/writer")
+
+            .then()
+            .statusCode(EMPTY_SHARE_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(EMPTY_SHARE_INFO.getErrorCode()))
+            .body("message", equalTo(EMPTY_SHARE_INFO.getMessage()));
+    }
+
+    @Test
+    void 존재하지_않는_회원에_대한_쉐어를_검색한다면_예외를_발생시킨다() {
+        given(documentationSpec)
+            .param("writerId", "12345")
+            .filter(document("share-write-by-member-get"))
+
+            .when()
+            .get("/shares/writer")
+
+            .then()
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 }
