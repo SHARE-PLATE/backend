@@ -6,7 +6,7 @@ import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.repository.MemberRepository;
-import louie.hanse.shareplate.uploade.FileUploader;
+import louie.hanse.shareplate.uploader.FileUploader;
 import louie.hanse.shareplate.web.dto.member.MemberChangeUserInfoRequest;
 import louie.hanse.shareplate.web.dto.member.MemberUserInfoResponse;
 import org.springframework.stereotype.Service;

@@ -22,7 +22,7 @@ import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.type.ShareType;
-import louie.hanse.shareplate.uploade.FileUploader;
+import louie.hanse.shareplate.uploader.FileUploader;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
