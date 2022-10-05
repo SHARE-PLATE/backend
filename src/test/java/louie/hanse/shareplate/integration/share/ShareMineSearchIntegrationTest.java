@@ -12,17 +12,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("내 쉐어 조회 통합 테스트")
 class ShareMineSearchIntegrationTest extends InitIntegrationTest {
-
-    @Autowired
-    JwtProvider jwtProvider;
 
     @Test
     void 내가_신청한_쉐어를_조회한다() {
