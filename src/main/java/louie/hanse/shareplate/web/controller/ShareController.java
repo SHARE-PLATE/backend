@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -90,7 +91,9 @@ public class ShareController {
     }
 
     @GetMapping("/writer")
-    public ShareWriterResponse getWriteByMember(Long writerId) {
+    public ShareWriterResponse getWriteByMember(
+        @NotNull(message = "요청한 쉐어정보 값이 비어있습니다.") @RequestParam(required = false)
+        Long writerId) {
         return shareService.getWriteByMember(writerId);
     }
 }

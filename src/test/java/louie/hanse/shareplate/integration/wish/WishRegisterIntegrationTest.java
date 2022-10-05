@@ -10,18 +10,13 @@ import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.exception.type.WishExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import louie.hanse.shareplate.jwt.JwtProvider;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("위시 기능 통합 테스트")
 class WishRegisterIntegrationTest extends InitIntegrationTest {
-
-    @Autowired
-    JwtProvider jwtProvider;
 
     @Test
     void 회원이_쉐어를_위시_등록을_요청한다() {

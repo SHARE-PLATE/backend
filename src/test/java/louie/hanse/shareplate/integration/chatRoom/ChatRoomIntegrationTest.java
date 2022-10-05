@@ -7,17 +7,12 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import io.restassured.http.ContentType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("채팅방 기능 통합 테스트")
 class ChatRoomIntegrationTest extends InitIntegrationTest {
-
-    @Autowired
-    JwtProvider jwtProvider;
 
     @Test
     void 회원의_채팅방_목록을_조회한다() {
