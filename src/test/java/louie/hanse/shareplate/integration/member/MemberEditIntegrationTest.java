@@ -80,25 +80,25 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
             .body("errorCode", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getErrorCode()))
             .body("message", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getMessage()));
     }
-//
-//    @Test
-//    void 프로필이미지를_빈값으로_요청하여_정보를_변경한다() {
-//        String accessToken = jwtProvider.createAccessToken(2355841033L);
-//
-//        given(documentationSpec)
-//            .filter(document("member-changed-user-information-by-invalid-member"))
-//            .contentType(MULTIPART)
-//            .header(AUTHORIZATION, accessToken)
-//            .multiPart(createMultiPartSpecification("nickname", "정현석"))
-//
-//            .when()
-//            .put("/members")
-//
-//            .then()
-//            .statusCode(MemberExceptionType.EMPTY_MEMBER_INFO.getStatusCode().value())
-//            .body("errorCode", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getErrorCode()))
-//            .body("message", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getMessage()));
-//    }
+
+    @Test
+    void 프로필이미지를_빈값으로_요청하여_정보를_변경한다() {
+        String accessToken = jwtProvider.createAccessToken(2355841033L);
+
+        given(documentationSpec)
+            .filter(document("member-changed-user-information-by-invalid-member"))
+            .contentType(MULTIPART)
+            .header(AUTHORIZATION, accessToken)
+            .multiPart(createMultiPartSpecification("nickname", "정현석"))
+
+            .when()
+            .put("/members")
+
+            .then()
+            .statusCode(MemberExceptionType.EMPTY_MEMBER_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getErrorCode()))
+            .body("message", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getMessage()));
+    }
 
 //    @Test
 //    void 프로필이미지를_1개_초과로_요청하여_정보를_변경한다() {
