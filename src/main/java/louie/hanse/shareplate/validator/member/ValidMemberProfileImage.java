@@ -11,7 +11,7 @@ import javax.validation.Payload;
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {MemberProfileImageMultipartFileValidator.class})
+@Constraint(validatedBy = {MemberProfileImageValidator.class})
 public @interface ValidMemberProfileImage {
     String message() default "";
 

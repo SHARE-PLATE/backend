@@ -7,7 +7,7 @@ import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
-public class MultipartFileValidator implements ConstraintValidator<ValidShareImage, MultipartFile> {
+public class ShareImageValidator implements ConstraintValidator<ValidShareImage, MultipartFile> {
 
     private static final List<String> enableContentTypes = createEnableContentTypes();
 
