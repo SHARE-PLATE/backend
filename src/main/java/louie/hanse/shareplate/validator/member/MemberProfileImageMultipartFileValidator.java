@@ -5,6 +5,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import org.springframework.http.MediaType;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberProfileImageMultipartFileValidator implements ConstraintValidator<ValidMemberProfileImage, MultipartFile> {
@@ -13,7 +14,14 @@ public class MemberProfileImageMultipartFileValidator implements ConstraintValid
 
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
-//        context.disableDefaultConstraintViolation();
+        context.disableDefaultConstraintViolation();
+
+        if (ObjectUtils.isEmpty(multipartFile)) {
+            context.buildConstraintViolationWithTemplate(
+                    MemberExceptionType.EMPTY_MEMBER_INFO.getMessage())
+                .addConstraintViolation();
+            return false;
+        }
 
         String contentType = multipartFile.getContentType();
 
