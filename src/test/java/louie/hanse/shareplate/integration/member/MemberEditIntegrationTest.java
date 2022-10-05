@@ -11,17 +11,12 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import louie.hanse.shareplate.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("회원 편집 통합 테스트")
 public class MemberEditIntegrationTest extends InitIntegrationTest {
-
-    @Autowired
-    JwtProvider jwtProvider;
 
     @Test
     void 회원의_정보를_변경한다() {
