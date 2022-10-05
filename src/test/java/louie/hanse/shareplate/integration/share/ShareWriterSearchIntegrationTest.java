@@ -9,7 +9,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("쉐어 기능 통합 테스트")
