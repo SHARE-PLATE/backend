@@ -1,4 +1,4 @@
-package louie.hanse.shareplate.uploader;
+package louie.hanse.shareplate.uploade;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -14,14 +14,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class FileUpload {
+public class FileUploader {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+    @Value("${file.upload.location.member}")
+    private String fileUploadLocationMember;
+    @Value("${file.upload.location.share}")
+    private String fileUploadLocationShare;
 
     private final AmazonS3 amazonS3Client;
 
-    public String uploadImage(MultipartFile image, String fileUploadLocation) throws IOException {
+    public String uploadShareImage(MultipartFile image) throws IOException {
+        return uploadImage(image, fileUploadLocationShare);
+    }
+
+    public String uploadMemberImage(MultipartFile image) throws IOException {
+        return uploadImage(image, fileUploadLocationMember);
+    }
+
+    private String uploadImage(MultipartFile image, String fileUploadLocation) throws IOException {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(image.getContentType());
         objectMetadata.setContentLength(image.getSize());

@@ -6,10 +6,9 @@ import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.repository.MemberRepository;
-import louie.hanse.shareplate.uploader.FileUpload;
+import louie.hanse.shareplate.uploade.FileUploader;
 import louie.hanse.shareplate.web.dto.member.MemberChangeUserInfoRequest;
 import louie.hanse.shareplate.web.dto.member.MemberUserInfoResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
 
-    @Value("${file.upload.location.member}")
-    private String fileUploadLocationMember;
-
     private final MemberRepository memberRepository;
-    private final FileUpload fileUpload;
+    private final FileUploader fileUploader;
 
     @Transactional
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) throws IOException {
         Member member = findByIdOrElseThrow(id);
-        String profileImageUrl = fileUpload.uploadImage(request.getProfileImage(), fileUploadLocationMember);
+        String profileImageUrl = fileUploader.uploadMemberImage(request.getProfileImage());
         member.changeProfileImageUrl(profileImageUrl);
         member.changeNickname(request.getNickname());
     }

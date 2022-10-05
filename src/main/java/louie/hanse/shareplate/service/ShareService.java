@@ -22,7 +22,7 @@ import louie.hanse.shareplate.repository.WishRepository;
 import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.type.MineType;
 import louie.hanse.shareplate.type.ShareType;
-import louie.hanse.shareplate.uploader.FileUpload;
+import louie.hanse.shareplate.uploade.FileUploader;
 import louie.hanse.shareplate.web.dto.share.ShareDetailResponse;
 import louie.hanse.shareplate.web.dto.share.ShareEditRequest;
 import louie.hanse.shareplate.web.dto.share.ShareMineSearchRequest;
@@ -32,7 +32,6 @@ import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchRequest;
 import louie.hanse.shareplate.web.dto.share.ShareSearchResponse;
 import louie.hanse.shareplate.web.dto.share.ShareWriterResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -44,22 +43,19 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ShareService {
 
-    @Value("${file.upload.location.share}")
-    private String fileUploadLocationShare;
-
     private final MemberService memberService;
     private final ShareRepository shareRepository;
     private final WishRepository wishRepository;
     private final EntryRepository entryRepository;
     private final JwtProvider jwtProvider;
-    private final FileUpload fileUpload;
+    private final FileUploader fileUploader;
 
     @Transactional
     public Long register(ShareRegisterRequest request, Long memberId) throws IOException {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
-            String uploadedImageUrl = fileUpload.uploadImage(image, fileUploadLocationShare);
+            String uploadedImageUrl = fileUploader.uploadShareImage(image);
             share.addShareImage(uploadedImageUrl);
         }
 
@@ -145,7 +141,7 @@ public class ShareService {
 
         Share share = request.toEntity(id, member);
         for (MultipartFile image : request.getImages()) {
-            String uploadImageUrl = fileUpload.uploadImage(image, fileUploadLocationShare);
+            String uploadImageUrl = fileUploader.uploadShareImage(image);
             share.addShareImage(uploadImageUrl);
         }
 
