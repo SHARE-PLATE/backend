@@ -18,18 +18,14 @@ import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.exception.type.WishExceptionType;
 import louie.hanse.shareplate.web.dto.exception.GlobalExceptionResponse;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(GlobalException.class)
     public GlobalExceptionResponse globalExceptionResponse(GlobalException globalException,
@@ -47,27 +43,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
     }
 
-    @Override
-    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers,
-        HttpStatus status, WebRequest request) {
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<Object> handleBindException(BindException ex) {
         String message = getMessage(ex);
         ExceptionType exceptionType = findExceptionType(message);
         return ResponseEntity.status(exceptionType.getStatusCode())
             .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
     }
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-        MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
-        WebRequest request) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValid(
+        MethodArgumentNotValidException ex) {
         ExceptionType exceptionType = findExceptionType(getMessage(ex));
         return ResponseEntity.status(exceptionType.getStatusCode())
             .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
     }
 
-    @Override
-    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex,
-        HttpHeaders headers, HttpStatus status, WebRequest request) {
+    @ExceptionHandler(TypeMismatchException.class)
+    public ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex) {
         String message = getMessage(ex);
         ExceptionType exceptionType = findExceptionType(message);
         return ResponseEntity.status(exceptionType.getStatusCode())
@@ -85,16 +78,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return null;
     }
 
-    private static String getMessage(ValidationException ex) {
-        return ex.getMessage();
-    }
-
-    private static String getMessage(BindException ex) {
-//        return ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        return ex.getMessage();
-    }
-
-    private static String getMessage(TypeMismatchException ex) {
+    private static String getMessage(Exception ex) {
         return ex.getMessage();
     }
 
