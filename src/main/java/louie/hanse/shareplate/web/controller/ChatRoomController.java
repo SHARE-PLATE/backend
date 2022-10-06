@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ChatRoomService;
 import louie.hanse.shareplate.type.ChatRoomType;
@@ -29,7 +30,8 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/{id}")
-    public ChatRoomDetailResponse chatRoomDetail(@PathVariable Long id,
+    public ChatRoomDetailResponse chatRoomDetail(
+        @PathVariable(required = false) @NotNull(message = "PathVariable의 ChatroomId가 비어있습니다.") @Positive(message = "채팅방 id는 양수여야 합니다.") Long id,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return chatRoomService.getDetail(id, memberId);
