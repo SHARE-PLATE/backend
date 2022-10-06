@@ -78,16 +78,7 @@ public class GlobalExceptionHandler {
         return null;
     }
 
-    private static String getMessage(ValidationException ex) {
-        return ex.getMessage();
-    }
-
-    private static String getMessage(BindException ex) {
-//        return ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        return ex.getMessage();
-    }
-
-    private static String getMessage(TypeMismatchException ex) {
+    private static String getMessage(Exception ex) {
         return ex.getMessage();
     }
 
