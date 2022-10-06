@@ -57,6 +57,7 @@ public class ChatRoomService {
     }
 
     public List<ChatRoomListResponse> getList(Long memberId, ChatRoomType type) {
+        memberService.findByIdOrElseThrow(memberId);
         List<ChatRoomMember> chatRoomMembers = chatRoomMemberRepository
             .findAllByMemberIdAndChatRoomType(memberId, type);
         List<ChatRoomListResponse> chatRoomListResponses = new ArrayList<>();
