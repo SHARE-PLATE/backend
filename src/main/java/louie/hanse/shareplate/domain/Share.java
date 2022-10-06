@@ -164,6 +164,7 @@ public class Share {
                 return chatRoom;
             }
         }
+        //TODO 추후 커스텀 예외 처리
         throw new RuntimeException("참여 채팅방을 찾을 수 없습니다.");
     }
 

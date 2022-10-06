@@ -4,21 +4,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.service.ChatRoomService;
 import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomDetailResponse;
 import louie.hanse.shareplate.web.dto.chatroom.ChatRoomListResponse;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chatrooms")
+@Validated
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
@@ -31,7 +36,8 @@ public class ChatRoomController {
     }
 
     @GetMapping
-    public List<ChatRoomListResponse> chatRoomList(HttpServletRequest request, ChatRoomType type) {
+    public List<ChatRoomListResponse> chatRoomList(HttpServletRequest request,
+        @Valid @RequestParam(required = false) @NotNull(message = "요청한 채팅방정보 필드값이 비어있습니다.") ChatRoomType type) {
         Long memberId = (Long) request.getAttribute("memberId");
         return chatRoomService.getList(memberId, type);
     }

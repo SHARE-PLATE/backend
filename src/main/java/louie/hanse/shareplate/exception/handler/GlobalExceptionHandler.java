@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ValidationException;
 import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
+import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
 import louie.hanse.shareplate.exception.type.EntryExceptionType;
 import louie.hanse.shareplate.exception.type.ExceptionType;
 import louie.hanse.shareplate.exception.type.KeywordExceptionType;
@@ -16,6 +17,7 @@ import louie.hanse.shareplate.exception.type.NotificationExceptionType;
 import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.exception.type.WishExceptionType;
 import louie.hanse.shareplate.web.dto.exception.GlobalExceptionResponse;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +65,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
     }
 
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex,
+        HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String message = getMessage(ex);
+        ExceptionType exceptionType = findExceptionType(message);
+        return ResponseEntity.status(exceptionType.getStatusCode())
+            .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
+    }
+
     private ExceptionType findExceptionType(String message) {
         List<ExceptionType> exceptionTypes = createExceptionTypes();
         for (ExceptionType exceptionType : exceptionTypes) {
@@ -79,7 +90,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private static String getMessage(BindException ex) {
-        return ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+//        return ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        return ex.getMessage();
+    }
+
+    private static String getMessage(TypeMismatchException ex) {
+        return ex.getMessage();
     }
 
     private List<ExceptionType> createExceptionTypes() {
@@ -98,6 +114,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Arrays.stream(NotificationExceptionType.values()).collect(Collectors.toList()));
         exceptionTypes.addAll(
             Arrays.stream(KeywordExceptionType.values()).collect(Collectors.toList()));
+        exceptionTypes.addAll(
+            Arrays.stream(ChatRoomExceptionType.values()).collect(Collectors.toList()));
         return exceptionTypes;
     }
 }
