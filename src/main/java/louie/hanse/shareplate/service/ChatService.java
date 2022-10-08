@@ -38,6 +38,7 @@ public class ChatService {
     }
 
     public int getTotalUnread(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         return chatRepository.getTotalUnread(memberId);
     }
 }
