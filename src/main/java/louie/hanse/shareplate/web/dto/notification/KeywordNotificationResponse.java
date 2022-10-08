@@ -9,6 +9,7 @@ import louie.hanse.shareplate.domain.Notification;
 @Getter
 public class KeywordNotificationResponse {
 
+    private Long id;
     private String shareLocation;
     private Long shareId;
     private Long writerId;
@@ -17,6 +18,7 @@ public class KeywordNotificationResponse {
     private LocalDateTime notificationCreatedDateTime;
 
     public KeywordNotificationResponse(Notification notification) {
+        this.id = notification.getId();
         this.shareLocation = notification.getShare().getLocation();
         this.shareId = notification.getShare().getId();
         this.writerId = notification.getShare().getWriter().getId();

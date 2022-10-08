@@ -89,40 +89,38 @@ public class NotificationService {
             latitude - 2, latitude + 2);
 
         List<Notification> notifications = new ArrayList<>();
-        List<KeywordNotificationResponse> responses = new ArrayList<>();
         for (Keyword keyword : keywords) {
             Notification notification = new Notification(
                 share, keyword.getMember(), NotificationType.KEYWORD);
             notifications.add(notification);
-            responses.add(new KeywordNotificationResponse(notification));
         }
         notificationRepository.saveAll(notifications);
 
-        sendKeywordNotifications(keywords, responses);
+        sendKeywordNotifications(keywords, notifications);
 
         createDeadlineNotificationSchedule(share.getId());
     }
 
     @Transactional
-    public void saveActivityNotificationAndSend(Long shareId, Long memberId, ActivityType activityType) {
+    public void saveActivityNotificationAndSend(Long shareId, Long memberId,
+        ActivityType activityType) {
         Share share = shareService.findByIdOrElseThrow(shareId);
         Member member = memberService.findByIdOrElseThrow(memberId);
         List<Entry> entries = entryRepository.findAllByShareIdAndMemberId(shareId,
             memberId);
 
         List<ActivityNotification> activityNotifications = new ArrayList<>();
-        List<ActivityNotificationResponse> responses = new ArrayList<>();
         for (Entry entry : entries) {
             ActivityNotification activityNotification = new ActivityNotification(share,
                 entry.getMember(), NotificationType.ACTIVITY, activityType, member);
             activityNotifications.add(activityNotification);
-            responses.add(new ActivityNotificationResponse(activityNotification));
         }
         notificationRepository.saveAll(activityNotifications);
 
         for (int i = 0; i < entries.size(); i++) {
             messageSendingOperations.convertAndSend(
-                "/queue/notifications/entries/" + entries.get(i).getId(), responses.get(i));
+                "/queue/notifications/entries/" + entries.get(i).getId(),
+                new ActivityNotificationResponse(activityNotifications.get(i)));
         }
     }
 
@@ -154,11 +152,12 @@ public class NotificationService {
     }
 
     private void sendKeywordNotifications(List<Keyword> keywords,
-        List<KeywordNotificationResponse> responses) {
+        List<Notification> notifications) {
         for (int i = 0; i < keywords.size(); i++) {
             Long keywordId = keywords.get(i).getId();
             messageSendingOperations.convertAndSend(
-                "/queue/notifications/keywords/" + keywordId, responses.get(i));
+                "/queue/notifications/keywords/" + keywordId,
+                new KeywordNotificationResponse(notifications.get(i)));
         }
     }
 

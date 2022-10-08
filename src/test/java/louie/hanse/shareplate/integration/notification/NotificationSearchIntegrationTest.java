@@ -39,6 +39,7 @@ class NotificationSearchIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value())
+            .body("[0].id", equalTo(1))
             .body("[0].recruitmentMemberNickname", equalTo("정현석"))
             .body("[0].notificationCreatedDateTime", equalTo("2022-07-03 16:00"))
             .body("[0].shareTitle", equalTo("판교역에서 치킨 먹을 사람 모집합니다."))
@@ -83,6 +84,7 @@ class NotificationSearchIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(HttpStatus.OK.value())
+            .body("[0].id", equalTo(3))
             .body("[0].shareLocation", equalTo("강남역"))
             .body("[0].shareId", equalTo(1))
             .body("[0].writerId", equalTo(2370842997L))
