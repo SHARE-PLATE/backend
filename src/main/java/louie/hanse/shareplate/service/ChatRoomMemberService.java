@@ -37,6 +37,7 @@ public class ChatRoomMemberService {
     }
 
     public List<ChatRoomMemberListResponse> getChatRoomMemberList(Long memberId) {
+        memberService.findByIdOrElseThrow(memberId);
         return chatRoomMemberRepository
             .findAllByMemberId(memberId).stream()
             .map(ChatRoomMemberListResponse::new)
