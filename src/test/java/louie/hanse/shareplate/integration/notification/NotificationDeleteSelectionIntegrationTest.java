@@ -65,6 +65,9 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
 
+            .when()
+            .delete("/notifications")
+
             .then()
             .statusCode(NotificationExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getStatusCode().value())
             .body("errorCode",
