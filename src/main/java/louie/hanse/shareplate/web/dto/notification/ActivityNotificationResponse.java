@@ -2,14 +2,15 @@ package louie.hanse.shareplate.web.dto.notification;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 import louie.hanse.shareplate.domain.ActivityNotification;
 import louie.hanse.shareplate.type.ActivityType;
 
-@ToString
+@NoArgsConstructor
 @Getter
 public class ActivityNotificationResponse {
 
+    private Long id;
     private String recruitmentMemberNickname;
     private LocalDateTime notificationCreatedDateTime;
     private String shareTitle;
@@ -19,6 +20,7 @@ public class ActivityNotificationResponse {
     private ActivityType activityType;
 
     public ActivityNotificationResponse(ActivityNotification activityNotification) {
+        this.id = activityNotification.getId();
         this.recruitmentMemberNickname = activityNotification.isDeadLine() ?
             null : activityNotification.getEntryMember().getNickname();
         this.notificationCreatedDateTime = activityNotification.getCreatedDateTime();

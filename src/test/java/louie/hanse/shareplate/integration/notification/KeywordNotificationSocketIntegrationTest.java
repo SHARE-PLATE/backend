@@ -67,6 +67,7 @@ class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest
         KeywordNotificationResponse result = (KeywordNotificationResponse) completableFuture
             .get(3, TimeUnit.SECONDS);
 
+        assertThat(result.getId()).isNotNull();
         assertThat(result.getShareTitle()).isEqualTo(title);
         assertThat(result.getShareLocation()).isEqualTo(location);
         assertThat(result.getShareThumbnailImageUrl()).contains("http");

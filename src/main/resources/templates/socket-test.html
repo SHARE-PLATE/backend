@@ -46,6 +46,15 @@
       ws.subscribe("/topic/chatroom-members/2", function (message) {
         var messageContents = JSON.parse(message.body);
       });
+      ws.subscribe("/queue/notifications/entries/4", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
+      ws.subscribe("/queue/notifications/entries/5", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
+      ws.subscribe("/queue/notifications/entries/6", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
       ws.subscribe("/queue/notifications/entries/7", function (message) {
         var messageContents = JSON.parse(message.body);
       });
