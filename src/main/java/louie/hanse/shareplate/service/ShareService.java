@@ -178,6 +178,11 @@ public class ShareService {
         return new ShareWriterResponse(writer);
     }
 
+    public Share findWithShareImageByIdOrElseThrow(Long id) {
+        return shareRepository.findWithShareImageByIdOrElseThrow(id)
+            .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
+    }
+
     private Share findWithWriterByIdOrElseThrow(Long id) {
         return shareRepository.findWithWriterById(id)
             .orElseThrow(() -> new GlobalException(ShareExceptionType.SHARE_NOT_FOUND));
