@@ -20,7 +20,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 회원이_일대일_채팅을_요청한다() {
-        String accessToken = jwtProvider.createAccessToken(2370842997L);
+        String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
@@ -94,5 +94,23 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
             .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
             .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 내가_등록한_쉐어에_일대일_채팅을_요청한다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
+            .filter(document("chatRoom-question"))
+            .header(AUTHORIZATION, accessToken)
+            .body(requestBody)
+
+            .when()
+            .post("/chatrooms")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
     }
 }
