@@ -102,4 +102,41 @@ class ActivityNotificationSocketIntegrationTest extends InitSocketIntegrationTes
         assertThat(result.getWriterId()).isEqualTo(share.getWriter().getId());
         assertThat(result.getActivityType()).isEqualTo(ActivityType.ENTRY_CANCEL);
     }
+
+    @Test
+    void 쉐어를_취소한다면_해당_쉐어를_참여하고_있던_사람들에게_알림이_전송된다()
+        throws ExecutionException, InterruptedException, TimeoutException {
+        stompSession.subscribe("/queue/notifications/entries/" + 2,
+            getStompSessionHandlerAdapter(ActivityNotificationResponse.class));
+
+        Long memberId = 2370842997L;
+        Long shareId = 1L;
+
+        String accessToken = jwtProvider.createAccessToken(memberId);
+        given(documentationSpec)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", shareId)
+
+            .when()
+            .delete("/shares/{id}")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+
+        ActivityNotificationResponse result = (ActivityNotificationResponse)
+            completableFuture.get(3, TimeUnit.SECONDS);
+
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Share share = shareService.findWithShareImageByIdOrElseThrow(shareId);
+
+        assertThat(result.getId()).isNotNull();
+        assertThat(result.getRecruitmentMemberNickname()).isEqualTo(member.getNickname());
+        assertThat(result.getNotificationCreatedDateTime()).isBefore(LocalDateTime.now());
+        assertThat(result.getShareTitle()).isEqualTo(share.getTitle());
+        assertThat(result.getShareThumbnailImageUrl()).isEqualTo(
+            share.getShareImages().get(0).getImageUrl());
+        assertThat(result.getShareId()).isEqualTo(share.getId());
+        assertThat(result.getWriterId()).isEqualTo(share.getWriter().getId());
+        assertThat(result.getActivityType()).isEqualTo(ActivityType.SHARE_CANCEL);
+    }
 }
