@@ -45,7 +45,8 @@ public class ChatRoomController {
     }
 
     @PostMapping
-    public Map<String, Long> createQuestionChatRoom(@RequestBody Map<String, Long> map,
+    public Map<String, Long> createQuestionChatRoom(
+        @RequestBody Map<String, @Valid @NotNull(message = "요청한 채팅방정보 필드값이 비어있습니다.") @Positive(message = "채팅방 id는 양수여야 합니다.") Long> map,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         Long shareId = map.get("shareId");
