@@ -93,4 +93,9 @@ public class ChatRoomService {
         chatRoom.addChatRoomMember(share.getWriter());
         return chatRoomRepository.save(chatRoom).getId();
     }
+
+    public Long findIdByShareIdAndType(Long shareId, ChatRoomType type) {
+        ChatRoom chatRoom = chatRoomRepository.findByShareIdAndType(shareId, type);
+        return chatRoom.getId();
+    }
 }
