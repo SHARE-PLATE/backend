@@ -32,6 +32,7 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .then()
             .statusCode(HttpStatus.OK.value())
             .body("chatRoomMemberId", equalTo(1))
+            .body("type", equalTo("ENTRY"))
             .body("share.id", equalTo(1))
             .body("share.writerId", equalTo(2370842997L))
             .body("share.thumbnailImageUrl", equalTo("https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg"))
@@ -41,11 +42,15 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .body("share.cancel", equalTo(false))
             .body("share.currentRecruitment", equalTo(3))
             .body("share.finalRecruitment", equalTo(3))
+            .body("share.location", equalTo("강남역"))
+            .body("share.closedDateTime", equalTo("2023-08-03 16:00"))
+            .body("share.writer", equalTo("정현석"))
             .body("chats[0].contents", equalTo("내용1"))
             .body("chats[0].writer", equalTo("정현석"))
             .body("chats[0].writerThumbnailImageUrl", equalTo("http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
             .body("chats[0].writtenDateTime", equalTo("2022-07-03 16:00"))
-            .body("chats[0].writtenByMe", equalTo(true));
+            .body("chats[0].writtenByMe", equalTo(true))
+            .body("chats[0].shareWrittenByMe", equalTo(true));
     }
 
     @Test
