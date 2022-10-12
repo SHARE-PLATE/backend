@@ -1,5 +1,6 @@
 package louie.hanse.shareplate.web.dto.share;
 
+import java.time.LocalDateTime;
 import lombok.Getter;
 import louie.hanse.shareplate.domain.Share;
 
@@ -15,6 +16,9 @@ public class SharePreviewResponse {
     private boolean cancel;
     private int currentRecruitment;
     private int finalRecruitment;
+    private String location;
+    private LocalDateTime closedDateTime;
+    private String writer;
 
     public SharePreviewResponse(Share share) {
         this.id = share.getId();
@@ -26,5 +30,8 @@ public class SharePreviewResponse {
         this.cancel = share.isCancel();
         this.currentRecruitment = share.getCurrentRecruitment();
         this.finalRecruitment = share.getRecruitment();
+        this.location = share.getLocation();
+        this.closedDateTime = share.getClosedDateTime();
+        this.writer = share.getWriter().getNickname();
     }
 }

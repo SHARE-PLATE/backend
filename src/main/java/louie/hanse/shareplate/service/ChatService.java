@@ -30,7 +30,7 @@ public class ChatService {
         chatRepository.save(chat);
         for (ChatRoomMember chatRoomMember : chatRoom.getChatRoomMembers()) {
             ChatDetailResponse chatDetailResponse = new ChatDetailResponse(
-                chat, chatRoomMember.getMember());
+                chat, chatRoomMember.getMember(), chatRoom.getShare());
             messageSendingOperations.convertAndSend(
                 "/topic/chatroom-members/" + chatRoomMember.getId(), chatDetailResponse);
 
