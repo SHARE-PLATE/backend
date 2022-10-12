@@ -12,7 +12,8 @@ public enum ChatRoomExceptionType implements ExceptionType {
     CHAT_ROOM_NOT_FOUND("CHATROOM005", "존재하지 않는 채팅방입니다.", BAD_REQUEST),
     CHAT_ROOM_NOT_JOINED("CHATROOM006", "회원이 참여하지 않은 채팅방입니다.", BAD_REQUEST),
     EMPTY_CHATROOM_INFO("CHATROOM007", "요청한 채팅방정보 필드값이 비어있습니다.", BAD_REQUEST),
-    WRITER_CAN_NOT_QUESTION_CHAT("CHATROOM008", "내가 등록한 쉐어에는 일대일 채팅을 할 수 없습니다.", BAD_REQUEST);
+    WRITER_CAN_NOT_QUESTION_CHAT("CHATROOM008", "내가 등록한 쉐어에는 일대일 채팅을 할 수 없습니다.", BAD_REQUEST),
+    CLOSE_TO_THE_CLOSED_DATE_TIME("CHATROOM009", "모집시간 1시간 미만으로 남은 경우, 채팅을 나갈 수 없습니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;
