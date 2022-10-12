@@ -78,7 +78,8 @@ public class ChatRoomService {
     }
 
     public ChatRoom findByIdOrElseThrow(Long id) {
-        return chatRoomRepository.findById(id).orElseThrow();
+        return chatRoomRepository.findById(id)
+            .orElseThrow(() -> new GlobalException(ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND));
     }
 
     @Transactional
