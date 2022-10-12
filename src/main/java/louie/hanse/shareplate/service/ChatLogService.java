@@ -26,17 +26,18 @@ public class ChatLogService {
     public void updateRecentReadDateTime(Long memberId, Long chatRoomId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
         ChatRoom chatRoom = chatRoomService.findByIdOrElseThrow(chatRoomId);
+
         boolean isExistChatRoomMember = chatRoomMemberRepository.existsByMemberIdAndChatRoomId(memberId, chatRoomId);
-        if (isExistChatRoomMember) {
-            Optional<ChatLog> chatLogOptional = chatLogRepository.findByMemberIdAndChatRoomId(
-                memberId, chatRoomId);
-            if (chatLogOptional.isPresent()) {
-                chatLogOptional.get().updateRecentReadDatetime();
-            } else {
-                chatLogRepository.save(new ChatLog(member, chatRoom));
-            }
-        } else {
+        if (!isExistChatRoomMember) {
             throw new GlobalException(ChatRoomExceptionType.CHAT_ROOM_NOT_JOINED);
+        }
+
+        Optional<ChatLog> chatLogOptional = chatLogRepository.findByMemberIdAndChatRoomId(
+            memberId, chatRoomId);
+        if (chatLogOptional.isPresent()) {
+            chatLogOptional.get().updateRecentReadDatetime();
+        } else {
+            chatLogRepository.save(new ChatLog(member, chatRoom));
         }
     }
 }
