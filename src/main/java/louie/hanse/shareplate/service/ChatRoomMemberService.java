@@ -3,11 +3,15 @@ package louie.hanse.shareplate.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.domain.ChatRoom;
 import louie.hanse.shareplate.domain.ChatRoomMember;
 import louie.hanse.shareplate.domain.Member;
 import louie.hanse.shareplate.domain.Share;
+import louie.hanse.shareplate.exception.GlobalException;
+import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
 import louie.hanse.shareplate.repository.ChatRoomMemberRepository;
 import louie.hanse.shareplate.repository.EntryRepository;
+import louie.hanse.shareplate.type.ChatRoomType;
 import louie.hanse.shareplate.web.dto.chatRoomMember.ChatRoomMemberListResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +24,25 @@ public class ChatRoomMemberService {
     private final ChatRoomMemberRepository chatRoomMemberRepository;
     private final EntryRepository entryRepository;
     private final MemberService memberService;
+    private final ChatRoomService chatRoomService;
 
     @Transactional
     public void exitChatRoom(Long chatRoomId, Long memberId) {
+        ChatRoom chatRoom = chatRoomService.findByIdOrElseThrow(chatRoomId);
         Member member = memberService.findByIdOrElseThrow(memberId);
+
+        boolean isExistChatRoomMember = chatRoomMemberRepository
+            .existsByMemberIdAndChatRoomId(memberId, chatRoomId);
+        if (!isExistChatRoomMember) {
+            throw new GlobalException(ChatRoomExceptionType.CHAT_ROOM_NOT_JOINED);
+        }
+
         ChatRoomMember chatRoomMember = chatRoomMemberRepository
             .findWithShareByChatRoomIdAndMemberId(chatRoomId, memberId);
         Share share = chatRoomMember.getChatRoom().getShare();
-
+        if (share.isLeftLessThanAnHour() && chatRoom.getType().equals(ChatRoomType.ENTRY)) {
+            throw new GlobalException(ChatRoomExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME);
+        }
         share.isWriterAndIsNotCancelThrowException(member);
         chatRoomMemberRepository.deleteByChatRoomIdAndMemberId(chatRoomId, memberId);
 
