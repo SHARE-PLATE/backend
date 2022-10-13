@@ -11,6 +11,7 @@
 <div id="app">
   <input type="text" v-model="message">
   <button type="button" @click="sendMessage">메시지 전송</button>
+  <button type="button" @click="sendMessage2">메시지 전송2</button>
 </div>
 </body>
 
@@ -32,14 +33,26 @@
         ws.send("/app/chatrooms/1/chat", {
           Authorization: 'Access-Token'
         }, JSON.stringify({contents: vm.$data.message}));
+      },
+      sendMessage2: function() {
+        ws.send("/app/chatrooms/1/chat", {
+          Authorization: 'Access-Token'
+        }, JSON.stringify({contents: vm.$data.message}));
       }
     }
   });
 
+  // var socket = new SockJS("http://louie-03.com/websocket");
   var socket = new SockJS("/websocket");
   var ws = Stomp.over(socket);
   function connect() {
     ws.connect({}, function (frame) {
+      ws.subscribe("/topic/chatroom-members/106", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
+      ws.subscribe("/topic/chatroom-members/108", function (message) {
+        var messageContents = JSON.parse(message.body);
+      });
       ws.subscribe("/topic/chatroom-members/1", function (message) {
         var messageContents = JSON.parse(message.body);
       });
