@@ -38,7 +38,7 @@ public class ChatRoomService {
     public ChatRoomDetailResponse getDetail(Long id, Long memberId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Optional<ChatRoomMember> chatRoomMemberOptional = chatRoomMemberRepository
-            .findByChatRoomIdAndMemberId(id, memberId);
+            .findWithChatRoomAndShareByChatRoomIdAndMemberId(id, memberId);
         if (chatRoomMemberOptional.isEmpty()) {
             throw new GlobalException(ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND);
         }
