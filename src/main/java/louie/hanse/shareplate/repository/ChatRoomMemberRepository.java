@@ -28,7 +28,16 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
     List<ChatRoomMember> findAllByMemberIdAndChatRoomType(
         @Param("memberId") Long memberId, @Param("type") ChatRoomType type);
 
-    Optional<ChatRoomMember> findByChatRoomIdAndMemberId(Long chatRoomId, Long memberId);
+    @Query("select crm from ChatRoomMember crm "
+        + "join fetch crm.chatRoom cr "
+        + "join fetch cr.chats c "
+        + "join fetch c.writer cw "
+        + "join fetch cr.share s "
+        + "join fetch s.writer sw "
+        + "where crm.chatRoom.id = :chatRoomId and "
+        + "crm.member.id = :memberId ")
+    Optional<ChatRoomMember> findWithChatRoomAndShareByChatRoomIdAndMemberId(
+        @Param("chatRoomId") Long chatRoomId, @Param("memberId") Long memberId);
 
     boolean existsByMemberIdAndChatRoomId(Long memberId, Long chatRoomId);
 }
