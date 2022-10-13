@@ -17,11 +17,12 @@ public class ChatDetailResponse {
     private boolean shareWrittenByMe;
 
     public ChatDetailResponse(Chat chat, Member member, Share share) {
+        Member chatWriter = chat.getWriter();
         this.contents = chat.getContents();
-        this.writer = chat.getWriter().getNickname();
-        this.writerThumbnailImageUrl = chat.getWriter().getThumbnailImageUrl();
+        this.writer = chatWriter.getNickname();
+        this.writerThumbnailImageUrl = chatWriter.getThumbnailImageUrl();
         this.writtenDateTime = chat.getWrittenDateTime();
-        this.writtenByMe = member.equals(chat.getWriter());
-        this.shareWrittenByMe = share.isWriter(member);
+        this.writtenByMe = member.equals(chatWriter);
+        this.shareWrittenByMe = share.isWriter(chatWriter);
     }
 }
