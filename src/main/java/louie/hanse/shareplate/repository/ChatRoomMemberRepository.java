@@ -40,4 +40,6 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
         @Param("chatRoomId") Long chatRoomId, @Param("memberId") Long memberId);
 
     boolean existsByMemberIdAndChatRoomId(Long memberId, Long chatRoomId);
+
+    void deleteByMemberIdAndChatRoomId(Long memberId, Long chatRoomId);
 }
