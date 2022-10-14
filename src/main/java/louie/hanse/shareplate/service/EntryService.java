@@ -68,6 +68,8 @@ public class EntryService {
             throw new GlobalException(EntryExceptionType.SHARE_WRITER_CANNOT_ENTRY_CANCEL);
         }
         entryRepository.deleteByMemberIdAndShareId(memberId, shareId);
+        chatRoomMemberRepository.deleteByMemberIdAndChatRoomId(
+            memberId, share.getEntryChatRoom().getId());
     }
 
     public List<Long> getIdList(Long memberId) {
