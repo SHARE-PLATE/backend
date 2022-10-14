@@ -51,8 +51,8 @@ public class EntryService {
 
     @Transactional
     public void cancel(Long shareId, Long memberId) {
-        memberService.findByIdOrElseThrow(memberId);
-        Share share = shareService.findByIdOrElseThrow(shareId);
+        Member member = memberService.findByIdOrElseThrow(memberId);
+        Share share = shareService.findWithWriterByIdOrElseThrow(shareId);
 
         share.isCanceledThrowException();
         if (!isExistEntry(shareId, memberId)) {
@@ -63,6 +63,9 @@ public class EntryService {
         }
         if (share.isLeftLessThanAnHour()) {
             throw new GlobalException(EntryExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME);
+        }
+        if (share.isWriter(member)) {
+            throw new GlobalException(EntryExceptionType.SHARE_WRITER_CANNOT_ENTRY_CANCEL);
         }
         entryRepository.deleteByMemberIdAndShareId(memberId, shareId);
     }
