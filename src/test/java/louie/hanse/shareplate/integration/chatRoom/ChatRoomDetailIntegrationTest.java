@@ -2,6 +2,7 @@ package louie.hanse.shareplate.integration.chatRoom;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
@@ -35,7 +36,8 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .body("type", equalTo("ENTRY"))
             .body("share.id", equalTo(1))
             .body("share.writerId", equalTo(2370842997L))
-            .body("share.thumbnailImageUrl", equalTo("https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg"))
+            .body("share.thumbnailImageUrl", equalTo(
+                "https://share-plate-file-upload.s3.ap-northeast-2.amazonaws.com/test/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B51.jpeg"))
             .body("share.title  ", equalTo("강남역에서 떡볶이 먹을 사람 모집합니다."))
             .body("share.price", equalTo(10000))
             .body("share.originalPrice", equalTo(30000))
@@ -45,12 +47,13 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .body("share.location", equalTo("강남역"))
             .body("share.closedDateTime", equalTo("2023-08-03 16:00"))
             .body("share.writer", equalTo("정현석"))
-            .body("chats[0].contents", equalTo("내용1"))
-            .body("chats[0].writer", equalTo("정현석"))
-            .body("chats[0].writerThumbnailImageUrl", equalTo("http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
-            .body("chats[0].writtenDateTime", equalTo("2022-07-03 16:00"))
-            .body("chats[0].writtenByMe", equalTo(true))
-            .body("chats[0].shareWrittenByMe", equalTo(true));
+            .body("chats", hasSize(4));
+//            .body("chats[0].contents", equalTo("내용1"))
+//            .body("chats[0].writer", equalTo("정현석"))
+//            .body("chats[0].writerThumbnailImageUrl", equalTo("http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
+//            .body("chats[0].writtenDateTime", equalTo("2022-07-03 16:00"))
+//            .body("chats[0].writtenByMe", equalTo(true))
+//            .body("chats[0].shareWrittenByMe", equalTo(true));
     }
 
     @Test
@@ -67,9 +70,12 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .get("/chatrooms/{id}")
 
             .then()
-            .statusCode(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getStatusCode().value())
-            .body("errorCode", equalTo(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getErrorCode()))
-            .body("message", equalTo(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getMessage()));
+            .statusCode(
+                ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getStatusCode().value())
+            .body("errorCode",
+                equalTo(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getErrorCode()))
+            .body("message",
+                equalTo(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getMessage()));
     }
 
     @Test
@@ -87,7 +93,8 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
-            .body("errorCode", equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
+            .body("errorCode",
+                equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
             .body("message", equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getMessage()));
     }
 

@@ -19,7 +19,11 @@ public enum ShareExceptionType implements ExceptionType {
     IS_NOT_WRITER("SHARE012", "쉐어를 작성한 사람만 쉐어를 편집할 수 있습니다.", FORBIDDEN),
     PATH_VARIABLE_EMPTY_SHARE_ID("SHARE013", "PathVariable의 shareId가 비어있습니다.", BAD_REQUEST),
     SHARE_IS_CLOSED("SHARE014", "마감된 쉐어입니다.", BAD_REQUEST),
-    SHARE_IS_CANCELED("SHARE015", "취소된 쉐어입니다.", BAD_REQUEST);
+    SHARE_IS_CANCELED("SHARE015", "취소된 쉐어입니다.", BAD_REQUEST),
+    CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_CANCEL("SHARE016",
+        "모집시간이 1시간 미만으로 남은 경우, 쉐어 취소를 할 수 없습니다.", BAD_REQUEST),
+    CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_EDIT("SHARE017",
+        "모집시간이 1시간 미만으로 남은 경우, 쉐어 변경을 할 수 없습니다.", BAD_REQUEST);
 
     private final String errorCode;
     private final String message;

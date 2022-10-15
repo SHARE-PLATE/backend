@@ -2,6 +2,7 @@ package louie.hanse.shareplate.integration.share;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.MULTIPART;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_EDIT;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.EMPTY_SHARE_INFO;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.IMAGE_LIMIT_EXCEEDED;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.IS_NOT_WRITER;
@@ -14,6 +15,7 @@ import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_INF
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_IS_CANCELED;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_IS_CLOSED;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
+import static louie.hanse.shareplate.integration.entry.utils.EntryIntegrationTestUtils.getShareRegisterRequest;
 import static louie.hanse.shareplate.integration.share.utils.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -22,13 +24,20 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.service.ShareService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("쉐어 편집 통합 테스트")
 class ShareEditIntegrationTest extends InitIntegrationTest {
+
+    @Autowired
+    ShareService shareService;
 
     @Test
     void 본인이_등록한_쉐어를_편집한다() {
@@ -607,5 +616,46 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
             .statusCode(SHARE_IS_CANCELED.getStatusCode().value())
             .body("errorCode", equalTo(SHARE_IS_CANCELED.getErrorCode()))
             .body("message", equalTo(SHARE_IS_CANCELED.getMessage()));
+    }
+
+    @Test
+    void 마감_시간이_한시간_미만으로_남은_쉐어에_편집_요청_시_예외를_발생시킨다() throws IOException {
+        Long writerId = 2370842997L;
+
+        Long shareId = shareService.register(
+            getShareRegisterRequest(LocalDateTime.now().plusMinutes(30)), writerId);
+
+        String accessToken = jwtProvider.createAccessToken(writerId);
+
+        given(documentationSpec)
+            .filter(document("share-edit-put"))
+            .contentType(MULTIPART)
+            .header(AUTHORIZATION, accessToken)
+            .pathParam("id", shareId)
+            .multiPart("images", "수정된 test1.jpg", "abcde".getBytes(), IMAGE_JPEG_VALUE)
+            .multiPart("images", "수정된 test2.png", "fhgij".getBytes(), IMAGE_PNG_VALUE)
+            .multiPart(createMultiPartSpecification("title", "수정된 제목"))
+            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그1"))
+            .multiPart(createMultiPartSpecification("hashtags", "수정된 해시태그2"))
+            .multiPart(createMultiPartSpecification("locationGuide", "강남역 파출소 앞"))
+            .multiPart(createMultiPartSpecification("location", "역삼역"))
+            .multiPart(createMultiPartSpecification("description", "수정된 설명"))
+            .formParam("type", "ingredient")
+            .formParam("price", 13000)
+            .formParam("originalPrice", 26000)
+            .formParam("recruitment", 2)
+            .formParam("locationNegotiation", true)
+            .formParam("priceNegotiation", false)
+            .formParam("latitude", 37.500326)
+            .formParam("longitude", 127.036087)
+            .formParam("closedDateTime", "2022-12-31 14:00")
+
+            .when()
+            .put("/shares/{id}")
+
+            .then()
+            .statusCode(CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_EDIT.getStatusCode().value())
+            .body("errorCode", equalTo(CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_EDIT.getErrorCode()))
+            .body("message", equalTo(CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_EDIT.getMessage()));
     }
 }
