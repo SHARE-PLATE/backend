@@ -158,6 +158,9 @@ public class ShareService {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = findWithWriterByIdOrElseThrow(id);
         share.isNotWriterThrowException(member);
+        if (share.isLeftLessThanAnHour()) {
+            throw new GlobalException(ShareExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_CANCEL);
+        }
         share.cancel();
     }
 
