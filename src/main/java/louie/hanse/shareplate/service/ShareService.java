@@ -138,6 +138,9 @@ public class ShareService {
         findShare.isNotWriterThrowException(member);
         findShare.isClosedThrowException();
         findShare.isCanceledThrowException();
+        if (findShare.isLeftLessThanAnHour()) {
+            throw new GlobalException(ShareExceptionType.CLOSE_TO_THE_CLOSED_DATE_TIME_CANNOT_EDIT);
+        }
 
         Share share = request.toEntity(id, member);
         for (MultipartFile image : request.getImages()) {
