@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 class ShareSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
-    void 검색한_키워드가_포함된_회원_주변의_쉐어를_조회한다() {
+    void 검색한_키워드가_포함된_회원_주변의_쉐어를_검색한다() {
         given(documentationSpec)
             .filter(document("share-search-get"))
             .accept(APPLICATION_JSON_VALUE)
@@ -48,9 +48,8 @@ class ShareSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 대한민국의_위도_범위를_벗어났을_경우_예외가_발생한다() {
+    void 대한민국의_위도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-search-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("type", "ingredient")
             .param("keyword", "햄버거")
@@ -67,9 +66,8 @@ class ShareSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 대한민국의_경도_범위를_벗어났을_경우_예외가_발생한다() {
+    void 대한민국의_경도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-search-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("type", "delivery")
             .param("keyword", "햄버거")

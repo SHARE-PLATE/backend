@@ -74,11 +74,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_이미지를_입력받지_못한_경우_예외가_발생한다() {
+    void 이미지를_입력하지_않은_경우_예외가_발생한다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -108,11 +107,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 지원하지_않는_이미지_형식을_입력받으면_예외를_발생시킨다() {
+    void 지원하지_않은_이미지_형식인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -144,11 +142,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 저장할_수_있는_쉐어_이미지는_5개를_초과할_수_없다() {
+    void 이미지의_개수가_5개가_넘는다면_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -184,11 +181,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 대한민국의_위도_범위를_벗어났을_경우_예외가_발생한다() {
+    void 대한민국의_위도_범위를_벗어난_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -221,11 +217,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 대한민국의_경도_범위를_벗어났을_경우_예외가_발생한다() {
+    void 대한민국의_경도_범위를_벗어난_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -258,11 +253,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_마감_시간이_과거인_경우_예외를_발생시킨다() {
+    void 마감_시간이_과거인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -299,7 +293,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -335,7 +328,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -371,7 +363,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -403,11 +394,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_id가_null인_경우_예외를_발생시킨다() {
+    void 쉐어_id가_null값인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", "  ")
@@ -443,7 +433,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -3)
@@ -475,11 +464,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어를_찾을_수_없는_경우_예외를_발생시킨다() {
+    void 유효하지_않은_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 33333333333L)
@@ -511,11 +499,10 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 작성자가_아닌_사용자_쉐어_편집을_요청하면_예외를_발생시킨다() {
+    void 쉐어_작성자가_아닌_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -551,7 +538,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 5)
@@ -587,7 +573,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 6)
@@ -619,7 +604,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 마감_시간이_한시간_미만으로_남은_쉐어에_편집_요청_시_예외를_발생시킨다() throws IOException {
+    void 마감_시간이_한시간_미만으로_남은_쉐어인_경우_예외를_발생시킨다() throws IOException {
         Long writerId = 2370842997L;
 
         Long shareId = shareService.register(
@@ -628,7 +613,6 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(writerId);
 
         given(documentationSpec)
-            .filter(document("share-edit-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", shareId)

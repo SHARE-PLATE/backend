@@ -22,7 +22,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequiredArgsConstructor
-public class LoginController {
+public class OAuthController {
 
     private final LoginService loginService;
     private final OAuthService oAuthService;

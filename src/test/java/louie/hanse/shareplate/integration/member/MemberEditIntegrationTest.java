@@ -2,6 +2,9 @@ package louie.hanse.shareplate.integration.member;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.MULTIPART;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.EMPTY_MEMBER_INFO;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.NOT_SUPPORT_IMAGE_TYPE;
 import static louie.hanse.shareplate.integration.share.utils.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -9,7 +12,6 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("member-changed-user-information"))
+            .filter(document("member-change-user-info-put"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart("profileImage", "수정된 test1.jpg", "abcde".getBytes(), IMAGE_JPEG_VALUE)
@@ -37,11 +39,10 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 유효하지_않은_회원이_정보를_변경한다() {
+    void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
-            .filter(document("member-changed-user-information-by-invalid-member"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart("profileImage", "수정된 test1.jpg", "abcde".getBytes(), IMAGE_JPEG_VALUE)
@@ -51,17 +52,16 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
             .put("/members")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 닉네임을_빈값으로_요청하여_정보를_변경한다() {
+    void 닉네임이_빈값인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("member-changed-user-information-by-invalid-member"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart("profileImage", "수정된 test1.jpg", "abcde".getBytes(), IMAGE_JPEG_VALUE)
@@ -71,17 +71,16 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
             .put("/members")
 
             .then()
-            .statusCode(MemberExceptionType.EMPTY_MEMBER_INFO.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getMessage()));
+            .statusCode(EMPTY_MEMBER_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(EMPTY_MEMBER_INFO.getErrorCode()))
+            .body("message", equalTo(EMPTY_MEMBER_INFO.getMessage()));
     }
 
     @Test
-    void 프로필이미지를_빈값으로_요청하여_정보를_변경한다() {
+    void 프로필이미지가_null값인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("member-changed-user-information-by-invalid-member"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart(createMultiPartSpecification("nickname", "정현석"))
@@ -90,9 +89,9 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
             .put("/members")
 
             .then()
-            .statusCode(MemberExceptionType.EMPTY_MEMBER_INFO.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.EMPTY_MEMBER_INFO.getMessage()));
+            .statusCode(EMPTY_MEMBER_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(EMPTY_MEMBER_INFO.getErrorCode()))
+            .body("message", equalTo(EMPTY_MEMBER_INFO.getMessage()));
     }
 
 //    @Test
@@ -117,11 +116,10 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
 //    }
 
     @Test
-    void 유효하지_않은_이미지_확장자의_프로필이미지로_회원의_정보를_변경한다() {
+    void profileImage가_유효하지_않은_이미지_확장자인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("member-changed-user-information"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart("profileImage", "수정된 test1.txt", "abcde".getBytes(), TEXT_PLAIN_VALUE)
@@ -131,8 +129,8 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
             .put("/members")
 
             .then()
-            .statusCode(MemberExceptionType.NOT_SUPPORT_IMAGE_TYPE.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.NOT_SUPPORT_IMAGE_TYPE.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.NOT_SUPPORT_IMAGE_TYPE.getMessage()));
+            .statusCode(NOT_SUPPORT_IMAGE_TYPE.getStatusCode().value())
+            .body("errorCode", equalTo(NOT_SUPPORT_IMAGE_TYPE.getErrorCode()))
+            .body("message", equalTo(NOT_SUPPORT_IMAGE_TYPE.getMessage()));
     }
 }

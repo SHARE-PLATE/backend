@@ -110,11 +110,10 @@ class ShareMineSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 내_쉐어_조회_요청_시_쉐어_타입이_올바르지_않을_경우_예외를_발생시킨다() {
+    void 쉐어_타입이_유효하지_않을_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("share-search-mine-wish-get"))
             .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "wish")
@@ -131,11 +130,10 @@ class ShareMineSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 내_쉐어_조회_요청_시_mine_타입이_올바르지_않을_경우_예외를_발생시킨다() {
+    void mineType이_유효하지_않을_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("share-search-mine-wish-get"))
             .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "abcd")
@@ -152,11 +150,10 @@ class ShareMineSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 내_쉐어_조회_요청_시_mine_타입을_입력하지_않은_경우_예외를_발생시킨다() {
+    void mineType이_null값인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .filter(document("share-search-mine-wish-get"))
             .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("shareType", "delivery")
