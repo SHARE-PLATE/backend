@@ -20,7 +20,7 @@ class MemberSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("member-get-information"))
+            .filter(document("member-info-get"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 
@@ -36,11 +36,10 @@ class MemberSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 유효하지_않은_회원의_정보를_조회한다() {
+    void 유효하지_않은_회원인_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
-            .filter(document("member-get-information-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 

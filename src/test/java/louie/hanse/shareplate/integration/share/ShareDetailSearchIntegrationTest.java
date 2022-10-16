@@ -20,7 +20,7 @@ import org.springframework.http.HttpStatus;
 class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
-    void 특정_쉐어의_상세정보를_조회한다() {
+    void 쉐어의_상세정보를_조회한다() {
         given(documentationSpec)
             .filter(document("share-detail-get"))
             .accept(APPLICATION_JSON_VALUE)
@@ -64,7 +64,7 @@ class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_id가_null인_경우_예외를_발생시킨다() {
+    void 쉐어_id가_null값인_경우_예외를_발생시킨다() {
         given(documentationSpec)
             .filter(document("share-detail-get"))
             .accept(APPLICATION_JSON_VALUE)
@@ -82,7 +82,6 @@ class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void 쉐어_id가_양수가_아닌_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-detail-get"))
             .accept(APPLICATION_JSON_VALUE)
             .pathParam("id", -1)
 
@@ -96,9 +95,8 @@ class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어를_찾을_수_없는_경우_예외를_발생시킨다() {
+    void 유효하지_않는_쉐어인_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-detail-get"))
             .accept(APPLICATION_JSON_VALUE)
             .pathParam("id", 33333333333L)
 
@@ -114,7 +112,6 @@ class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void 쉐어가_취소된_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-detail-get"))
             .accept(APPLICATION_JSON_VALUE)
             .pathParam("id", 6)
 

@@ -60,11 +60,10 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
 
 //    TODO 어떤 필드가 검증에 실패했는지도 메세지로 나타내기, closedDateTime 패턴 형식까지 검증하기
     @Test
-    void 쉐어_등록_요청_시_쉐어_이미지를_입력받지_못한_경우_예외가_발생한다() {
+    void 이미지를_입력하지_않은_경우_예외가_발생한다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart(createMultiPartSpecification("title", "제목"))
@@ -93,11 +92,10 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 지원하지_않은_이미지_형식을_입력받으면_예외를_발생시킨다() {
+    void 지원하지_않은_이미지_형식인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.txt", "abc".getBytes(), TEXT_PLAIN_VALUE)
@@ -128,7 +126,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_등록_요청_시_쉐어_이미지는_5개를_초과할_수_없다() {
+    void 이미지의_개수가_5개가_넘는다면_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
@@ -167,11 +165,10 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_등록_요청_시_대한민국의_위도_범위를_벗어났을_경우_예외가_발생한다() {
+    void 대한민국의_위도_범위를_벗어난_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)
@@ -203,11 +200,10 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_등록_요청_시_대한민국의_경도_범위를_벗어났을_경우_예외가_발생한다() {
+    void 대한민국의_경도_범위를_벗어난_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)
@@ -239,11 +235,10 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_등록_요청_시_마감_시간이_과거인_경우_예외를_발생시킨다() {
+    void 마감_시간이_과거인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)

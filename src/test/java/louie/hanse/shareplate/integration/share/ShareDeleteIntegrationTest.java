@@ -30,7 +30,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-not-writer-delete"))
+            .filter(document("share-delete"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 4)
 
@@ -42,11 +42,10 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 요청한_쉐어_id_값이_음수인_경우_요청이_실패한다() {
+    void 쉐어_id_값이_양수가_아닌_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-delete"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -1)
 
@@ -60,11 +59,10 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 존재하지_않은_쉐어_삭제_요청을_보내는_경우_요청은_실패한다() {
+    void 유효하지_않는_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-delete"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1000000000)
 
@@ -78,11 +76,10 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 작성자가_아닌_사용자가_쉐어_삭제_요청을_보내는_경우_요청은_실패한다() {
+    void 쉐어_작성자가_아닌_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-delete"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -96,7 +93,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 마감_시간이_한시간_미만으로_남은_쉐어에_취소_요청_시_예외를_발생시킨다() throws IOException {
+    void 마감_시간이_한시간_미만으로_남은_쉐어인_경우_예외를_발생시킨다() throws IOException {
         Long writerId = 2370842997L;
 
         Long shareId = shareService.register(
@@ -105,7 +102,6 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(writerId);
 
         given(documentationSpec)
-            .filter(document("share-not-writer-delete"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", shareId)
 

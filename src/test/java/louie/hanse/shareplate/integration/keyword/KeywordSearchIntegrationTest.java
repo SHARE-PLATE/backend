@@ -1,12 +1,13 @@
 package louie.hanse.shareplate.integration.keyword;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ class KeywordSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-search-get"))
             .header(AUTHORIZATION, accessToken)
             .accept(ContentType.JSON)
 
@@ -33,7 +35,7 @@ class KeywordSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 유효하지_않은_회원이_키워드를_조회한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
@@ -44,8 +46,8 @@ class KeywordSearchIntegrationTest extends InitIntegrationTest {
             .get("/keywords")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 }

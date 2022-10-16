@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
-import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutionException;
@@ -24,7 +23,7 @@ class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest
 
 //    TODO : shareId 검증하도록 구현
     @Test
-    void 키워드에_등록한_내용이_포함된_쉐어가_등록된_경우_실시간으로_키워드_알림이_전송된다()
+    void 키워드에_등록한_내용이_포함된_쉐어가_등록된_경우_실시간으로_키워드_알림을_전송한다()
         throws ExecutionException, InterruptedException, TimeoutException {
         Long keywordId = 9L;
 
@@ -36,7 +35,6 @@ class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest
         String location = "강남역";
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)

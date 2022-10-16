@@ -3,12 +3,12 @@ package louie.hanse.shareplate.integration.chatRoom;
 import static io.restassured.RestAssured.given;
 import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.EMPTY_CHATROOM_INFO;
 import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.INCORRECT_TYPE_VALUE;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-list-of-member"))
+            .filter(document("chatRoom-search-list-of-member-get"))
             .header(AUTHORIZATION, accessToken)
             .param("type", "entry")
 
@@ -45,12 +45,11 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 유효하지_않은_회원이_채팅방_목록을_조회한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-list-of-member"))
             .header(AUTHORIZATION, accessToken)
             .param("type", "entry")
 
@@ -58,19 +57,18 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
             .get("/chatrooms")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 유효하지_않은_type으로_채팅방_목록을_조회한다() {
+    void 유효하지_않은_type일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .accept(ContentType.JSON)
-            .filter(document("chatRoom-list-of-member"))
             .header(AUTHORIZATION, accessToken)
             .param("type", "aaaa")
 
@@ -84,12 +82,11 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 비어있는_type으로_채팅방_목록을_조회한다() {
+    void null값_type일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-list-of-member"))
             .header(AUTHORIZATION, accessToken)
             .param("type", "")
 

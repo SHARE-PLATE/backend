@@ -1,6 +1,10 @@
 package louie.hanse.shareplate.integration.chatRoom;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE;
+import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.EMPTY_CHATROOM_INFO;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -8,8 +12,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import io.restassured.http.ContentType;
 import java.util.Collections;
 import java.util.Map;
-import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +27,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-question"))
+            .filter(document("chatRoom-question-chat-post"))
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
 
@@ -37,13 +39,12 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_shareId를_null로_하여_일대일_채팅을_요청한다() {
+    void 쉐어_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         Map<String, Long> requestBody = Collections.singletonMap("shareId", null);
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-question"))
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
 
@@ -51,19 +52,18 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .post("/chatrooms")
 
             .then()
-            .statusCode(ChatRoomExceptionType.EMPTY_CHATROOM_INFO.getStatusCode().value())
-            .body("errorCode", equalTo(ChatRoomExceptionType.EMPTY_CHATROOM_INFO.getErrorCode()))
-            .body("message", equalTo(ChatRoomExceptionType.EMPTY_CHATROOM_INFO.getMessage()));
+            .statusCode(EMPTY_CHATROOM_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(EMPTY_CHATROOM_INFO.getErrorCode()))
+            .body("message", equalTo(EMPTY_CHATROOM_INFO.getMessage()));
     }
 
     @Test
-    void 회원이_shareId를_음수로로_하여_일대일_채팅을_요청한다() {
+    void 쉐어_id가_양수가_아닐_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         Map<String, Long> requestBody = Collections.singletonMap("shareId", -1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-question"))
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
 
@@ -71,19 +71,18 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .post("/chatrooms")
 
             .then()
-            .statusCode(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
-            .body("errorCode", equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
-            .body("message", equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getMessage()));
+            .statusCode(CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(CHATROOM_ID_IS_NEGATIVE.getMessage()));
     }
 
     @Test
-    void 유효하지_않은_회원이_일대일_채팅을_요청한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-question"))
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
 
@@ -91,19 +90,38 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .post("/chatrooms")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 내가_등록한_쉐어에_일대일_채팅을_요청한다() {
+    void 존재하지_않은_쉐어_id일_경우_예외를_발생시킨다() {
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+
+        Map<String, Long> requestBody = Collections.singletonMap("shareId", 999L);
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(requestBody)
+
+            .when()
+            .post("/chatrooms")
+
+            .then()
+            .statusCode(SHARE_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(SHARE_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    //TODO 예외처리 fix
+    void 내가_등록한_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-question"))
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
 

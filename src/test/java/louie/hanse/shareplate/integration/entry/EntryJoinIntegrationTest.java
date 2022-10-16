@@ -1,6 +1,14 @@
 package louie.hanse.shareplate.integration.entry;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN;
+import static louie.hanse.shareplate.exception.type.EntryExceptionType.SHARE_ALREADY_JOINED;
+import static louie.hanse.shareplate.exception.type.EntryExceptionType.SHARE_OVERCAPACITY;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_ID_IS_NEGATIVE;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_IS_CANCELED;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
 import static louie.hanse.shareplate.integration.entry.utils.EntryIntegrationTestUtils.getShareRegisterRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -9,9 +17,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import io.restassured.http.ContentType;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import louie.hanse.shareplate.exception.type.EntryExceptionType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
-import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.service.ShareService;
 import louie.hanse.shareplate.web.dto.share.ShareRegisterRequest;
@@ -27,11 +32,11 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
     ShareService shareService;
 
     @Test
-    void 회원이_쉐어에_참가_요청한다() {
+    void 회원이_쉐어에_참가한다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("entry-request-share"))
+            .filter(document("entry-share-post"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 3)
@@ -45,11 +50,10 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
 
 
     @Test
-    void 회원이_쉐어_id_값을_빈값으로_참가를_요청한다() {
+    void 쉐어_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("entry-request-empty-of-share-id"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", " ")
@@ -58,17 +62,16 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getStatusCode().value())
-            .body("errorCode", equalTo(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getErrorCode()))
-            .body("message", equalTo(ShareExceptionType.PATH_VARIABLE_EMPTY_SHARE_ID.getMessage()));
+            .statusCode(PATH_VARIABLE_EMPTY_SHARE_ID.getStatusCode().value())
+            .body("errorCode", equalTo(PATH_VARIABLE_EMPTY_SHARE_ID.getErrorCode()))
+            .body("message", equalTo(PATH_VARIABLE_EMPTY_SHARE_ID.getMessage()));
     }
 
     @Test
-    void 회원이_쉐어_id_값을_음수로_참가를_요청한다() {
+    void 쉐어_id가_양수가_아닐_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("entry-request-negative-of-share-id"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", -3)
@@ -77,18 +80,17 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getStatusCode().value())
-            .body("errorCode", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getErrorCode()))
-            .body("message", equalTo(ShareExceptionType.SHARE_ID_IS_NEGATIVE.getMessage()));
+            .statusCode(SHARE_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(SHARE_ID_IS_NEGATIVE.getMessage()));
     }
 
 
     @Test
-    void 유효하지_않은_회원이_쉐어에_참가_요청한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
-            .filter(document("entry-request-share-by-invalid-member"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 3)
@@ -97,17 +99,16 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 회원이_유효하지_않은_쉐어에_참가_요청한다() {
+    void 존재하지_않은_쉐어_id일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("entry-request-invalid-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 2222)
@@ -116,17 +117,16 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(ShareExceptionType.SHARE_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(ShareExceptionType.SHARE_NOT_FOUND.getMessage()));
+            .statusCode(SHARE_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(SHARE_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 회원이_이미_참가한_쉐어에_참가_재요청_한다() {
+    void 이미_참가한_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("entry-re-request-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 1)
@@ -135,17 +135,16 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(EntryExceptionType.SHARE_ALREADY_JOINED.getStatusCode().value())
-            .body("errorCode", equalTo(EntryExceptionType.SHARE_ALREADY_JOINED.getErrorCode()))
-            .body("message", equalTo(EntryExceptionType.SHARE_ALREADY_JOINED.getMessage()));
+            .statusCode(SHARE_ALREADY_JOINED.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_ALREADY_JOINED.getErrorCode()))
+            .body("message", equalTo(SHARE_ALREADY_JOINED.getMessage()));
     }
 
     @Test
-    void 회원이_취소된_쉐어에_참가를_요청한다() {
+    void 취소된_쉐어에_요청할_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
-            .filter(document("entry-re-request-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 6)
@@ -154,17 +153,16 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(ShareExceptionType.SHARE_IS_CANCELED.getStatusCode().value())
-            .body("errorCode", equalTo(ShareExceptionType.SHARE_IS_CANCELED.getErrorCode()))
-            .body("message", equalTo(ShareExceptionType.SHARE_IS_CANCELED.getMessage()));
+            .statusCode(SHARE_IS_CANCELED.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_IS_CANCELED.getErrorCode()))
+            .body("message", equalTo(SHARE_IS_CANCELED.getMessage()));
     }
 
     @Test
-    void 회원이_모집_정원이_초과된_쉐어에_참가_요청한다() {
+    void 모집_정원이_초과된_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("entry-request-exceeded-recruitment"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 1)
@@ -173,20 +171,19 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(EntryExceptionType.SHARE_OVERCAPACITY.getStatusCode().value())
-            .body("errorCode", equalTo(EntryExceptionType.SHARE_OVERCAPACITY.getErrorCode()))
-            .body("message", equalTo(EntryExceptionType.SHARE_OVERCAPACITY.getMessage()));
+            .statusCode(SHARE_OVERCAPACITY.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_OVERCAPACITY.getErrorCode()))
+            .body("message", equalTo(SHARE_OVERCAPACITY.getMessage()));
     }
 
     @Test
-    void 회원이_마감시간이_지난_쉐어에_참가_요청한다() throws IOException {
+    void 마감시간이_지난_쉐어일_경우_예외를_발생시킨다() throws IOException {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().minusHours(2));
         Long shareId = shareService.register(request, 2355841033L);
 
         given(documentationSpec)
-            .filter(document("entry-request-closed-share"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", shareId)
@@ -195,10 +192,8 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getStatusCode().value())
-            .body("errorCode",
-                equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getErrorCode()))
-            .body("message",
-                equalTo(EntryExceptionType.CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getMessage()));
+            .statusCode(CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getStatusCode().value())
+            .body("errorCode", equalTo(CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getErrorCode()))
+            .body("message", equalTo(CLOSED_DATE_TIME_HAS_PASSED_NOT_JOIN.getMessage()));
     }
 }

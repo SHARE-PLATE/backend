@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 class ShareRecommendationIntegrationTest extends InitIntegrationTest {
 
     @Test
-    void 검색한_키워드가_포함된_회원_주변의_쉐어를_추천한다() {
+    void 회원_주변의_쉐어를_추천한다() {
         given(documentationSpec)
             .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
@@ -31,9 +31,8 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 위도를_입력하지_않는_경우_예외가_발생한다() {
+    void longitude가_null값인_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("longitude", 128.3007637)
 
@@ -49,7 +48,6 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
     @Test
     void 대한민국의_위도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 39)
             .param("longitude", 128.3007637)
@@ -66,7 +64,6 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
     @Test
     void 대한민국의_경도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
-            .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 36.6576769)
             .param("longitude", 123)
