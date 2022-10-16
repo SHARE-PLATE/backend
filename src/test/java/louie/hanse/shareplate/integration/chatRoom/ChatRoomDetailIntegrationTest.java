@@ -1,14 +1,16 @@
 package louie.hanse.shareplate.integration.chatRoom;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE;
+import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
-import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-detail-of-member"))
+            .filter(document("chatRoom-detail-get"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -48,21 +50,14 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .body("share.closedDateTime", equalTo("2023-08-03 16:00"))
             .body("share.writer", equalTo("정현석"))
             .body("chats", hasSize(4));
-//            .body("chats[0].contents", equalTo("내용1"))
-//            .body("chats[0].writer", equalTo("정현석"))
-//            .body("chats[0].writerThumbnailImageUrl", equalTo("http://k.kakaocdn.net/dn/wtMIN/btrII2nrJAv/KWEi4dNNGqeBYjzr0KZGK1/img_110x110.jpg"))
-//            .body("chats[0].writtenDateTime", equalTo("2022-07-03 16:00"))
-//            .body("chats[0].writtenByMe", equalTo(true))
-//            .body("chats[0].shareWrittenByMe", equalTo(true));
     }
 
     @Test
-    void 회원이_ChatRoom_id_값을_빈값으로_채팅방을_상세조회한다() {
+    void 채팅방_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-detail-of-member"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", " ")
 
@@ -71,20 +66,19 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(
-                ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getStatusCode().value())
+                PATH_VARIABLE_EMPTY_CHATROOM_ID.getStatusCode().value())
             .body("errorCode",
-                equalTo(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getErrorCode()))
+                equalTo(PATH_VARIABLE_EMPTY_CHATROOM_ID.getErrorCode()))
             .body("message",
-                equalTo(ChatRoomExceptionType.PATH_VARIABLE_EMPTY_CHATROOM_ID.getMessage()));
+                equalTo(PATH_VARIABLE_EMPTY_CHATROOM_ID.getMessage()));
     }
 
     @Test
-    void 회원이_ChatRoom_id_값을_음수로_채팅방을_상세조회한다() {
+    void 채팅방_id가_양수가_아닐_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-detail-of-member"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -1)
 
@@ -92,19 +86,18 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .get("/chatrooms/{id}")
 
             .then()
-            .statusCode(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
+            .statusCode(CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
             .body("errorCode",
-                equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
-            .body("message", equalTo(ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE.getMessage()));
+                equalTo(CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(CHATROOM_ID_IS_NEGATIVE.getMessage()));
     }
 
     @Test
-    void 유효하지_않은_회원이_채팅방_메세지를_조회한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-detail-of-member"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -112,18 +105,17 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .get("/chatrooms/{id}")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 유효하지_않은_채팅방_id로_조회한다() {
+    void 존재하지_않은_채팅방_id일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
-            .filter(document("chatRoom-detail-of-member"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 999)
 
@@ -131,9 +123,9 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .get("/chatrooms/{id}")
 
             .then()
-            .statusCode(ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(ChatRoomExceptionType.CHAT_ROOM_NOT_FOUND.getMessage()));
+            .statusCode(CHAT_ROOM_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(CHAT_ROOM_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(CHAT_ROOM_NOT_FOUND.getMessage()));
     }
 }
 

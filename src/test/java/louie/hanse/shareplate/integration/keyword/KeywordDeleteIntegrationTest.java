@@ -1,11 +1,16 @@
 package louie.hanse.shareplate.integration.keyword;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.KEYWORD_ID_IS_NEGATIVE;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.KEYWORD_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import louie.hanse.shareplate.exception.type.KeywordExceptionType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
+import io.restassured.http.ContentType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,10 +20,11 @@ import org.springframework.http.HttpStatus;
 class KeywordDeleteIntegrationTest extends InitIntegrationTest {
 
     @Test
-    void 등록한_키워드_삭제를_요청한다() {
+    void 등록한_키워드를_삭제한다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        given()
+        given(documentationSpec)
+            .filter(document("keyword-delete"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -30,10 +36,11 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_키워드_id_값을_빈값으로_삭제를_요청한다() {
+    void 키워드_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        given()
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", " ")
 
@@ -41,20 +48,18 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
             .delete("/keywords/{id}")
 
             .then()
-            .statusCode(
-                KeywordExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getStatusCode().value())
-            .body("errorCode",
-                equalTo(KeywordExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getErrorCode()))
-            .body("message",
-                equalTo(KeywordExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getMessage()));
+            .statusCode(PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getStatusCode().value())
+            .body("errorCode", equalTo(PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getErrorCode()))
+            .body("message", equalTo(PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getMessage()));
     }
 
 
     @Test
-    void 회원이_키워드_id_값을_음수로_삭제_요청한다() {
+    void 키워드_id가_양수가_아닐_경우_예외를_발생시칸다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        given()
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -1)
 
@@ -62,19 +67,17 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
             .delete("/keywords/{id}")
 
             .then()
-            .statusCode(
-                KeywordExceptionType.KEYWORD_ID_IS_NEGATIVE.getStatusCode().value())
-            .body("errorCode",
-                equalTo(KeywordExceptionType.KEYWORD_ID_IS_NEGATIVE.getErrorCode()))
-            .body("message",
-                equalTo(KeywordExceptionType.KEYWORD_ID_IS_NEGATIVE.getMessage()));
+            .statusCode(KEYWORD_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(KEYWORD_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(KEYWORD_ID_IS_NEGATIVE.getMessage()));
     }
 
     @Test
-    void 유효하지_않은_회원이_키워드_삭제를_요청한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        given()
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -82,19 +85,17 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
             .delete("/keywords/{id}")
 
             .then()
-            .statusCode(
-                MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode",
-                equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message",
-                equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 회원이_유효하지_않은_키워드를_삭제_요청한다() {
+    void 존재하지_않은_키워드_id일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        given()
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 999)
 
@@ -102,19 +103,17 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
             .delete("/keywords/{id}")
 
             .then()
-            .statusCode(
-                KeywordExceptionType.KEYWORD_NOT_FOUND.getStatusCode().value())
-            .body("errorCode",
-                equalTo(KeywordExceptionType.KEYWORD_NOT_FOUND.getErrorCode()))
-            .body("message",
-                equalTo(KeywordExceptionType.KEYWORD_NOT_FOUND.getMessage()));
+            .statusCode(KEYWORD_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(KEYWORD_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(KEYWORD_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 다른_회원의_키워드를_삭제_요청한다() {
+    void 다른_회원의_키워드일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        given()
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 2)
 
@@ -122,11 +121,8 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
             .delete("/keywords/{id}")
 
             .then()
-            .statusCode(
-                KeywordExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD.getStatusCode().value())
-            .body("errorCode",
-                equalTo(KeywordExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD.getErrorCode()))
-            .body("message",
-                equalTo(KeywordExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD.getMessage()));
+            .statusCode(OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD.getStatusCode().value())
+            .body("errorCode", equalTo(OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD.getErrorCode()))
+            .body("message", equalTo(OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD.getMessage()));
     }
 }

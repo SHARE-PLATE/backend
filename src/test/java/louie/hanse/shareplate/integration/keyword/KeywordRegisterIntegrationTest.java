@@ -1,14 +1,16 @@
 package louie.hanse.shareplate.integration.keyword;
 
 import static io.restassured.RestAssured.given;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.DUPLICATE_KEYWORD;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.EMPTY_KEYWORD_INFO;
+import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.OUT_OF_SCOPE_FOR_KOREA;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
 import java.util.Map;
-import louie.hanse.shareplate.exception.type.KeywordExceptionType;
-import louie.hanse.shareplate.exception.type.MemberExceptionType;
-import louie.hanse.shareplate.exception.type.ShareExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         );
 
         given(documentationSpec)
+            .filter(document("keyword-register-post"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -41,7 +44,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 필수_필드값이_빈값으로_키워드를_등록한다() {
+    void 필수_필드값이_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         Map<String, Object> requestBody = Map.of(
@@ -59,13 +62,13 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
             .post("/keywords")
 
             .then()
-            .statusCode(KeywordExceptionType.EMPTY_KEYWORD_INFO.getStatusCode().value())
-            .body("errorCode", equalTo(KeywordExceptionType.EMPTY_KEYWORD_INFO.getErrorCode()))
-            .body("message", equalTo(KeywordExceptionType.EMPTY_KEYWORD_INFO.getMessage()));
+            .statusCode(EMPTY_KEYWORD_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(EMPTY_KEYWORD_INFO.getErrorCode()))
+            .body("message", equalTo(EMPTY_KEYWORD_INFO.getMessage()));
     }
 
     @Test
-    void 유효하지_않은_회원이_키워드를_등록한다() {
+    void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         Map<String, Object> requestBody = Map.of(
@@ -84,13 +87,13 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
             .post("/keywords")
 
             .then()
-            .statusCode(MemberExceptionType.MEMBER_NOT_FOUND.getStatusCode().value())
-            .body("errorCode", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getErrorCode()))
-            .body("message", equalTo(MemberExceptionType.MEMBER_NOT_FOUND.getMessage()));
+            .statusCode(MEMBER_NOT_FOUND.getStatusCode().value())
+            .body("errorCode", equalTo(MEMBER_NOT_FOUND.getErrorCode()))
+            .body("message", equalTo(MEMBER_NOT_FOUND.getMessage()));
     }
 
     @Test
-    void 중복으로_키워드를_등록한다() {
+    void 중복_키워드일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         Map<String, Object> requestBody = Map.of(
@@ -109,13 +112,13 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
             .post("/keywords")
 
             .then()
-            .statusCode(KeywordExceptionType.DUPLICATE_KEYWORD.getStatusCode().value())
-            .body("errorCode", equalTo(KeywordExceptionType.DUPLICATE_KEYWORD.getErrorCode()))
-            .body("message", equalTo(KeywordExceptionType.DUPLICATE_KEYWORD.getMessage()));
+            .statusCode(DUPLICATE_KEYWORD.getStatusCode().value())
+            .body("errorCode", equalTo(DUPLICATE_KEYWORD.getErrorCode()))
+            .body("message", equalTo(DUPLICATE_KEYWORD.getMessage()));
     }
 
     @Test
-    void 대한민국_위도_경도가_아닌_지역을_키워드로_등록한다() {
+    void 대한민국_위도_경도가_아닐_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         Map<String, Object> requestBody = Map.of(
@@ -134,9 +137,9 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
             .post("/keywords")
 
             .then()
-            .statusCode(ShareExceptionType.OUT_OF_SCOPE_FOR_KOREA.getStatusCode().value())
-            .body("errorCode", equalTo(ShareExceptionType.OUT_OF_SCOPE_FOR_KOREA.getErrorCode()))
-            .body("message", equalTo(ShareExceptionType.OUT_OF_SCOPE_FOR_KOREA.getMessage()));
+            .statusCode(OUT_OF_SCOPE_FOR_KOREA.getStatusCode().value())
+            .body("errorCode", equalTo(OUT_OF_SCOPE_FOR_KOREA.getErrorCode()))
+            .body("message", equalTo(OUT_OF_SCOPE_FOR_KOREA.getMessage()));
     }
 
 }
