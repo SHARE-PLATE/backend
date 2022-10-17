@@ -30,8 +30,8 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
 
     @Query("select crm from ChatRoomMember crm "
         + "join fetch crm.chatRoom cr "
-        + "join fetch cr.chats c "
-        + "join fetch c.writer cw "
+        + "left join fetch cr.chats c "
+        + "left join fetch c.writer cw "
         + "join fetch cr.share s "
         + "join fetch s.writer sw "
         + "where crm.chatRoom.id = :chatRoomId and "
