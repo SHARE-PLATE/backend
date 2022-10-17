@@ -35,7 +35,8 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
         + "join fetch cr.share s "
         + "join fetch s.writer sw "
         + "where crm.chatRoom.id = :chatRoomId and "
-        + "crm.member.id = :memberId ")
+        + "crm.member.id = :memberId "
+        + "order by c.writtenDateTime ")
     Optional<ChatRoomMember> findWithChatRoomAndShareByChatRoomIdAndMemberId(
         @Param("chatRoomId") Long chatRoomId, @Param("memberId") Long memberId);
 
