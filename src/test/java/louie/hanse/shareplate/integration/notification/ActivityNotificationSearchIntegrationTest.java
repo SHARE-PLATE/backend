@@ -26,7 +26,6 @@ class ActivityNotificationSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 회원이_활동_알림_리스트_조회를_요청한다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
@@ -52,7 +51,6 @@ class ActivityNotificationSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)

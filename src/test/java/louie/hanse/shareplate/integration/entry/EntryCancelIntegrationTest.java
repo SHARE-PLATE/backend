@@ -175,10 +175,8 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(CLOSE_TO_THE_CLOSED_DATE_TIME.getStatusCode().value())
-            .body("errorCode",
-                equalTo(CLOSE_TO_THE_CLOSED_DATE_TIME.getErrorCode()))
-            .body("message",
-                equalTo(CLOSE_TO_THE_CLOSED_DATE_TIME.getMessage()));
+            .body("errorCode", equalTo(CLOSE_TO_THE_CLOSED_DATE_TIME.getErrorCode()))
+            .body("message", equalTo(CLOSE_TO_THE_CLOSED_DATE_TIME.getMessage()));
     }
 
     @Test

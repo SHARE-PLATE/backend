@@ -65,12 +65,9 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
             .get("/chatrooms/{id}")
 
             .then()
-            .statusCode(
-                PATH_VARIABLE_EMPTY_CHATROOM_ID.getStatusCode().value())
-            .body("errorCode",
-                equalTo(PATH_VARIABLE_EMPTY_CHATROOM_ID.getErrorCode()))
-            .body("message",
-                equalTo(PATH_VARIABLE_EMPTY_CHATROOM_ID.getMessage()));
+            .statusCode(PATH_VARIABLE_EMPTY_CHATROOM_ID.getStatusCode().value())
+            .body("errorCode", equalTo(PATH_VARIABLE_EMPTY_CHATROOM_ID.getErrorCode()))
+            .body("message", equalTo(PATH_VARIABLE_EMPTY_CHATROOM_ID.getMessage()));
     }
 
     @Test
@@ -87,8 +84,7 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
 
             .then()
             .statusCode(CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
-            .body("errorCode",
-                equalTo(CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
+            .body("errorCode", equalTo(CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
             .body("message", equalTo(CHATROOM_ID_IS_NEGATIVE.getMessage()));
     }
 
