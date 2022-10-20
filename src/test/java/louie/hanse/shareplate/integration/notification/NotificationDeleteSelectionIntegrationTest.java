@@ -14,7 +14,6 @@ import io.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.service.ShareService;
@@ -40,7 +39,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
             .filter(document("notification-selection-delete"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body( Map.of("idList", (List.of(3L, 4L))))
+            .body(Collections.singletonMap("idList", List.of(3L, 4L)))
 
             .when()
             .delete("/notifications")
@@ -78,7 +77,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(Map.of("idList", List.of(3L, -4L)))
+            .body(Collections.singletonMap("idList", List.of(3L, -4L)))
 
             .when()
             .delete("/notifications")
@@ -96,7 +95,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(Map.of("idList", (List.of(1L, 3L))))
+            .body(Collections.singletonMap("idList", List.of(1L, 3L)))
 
             .when()
             .delete("/notifications")
@@ -114,7 +113,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(Map.of("idList", (List.of(3444444L, 433333L))))
+            .body(Collections.singletonMap("idList", List.of(3444444L, 433333L)))
 
             .when()
             .delete("/notifications")
@@ -132,7 +131,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(Map.of("idList", (List.of(3L, 4L))))
+            .body(Collections.singletonMap("idList", List.of(3L, 4L)))
 
             .when()
             .delete("/notifications")
