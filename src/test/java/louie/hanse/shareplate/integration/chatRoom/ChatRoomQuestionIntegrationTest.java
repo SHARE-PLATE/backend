@@ -11,7 +11,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import io.restassured.http.ContentType;
 import java.util.Collections;
-import java.util.Map;
+import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,12 +24,11 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     void 회원이_일대일_채팅을_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .filter(document("chatRoom-question-chat-post"))
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("shareId", 1))
 
             .when()
             .post("/chatrooms")
@@ -42,11 +41,10 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     void 쉐어_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("shareId", null);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("shareId", null))
 
             .when()
             .post("/chatrooms")
@@ -61,11 +59,10 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     void 쉐어_id가_양수가_아닐_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("shareId", -1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("shareId", -1))
 
             .when()
             .post("/chatrooms")
@@ -80,11 +77,10 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("shareId", 1))
 
             .when()
             .post("/chatrooms")
@@ -99,11 +95,10 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     void 존재하지_않은_쉐어_id일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("shareId", 999L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("shareId", 999))
 
             .when()
             .post("/chatrooms")
@@ -115,20 +110,20 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    //TODO 예외처리 fix
     void 내가_등록한_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("shareId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("shareId", 1))
 
             .when()
             .post("/chatrooms")
 
             .then()
-            .statusCode(HttpStatus.OK.value());
+            .statusCode(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT.getStatusCode().value())
+            .body("errorCode", equalTo(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT.getErrorCode()))
+            .body("message", equalTo(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT.getMessage()));
     }
 }

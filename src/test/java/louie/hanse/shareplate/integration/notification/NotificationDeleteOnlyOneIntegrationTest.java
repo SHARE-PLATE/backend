@@ -30,7 +30,6 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 회원이_알림을_단건_삭제한다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
@@ -48,7 +47,6 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 알림_id가_null값인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
@@ -67,7 +65,6 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 알림_id_값이_양수가_아닌_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
@@ -86,7 +83,6 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
@@ -105,7 +101,6 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 유효하지_않은_알림인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
@@ -124,7 +119,6 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 다른_회원의_알림인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)

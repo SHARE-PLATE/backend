@@ -13,8 +13,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
+import java.util.Collections;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -26,14 +26,11 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 회원이_쉐어를_위시_등록을_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 3);
-
         given(documentationSpec)
             .filter(document("wish-register-post"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 3))
 
             .when()
             .post("/wish-list")
@@ -46,13 +43,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 쉐어_id가_null값인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", null);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", null))
 
             .when()
             .post("/wish-list")
@@ -67,13 +61,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 쉐어_id가_양수가_아닌_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", -3);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", -3))
 
             .when()
             .post("/wish-list")
@@ -89,13 +80,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 3);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 3))
 
             .when()
             .post("/wish-list")
@@ -110,13 +98,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 333);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 3333333))
 
             .when()
             .post("/wish-list")
@@ -131,13 +116,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 이미_위시를_등록한_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 1);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 1))
 
             .when()
             .post("/wish-list")
@@ -152,13 +134,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 작성한_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 2);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 2))
 
             .when()
             .post("/wish-list")
@@ -173,13 +152,10 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
     void 취소된_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 6);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 6))
 
             .when()
             .post("/wish-list")

@@ -87,7 +87,7 @@ public class ChatRoomService {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
         if (share.isWriter(member)) {
-            new GlobalException(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT);
+            throw new GlobalException(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT);
         }
         ChatRoom chatRoom = new ChatRoom(member, share, ChatRoomType.QUESTION);
         chatRoom.addChatRoomMember(share.getWriter());

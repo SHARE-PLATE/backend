@@ -12,7 +12,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import io.restassured.http.ContentType;
 import java.util.Collections;
-import java.util.Map;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,12 +24,11 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     void 회원이_채팅을_읽은시간_기준으로_채팅_읽은_시간을_변경한다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("chatRoomId", 1L);
         given(documentationSpec)
             .filter(document("chatLog-recent-update-date-time-put"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("chatRoomId", 1))
 
             .when()
             .put("/chat-logs/update-read-time")
@@ -43,11 +41,10 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     void 채팅방_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("chatRoomId", null);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("chatRoomId", null))
 
             .when()
             .put("/chat-logs/update-read-time")
@@ -62,11 +59,10 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     void 채팅방_id가_양수가_아닐_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("chatRoomId", -1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("chatRoomId", -1))
 
             .when()
             .put("/chat-logs/update-read-time")
@@ -81,11 +77,10 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("chatRoomId", 1L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("chatRoomId", 1))
 
             .when()
             .put("/chat-logs/update-read-time")
@@ -100,11 +95,10 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     void 존재하지_않은_채팅방_id일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("chatRoomId", 999L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("chatRoomId", 999))
 
             .when()
             .put("/chat-logs/update-read-time")
@@ -119,11 +113,10 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     void 회원이_참여하지_않은_채팅방일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, Long> requestBody = Collections.singletonMap("chatRoomId", 4L);
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("chatRoomId", 4))
 
             .when()
             .put("/chat-logs/update-read-time")

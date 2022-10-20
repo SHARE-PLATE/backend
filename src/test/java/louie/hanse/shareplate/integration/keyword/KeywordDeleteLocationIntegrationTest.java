@@ -23,13 +23,11 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
     void 등록한_키워드_주소를_삭제한다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, String> requestBody = Collections.singletonMap("location", "방이동");
-
         given(documentationSpec)
             .filter(document("keyword-delete-location-delete"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("location", "방이동"))
 
             .when()
             .delete("/keywords")
@@ -42,12 +40,10 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_회원일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        Map<String, String> requestBody = Collections.singletonMap("location", "방이동");
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("location", "방이동"))
 
             .when()
             .delete("/keywords")
@@ -62,12 +58,10 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
     void 필수_필드값이_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, String> requestBody = Collections.singletonMap("location", null);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("location", null))
 
             .when()
             .delete("/keywords")
@@ -82,12 +76,10 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
     void 등록하지_않은_주소일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
-        Map<String, String> requestBody = Collections.singletonMap("location", "묵현리");
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("location", "묵현리"))
 
             .when()
             .delete("/keywords")

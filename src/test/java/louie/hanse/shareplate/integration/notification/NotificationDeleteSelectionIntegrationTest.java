@@ -12,8 +12,8 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import io.restassured.http.ContentType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import louie.hanse.shareplate.repository.MemberRepository;
 import louie.hanse.shareplate.service.ShareService;
@@ -33,17 +33,13 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 회원이_알림을_선택_삭제_요청한다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
-
-        Map<String, List<Long>> requestBody = Map.of("idList",
-            new ArrayList<>(List.of(3L, 4L)));
 
         given(documentationSpec)
             .filter(document("notification-selection-delete"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("idList", List.of(3L, 4L)))
 
             .when()
             .delete("/notifications")
@@ -54,18 +50,16 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 알림_id가_null값인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
+
         List<Long> idList = new ArrayList<>();
         idList.add(null);
         idList.add(1L);
 
-        Map<String, List<Long>> requestBody = Map.of("idList", idList);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("idList", idList))
 
             .when()
             .delete("/notifications")
@@ -78,16 +72,12 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 알림_id_값이_양수가_아닌_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
-
-        Map<String, List<Long>> requestBody = Map.of("idList",
-            new ArrayList<>(List.of(3L, -4L)));
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("idList", List.of(3L, -4L)))
 
             .when()
             .delete("/notifications")
@@ -100,16 +90,12 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(1L);
-
-        Map<String, List<Long>> requestBody = Map.of("idList",
-            new ArrayList<>(List.of(1L, 3L)));
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("idList", List.of(1L, 3L)))
 
             .when()
             .delete("/notifications")
@@ -122,16 +108,12 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 유효하지_않은_알림인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841047L);
-
-        Map<String, List<Long>> requestBody = Map.of("idList",
-            new ArrayList<>(List.of(3444444L, 433333L)));
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("idList", List.of(3444444L, 433333L)))
 
             .when()
             .delete("/notifications")
@@ -144,16 +126,12 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
 
     @Test
     void 다른_회원의_알림인_경우_예외를_발생시킨다() {
-
         String accessToken = jwtProvider.createAccessToken(2355841033L);
-
-        Map<String, List<Long>> requestBody = Map.of("idList",
-            new ArrayList<>(List.of(3L, 4L)));
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestBody)
+            .body(Collections.singletonMap("idList", List.of(3L, 4L)))
 
             .when()
             .delete("/notifications")

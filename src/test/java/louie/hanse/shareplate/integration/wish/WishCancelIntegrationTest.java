@@ -12,8 +12,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import io.restassured.http.ContentType;
+import java.util.Collections;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -25,14 +25,11 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 회원이_쉐어의_위시를_취소를_요청한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 3);
-
         given(documentationSpec)
             .filter(document("wish-cancel-delete"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 3))
 
             .when()
             .delete("/wish-list")
@@ -45,13 +42,10 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 쉐어_id가_null값인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", null);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", null))
 
             .when()
             .delete("/wish-list")
@@ -66,13 +60,10 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 쉐어_id가_양수가_아닌_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", -3);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", -3))
 
             .when()
             .delete("/wish-list")
@@ -87,13 +78,10 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(1L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 3);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 3))
 
             .when()
             .delete("/wish-list")
@@ -108,13 +96,10 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 222);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 22222))
 
             .when()
             .delete("/wish-list")
@@ -129,13 +114,10 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 유효하지_않은_위시인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 4);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 4))
 
             .when()
             .delete("/wish-list")
@@ -150,13 +132,10 @@ class WishCancelIntegrationTest extends InitIntegrationTest {
     void 취소된_쉐어인_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
-        JSONObject requestParam = new JSONObject();
-        requestParam.put("shareId", 6);
-
         given(documentationSpec)
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
-            .body(requestParam)
+            .body(Collections.singletonMap("shareId", 6))
 
             .when()
             .delete("/wish-list")
