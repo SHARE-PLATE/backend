@@ -11,6 +11,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import io.restassured.http.ContentType;
 import java.util.Collections;
+import louie.hanse.shareplate.exception.type.ChatRoomExceptionType;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -122,6 +123,8 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .post("/chatrooms")
 
             .then()
-            .statusCode(HttpStatus.OK.value());
+            .statusCode(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT.getStatusCode().value())
+            .body("errorCode", equalTo(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT.getErrorCode()))
+            .body("message", equalTo(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT.getMessage()));
     }
 }
