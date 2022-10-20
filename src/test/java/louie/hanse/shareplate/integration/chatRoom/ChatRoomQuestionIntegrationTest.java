@@ -110,7 +110,6 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    //TODO 예외처리 fix
     void 내가_등록한_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 

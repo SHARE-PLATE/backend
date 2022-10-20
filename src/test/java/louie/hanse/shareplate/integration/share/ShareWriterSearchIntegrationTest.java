@@ -13,11 +13,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("회원이 작성한 쉐어 조회 통합 테스트")
+@DisplayName("특정 회원이 작성한 쉐어 조회 통합 테스트")
 class ShareWriterSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
-    void 회원이_작성한_쉐어를_조회한다() {
+    void 특정_회원이_작성한_쉐어를_조회한다() {
         given(documentationSpec)
             .param("writerId", 2370842997L)
             .filter(document("share-write-by-member-get"))
