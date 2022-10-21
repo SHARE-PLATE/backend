@@ -27,11 +27,11 @@ public class MemberService {
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) throws IOException {
         Member member = findByIdOrElseThrow(id);
 
-        MultipartFile profileImage = request.getProfileImage();
-        if (!ObjectUtils.isEmpty(profileImage)) {
-            String profileImageUrl = fileUploader.uploadMemberImage(profileImage);
-            member.changeProfileImageUrl(profileImageUrl);
-            member.changeThumbnailImageUrl(profileImageUrl);
+        MultipartFile image = request.getImage();
+        if (!ObjectUtils.isEmpty(image)) {
+            String imageUrl = fileUploader.uploadMemberImage(image);
+            member.changeProfileImageUrl(imageUrl);
+            member.changeThumbnailImageUrl(imageUrl);
         }
 
         String nickname = request.getNickname();

@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-public class MemberProfileImageValidator implements ConstraintValidator<ValidMemberProfileImage, MultipartFile> {
+public class MemberImageValidator implements ConstraintValidator<ValidMemberImage, MultipartFile> {
 
     private static final List<String> enableContentTypes = createEnableContentTypes();
 

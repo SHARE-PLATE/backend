@@ -11,8 +11,8 @@ import javax.validation.Payload;
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {MemberProfileImageValidator.class})
-public @interface ValidMemberProfileImage {
+@Constraint(validatedBy = {MemberImageValidator.class})
+public @interface ValidMemberImage {
     String message() default "";
 
     Class<?>[] groups() default {};
