@@ -9,7 +9,7 @@ import louie.hanse.shareplate.web.dto.member.MemberChangeUserInfoRequest;
 import louie.hanse.shareplate.web.dto.member.MemberUserInfoResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +27,7 @@ public class MemberController {
         return memberService.getUserInfo(memberId);
     }
 
-    @PutMapping
+    @PatchMapping
     public void changeUserInfo(@Valid MemberChangeUserInfoRequest memberChangeUserInfoRequest,
         HttpServletRequest request) throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");

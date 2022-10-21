@@ -11,6 +11,9 @@ import louie.hanse.shareplate.web.dto.member.MemberChangeUserInfoRequest;
 import louie.hanse.shareplate.web.dto.member.MemberUserInfoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,9 +26,18 @@ public class MemberService {
     @Transactional
     public void changeUserInfo(MemberChangeUserInfoRequest request, Long id) throws IOException {
         Member member = findByIdOrElseThrow(id);
-        String profileImageUrl = fileUploader.uploadMemberImage(request.getProfileImage());
-        member.changeProfileImageUrl(profileImageUrl);
-        member.changeNickname(request.getNickname());
+
+        MultipartFile profileImage = request.getProfileImage();
+        if (!ObjectUtils.isEmpty(profileImage)) {
+            String profileImageUrl = fileUploader.uploadMemberImage(profileImage);
+            member.changeProfileImageUrl(profileImageUrl);
+            member.changeThumbnailImageUrl(profileImageUrl);
+        }
+
+        String nickname = request.getNickname();
+        if (StringUtils.hasText(nickname)) {
+            member.changeNickname(nickname);
+        }
     }
 
     public MemberUserInfoResponse getUserInfo(Long id) {

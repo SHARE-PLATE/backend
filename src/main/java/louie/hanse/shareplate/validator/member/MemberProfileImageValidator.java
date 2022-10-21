@@ -16,20 +16,14 @@ public class MemberProfileImageValidator implements ConstraintValidator<ValidMem
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
         context.disableDefaultConstraintViolation();
 
-        if (ObjectUtils.isEmpty(multipartFile)) {
-            context.buildConstraintViolationWithTemplate(
-                    MemberExceptionType.EMPTY_MEMBER_INFO.getMessage())
-                .addConstraintViolation();
-            return false;
-        }
-
-        String contentType = multipartFile.getContentType();
-
-        if (!enableContentTypes.contains(contentType)) {
-            context.buildConstraintViolationWithTemplate(
-                MemberExceptionType.NOT_SUPPORT_IMAGE_TYPE.getMessage())
-                .addConstraintViolation();
-            return false;
+        if (!ObjectUtils.isEmpty(multipartFile)) {
+            String contentType = multipartFile.getContentType();
+            if (!enableContentTypes.contains(contentType)) {
+                context.buildConstraintViolationWithTemplate(
+                        MemberExceptionType.NOT_SUPPORT_IMAGE_TYPE.getMessage())
+                    .addConstraintViolation();
+                return false;
+            }
         }
         return true;
     }
