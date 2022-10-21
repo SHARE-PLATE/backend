@@ -102,7 +102,7 @@ public class ShareService {
     }
 
     public ShareDetailResponse getDetail(Long id, String accessToken) {
-        Share share = findByIdOrElseThrow(id);
+        Share share = findWithWriterByIdOrElseThrow(id);
         share.isCanceledThrowException();
 
         boolean check = true;
@@ -120,7 +120,9 @@ public class ShareService {
 
         boolean wish = false;
         boolean entry = false;
+        Member member = null;
         if (check) {
+            member = memberService.findByIdOrElseThrow(memberId);
             wish = wishRepository.existsByMemberIdAndShareId(memberId, id);
             entry = entryRepository.existsByMemberIdAndShareId(memberId, id);
         }
@@ -128,7 +130,7 @@ public class ShareService {
         if (check && !entry) {
             entry = shareRepository.existsByIdAndWriterId(id, memberId);
         }
-        return new ShareDetailResponse(share, wish, entry);
+        return new ShareDetailResponse(share, member, wish, entry);
     }
 
     @Transactional

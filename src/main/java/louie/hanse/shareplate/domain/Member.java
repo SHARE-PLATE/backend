@@ -40,6 +40,10 @@ public class Member {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public void changeThumbnailImageUrl(String thumbnailImageUrl) {
+        this.thumbnailImageUrl = thumbnailImageUrl;
+    }
+
     public void changeNickname(String nickname) {
         this.nickname = nickname;
     }
