@@ -1,5 +1,6 @@
 package louie.hanse.shareplate.web.dto.share;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,9 +37,12 @@ public class ShareDetailResponse {
     private LocalDateTime closedDateTime;
     private boolean wish;
     private boolean entry;
+
+    @JsonProperty("isWriter")
+    private boolean isWriter;
     private int wishCount;
 
-    public ShareDetailResponse(Share share, boolean wish, boolean entry) {
+    public ShareDetailResponse(Share share, Member member, boolean wish, boolean entry) {
         this.id = share.getId();
         this.imageUrls = share.getShareImages().stream()
             .map(ShareImage::getImageUrl)
@@ -63,6 +67,7 @@ public class ShareDetailResponse {
         this.closedDateTime = share.getClosedDateTime();
         this.wish = wish;
         this.entry = entry;
+        this.isWriter = share.isWriter(member);
         this.wishCount = share.getWishCount();
         this.locationNegotiation = share.isLocationNegotiation();
         this.priceNegotiation = share.isPriceNegotiation();

@@ -55,6 +55,7 @@ class ShareDetailSearchIntegrationTest extends InitIntegrationTest {
             .body("closedDateTime", equalTo("2023-08-03 16:00"))
             .body("wish", equalTo(false))
             .body("entry", equalTo(false))
+            .body("isWriter", equalTo(false))
             .body("wishCount", equalTo(1))
             .body("locationNegotiation", equalTo(true))
             .body("priceNegotiation", equalTo(false))
