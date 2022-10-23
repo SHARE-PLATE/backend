@@ -97,7 +97,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         Long writerId = 2370842997L;
 
         Long shareId = shareService.register(
-            getShareRegisterRequest(LocalDateTime.now().plusMinutes(30)), writerId);
+            getShareRegisterRequest(LocalDateTime.now().plusMinutes(30)), writerId).get("id");
 
         String accessToken = jwtProvider.createAccessToken(writerId);
 

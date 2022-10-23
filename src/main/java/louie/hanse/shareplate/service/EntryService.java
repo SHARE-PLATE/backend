@@ -28,7 +28,7 @@ public class EntryService {
     private final ChatRoomMemberRepository chatRoomMemberRepository;
 
     @Transactional
-    public void entry(Long shareId, Long memberId) {
+    public Long entry(Long shareId, Long memberId) {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = shareService.findByIdOrElseThrow(shareId);
 
@@ -47,6 +47,7 @@ public class EntryService {
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, chatRoom);
         chatRoomMemberRepository.save(chatRoomMember);
 
+        return entry.getId();
     }
 
     @Transactional
