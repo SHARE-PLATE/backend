@@ -2,3 +2,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+logging:
+  file:
+    name: /tmp/log/share-plate.log

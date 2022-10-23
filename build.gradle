@@ -77,6 +77,9 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.0'
 	implementation 'org.webjars:sockjs-client:1.1.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+	// Log
+	implementation 'org.codehaus.janino:janino:3.1.6'
 }
 
 tasks.named('test') {

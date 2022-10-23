@@ -5,7 +5,7 @@ FROM openjdk:11-jdk
 #spring boot의 Tomcat의 default 저장소가 /tmp인데
 #위와 같이 볼륨 마운트를 해주면 호스트의 /var/lib/docker에 임시파일을 만들고
 #컨테이너 안의 /tmp 와 연결할 수 있다는 뜻입니다.
-VOLUME /tmp
+VOLUME /tmp/log
 
 # JAR_FILE 변수에 값을 저장
 ARG JAR_FILE=./build/libs/*.jar
