@@ -1,7 +1,9 @@
 package louie.hanse.shareplate.web.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -40,11 +42,12 @@ public class ShareController {
     private final NotificationService notificationService;
 
     @PostMapping
-    public void register(@Valid ShareRegisterRequest shareRegisterRequest, HttpServletRequest request)
+    public Map<String, Long> register(@Valid ShareRegisterRequest shareRegisterRequest, HttpServletRequest request)
         throws IOException {
         Long memberId = (Long) request.getAttribute("memberId");
-        Long shareId = shareService.register(shareRegisterRequest, memberId);
-        notificationService.saveKeywordNotificationAndSend(shareId, memberId);
+        Map<String, Long> map = shareService.register(shareRegisterRequest, memberId);
+        notificationService.saveKeywordNotificationAndSend(map.get("id"), memberId);
+        return Collections.singletonMap("entryId", map.get("entryId"));
     }
 
     @GetMapping

@@ -51,7 +51,7 @@ public class ShareService {
     private final FileUploader fileUploader;
 
     @Transactional
-    public Long register(ShareRegisterRequest request, Long memberId) throws IOException {
+    public Map<String, Long> register(ShareRegisterRequest request, Long memberId) throws IOException {
         Member member = memberService.findByIdOrElseThrow(memberId);
         Share share = request.toEntity(member);
         for (MultipartFile image : request.getImages()) {
@@ -69,7 +69,8 @@ public class ShareService {
         entryRepository.save(entry);
         new ChatRoom(member, share, ChatRoomType.ENTRY);
         shareRepository.save(share);
-        return share.getId();
+
+        return Map.of("id", share.getId(), "entryId", entry.getId());
     }
 
     public List<ShareSearchResponse> searchAroundMember(

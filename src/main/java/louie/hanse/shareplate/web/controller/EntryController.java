@@ -33,12 +33,14 @@ public class EntryController {
     }
 
     @PostMapping("/shares/{shareId}/entry")
-    public void entryShare(
+    public Map<String, Long> entryShare(
         @PathVariable(required = false) @NotNull(message = "PathVariable의 shareId가 비어있습니다.") @Positive(message = "쉐어 id는 양수여야 합니다.") Long shareId,
         HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
-        entryService.entry(shareId, memberId);
+        Long entryId = entryService.entry(shareId, memberId);
         notificationService.saveActivityNotificationAndSend(shareId, memberId, ActivityType.ENTRY);
+
+        return Collections.singletonMap("entryId", entryId);
     }
 
     @DeleteMapping("/shares/{shareId}/entry")
