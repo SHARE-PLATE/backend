@@ -19,4 +19,8 @@ public enum ChatRoomType {
     public boolean isEntry() {
         return this == ENTRY;
     }
+
+    public boolean isQuestion() {
+        return this == QUESTION;
+    }
 }
