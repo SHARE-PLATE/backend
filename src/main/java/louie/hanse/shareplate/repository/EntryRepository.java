@@ -9,8 +9,10 @@ import org.springframework.data.repository.query.Param;
 public interface EntryRepository extends JpaRepository<Entry, Long> {
 
     @Query("select e from Entry e where e.share.id = :shareId and e.member.id <> :memberId")
-    List<Entry> findAllByShareIdAndMemberId(
+    List<Entry> findAllByShareIdAndNotMemberId(
         @Param("shareId") Long shareId, @Param("memberId") Long memberId);
+
+    Entry findByShareIdAndMemberId(Long shareId, Long memberId);
 
     boolean existsByMemberIdAndShareId(Long memberId, Long shareId);
 

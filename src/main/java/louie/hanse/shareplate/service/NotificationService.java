@@ -106,7 +106,7 @@ public class NotificationService {
         ActivityType activityType) {
         Share share = shareService.findByIdOrElseThrow(shareId);
         Member member = memberService.findByIdOrElseThrow(memberId);
-        List<Entry> entries = entryRepository.findAllByShareIdAndMemberId(shareId,
+        List<Entry> entries = entryRepository.findAllByShareIdAndNotMemberId(shareId,
             memberId);
 
         List<ActivityNotification> activityNotifications = new ArrayList<>();
