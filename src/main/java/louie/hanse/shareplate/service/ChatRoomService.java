@@ -90,7 +90,6 @@ public class ChatRoomService {
             throw new GlobalException(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT);
         }
         ChatRoom chatRoom = new ChatRoom(member, share, ChatRoomType.QUESTION);
-        chatRoom.addChatRoomMember(share.getWriter());
         return chatRoomRepository.save(chatRoom).getId();
     }
 
