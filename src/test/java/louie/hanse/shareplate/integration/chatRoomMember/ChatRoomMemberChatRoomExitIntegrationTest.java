@@ -62,7 +62,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().plusMinutes(30));
-        Long shareId = shareService.register(request, 2355841047L);
+        Long shareId = shareService.register(request, 2355841047L).get("id");
         chatRoomService.createQuestionChatRoom(2370842997L, shareId);
 
         Long chatRoomId = chatRoomService.findIdByShareIdAndType(shareId, ChatRoomType.QUESTION);
@@ -191,7 +191,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().plusMinutes(30));
-        Long shareId = shareService.register(request, 2355841047L);
+        Long shareId = shareService.register(request, 2355841047L).get("id");
         entryService.entry(shareId, 2370842997L);
 
         Long chatRoomId = chatRoomService.findIdByShareIdAndType(shareId, ChatRoomType.ENTRY);

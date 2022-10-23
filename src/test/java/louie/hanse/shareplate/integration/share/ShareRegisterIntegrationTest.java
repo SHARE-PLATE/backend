@@ -9,6 +9,7 @@ import static louie.hanse.shareplate.exception.type.ShareExceptionType.OUT_OF_SC
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.PAST_CLOSED_DATE_TIME;
 import static louie.hanse.shareplate.integration.share.utils.ShareIntegrationTestUtils.createMultiPartSpecification;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -55,7 +56,8 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
             .post("/shares")
 
             .then()
-            .statusCode(HttpStatus.OK.value());
+            .statusCode(HttpStatus.OK.value())
+            .body("entryId", notNullValue());
     }
 
 //    TODO 어떤 필드가 검증에 실패했는지도 메세지로 나타내기, closedDateTime 패턴 형식까지 검증하기

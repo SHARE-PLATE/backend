@@ -163,7 +163,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().plusMinutes(30));
 
-        Long shareId = shareService.register(request, 2355841047L);
+        Long shareId = shareService.register(request, 2355841047L).get("id");
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
@@ -184,7 +184,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().minusHours(3));
-        Long shareId = shareService.register(request, 2355841047L);
+        Long shareId = shareService.register(request, 2355841047L).get("id");
 
         given(documentationSpec)
             .contentType(ContentType.JSON)

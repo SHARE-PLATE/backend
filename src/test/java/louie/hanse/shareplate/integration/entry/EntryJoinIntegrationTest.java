@@ -11,6 +11,7 @@ import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_IS_
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
 import static louie.hanse.shareplate.integration.entry.utils.EntryIntegrationTestUtils.getShareRegisterRequest;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
@@ -45,7 +46,8 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
             .post("/shares/{shareId}/entry")
 
             .then()
-            .statusCode(HttpStatus.OK.value());
+            .statusCode(HttpStatus.OK.value())
+            .body("entryId", notNullValue());
     }
 
 
@@ -181,7 +183,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().minusHours(2));
-        Long shareId = shareService.register(request, 2355841033L);
+        Long shareId = shareService.register(request, 2355841033L).get("id");
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
