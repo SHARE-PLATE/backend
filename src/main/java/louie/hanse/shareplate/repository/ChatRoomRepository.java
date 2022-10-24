@@ -15,5 +15,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     List<ChatRoom> findAllByMemberId(@Param("memberId") Long memberId,
         @Param("type") ChatRoomType type);
 
-    ChatRoom findByShareIdAndType(@Param("shareId") Long shareId, @Param("type") ChatRoomType type);
+    List<ChatRoom> findByShareIdAndType(@Param("shareId") Long shareId,
+        @Param("type") ChatRoomType type);
 }

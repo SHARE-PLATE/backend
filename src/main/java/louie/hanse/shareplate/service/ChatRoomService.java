@@ -3,6 +3,7 @@ package louie.hanse.shareplate.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import louie.hanse.shareplate.domain.Chat;
 import louie.hanse.shareplate.domain.ChatLog;
@@ -89,12 +90,18 @@ public class ChatRoomService {
         if (share.isWriter(member)) {
             throw new GlobalException(ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT);
         }
-        ChatRoom chatRoom = new ChatRoom(member, share, ChatRoomType.QUESTION);
-        return chatRoomRepository.save(chatRoom).getId();
+
+        List<Long> questionChatRoomIds = chatRoomRepository
+            .findByShareIdAndType(shareId, ChatRoomType.QUESTION)
+            .stream().map(ChatRoom::getId).collect(Collectors.toList());
+        Optional<ChatRoomMember> optionalChatRoomMember = chatRoomMemberRepository
+            .findByChatRoomIdsAndMemberId(questionChatRoomIds, memberId);
+        if (optionalChatRoomMember.isPresent()) {
+            throw new GlobalException(ChatRoomExceptionType.QUESTION_CHAT_ROOM_ALREADY_EXIST);
+        } else {
+            ChatRoom chatRoom = new ChatRoom(member, share, ChatRoomType.QUESTION);
+            return chatRoomRepository.save(chatRoom).getId();
+        }
     }
 
-    public Long findIdByShareIdAndType(Long shareId, ChatRoomType type) {
-        ChatRoom chatRoom = chatRoomRepository.findByShareIdAndType(shareId, type);
-        return chatRoom.getId();
-    }
 }
