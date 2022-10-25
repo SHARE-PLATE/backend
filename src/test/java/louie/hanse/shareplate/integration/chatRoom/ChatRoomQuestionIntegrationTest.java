@@ -3,7 +3,6 @@ package louie.hanse.shareplate.integration.chatRoom;
 import static io.restassured.RestAssured.given;
 import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE;
 import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.EMPTY_CHATROOM_INFO;
-import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.QUESTION_CHAT_ROOM_ALREADY_EXIST;
 import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT;
 import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
@@ -30,6 +29,22 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .filter(document("chatRoom-question-chat-post"))
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 1))
+
+            .when()
+            .post("/chatrooms")
+
+            .then()
+            .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 이미_입장한_문의_채팅방일_경우_입장했던_채팅방_id를_보내준다() {
+        String accessToken = jwtProvider.createAccessToken(2398606895L);
+
+        given(documentationSpec)
+            .contentType(ContentType.JSON)
+            .header(AUTHORIZATION, accessToken)
+            .body(Collections.singletonMap("shareId", 2))
 
             .when()
             .post("/chatrooms")
@@ -126,23 +141,5 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .statusCode(WRITER_CAN_NOT_QUESTION_CHAT.getStatusCode().value())
             .body("errorCode", equalTo(WRITER_CAN_NOT_QUESTION_CHAT.getErrorCode()))
             .body("message", equalTo(WRITER_CAN_NOT_QUESTION_CHAT.getMessage()));
-    }
-
-    @Test
-    void 이미_입장한_문의_채팅방일_경우_예외를_발생시킨다() {
-        String accessToken = jwtProvider.createAccessToken(2398606895L);
-
-        given(documentationSpec)
-            .contentType(ContentType.JSON)
-            .header(AUTHORIZATION, accessToken)
-            .body(Collections.singletonMap("shareId", 2))
-
-            .when()
-            .post("/chatrooms")
-
-            .then()
-            .statusCode(QUESTION_CHAT_ROOM_ALREADY_EXIST.getStatusCode().value())
-            .body("errorCode", equalTo(QUESTION_CHAT_ROOM_ALREADY_EXIST.getErrorCode()))
-            .body("message", equalTo(QUESTION_CHAT_ROOM_ALREADY_EXIST.getMessage()));
     }
 }
