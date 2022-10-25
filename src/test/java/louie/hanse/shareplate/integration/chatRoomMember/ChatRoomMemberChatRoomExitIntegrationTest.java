@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
+import louie.hanse.shareplate.repository.ChatRoomRepository;
 import louie.hanse.shareplate.service.ChatRoomService;
 import louie.hanse.shareplate.service.EntryService;
 import louie.hanse.shareplate.service.ShareService;
@@ -39,6 +40,9 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     ChatRoomService chatRoomService;
+
+    @Autowired
+    ChatRoomRepository chatRoomRepository;
 
     @Test
     void 쉐어에_참가한_회원이_채팅방을_나간다() {
@@ -65,7 +69,8 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         Long shareId = shareService.register(request, 2355841047L).get("id");
         chatRoomService.createQuestionChatRoom(2370842997L, shareId);
 
-        Long chatRoomId = chatRoomService.findIdByShareIdAndType(shareId, ChatRoomType.QUESTION);
+        Long chatRoomId = chatRoomRepository.findByShareIdAndType(shareId, ChatRoomType.QUESTION)
+            .get(0).getId();
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
@@ -187,14 +192,15 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_마감시간이_한시간_미만으로_남은_쉐어일_경우_예외를_발생시킨다() throws IOException {
+    void 쉐어_마감시간이_한시간_미만으로_남은_쉐어의_참가_채팅방일_경우_예외를_발생시킨다() throws IOException {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().plusMinutes(30));
         Long shareId = shareService.register(request, 2355841047L).get("id");
         entryService.entry(shareId, 2370842997L);
 
-        Long chatRoomId = chatRoomService.findIdByShareIdAndType(shareId, ChatRoomType.ENTRY);
+        Long chatRoomId = chatRoomRepository.findByShareIdAndType(shareId, ChatRoomType.ENTRY)
+            .get(0).getId();
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
@@ -211,7 +217,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 취소되지_않은_쉐어에_글쓴이가_요청할_경우_예외를_발생시킨다() {
+    void 취소되지_않은_쉐어의_글쓴이가_요청할_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)

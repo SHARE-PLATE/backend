@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, Long> {
 
-    @Query("select crf from ChatRoomMember crf "
-        + "join fetch crf.chatRoom cr "
+    @Query("select crm from ChatRoomMember crm "
+        + "join fetch crm.chatRoom cr "
         + "join fetch cr.share s "
-        + "where crf.chatRoom.id = :chatRoomId and "
-        + "crf.member.id = :memberId")
+        + "where crm.chatRoom.id = :chatRoomId and "
+        + "crm.member.id = :memberId")
     ChatRoomMember findWithShareByChatRoomIdAndMemberId(
         @Param("chatRoomId") Long chatRoomId, @Param("memberId") Long memberId);
 
@@ -43,4 +43,10 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember, 
     boolean existsByMemberIdAndChatRoomId(Long memberId, Long chatRoomId);
 
     void deleteByMemberIdAndChatRoomId(Long memberId, Long chatRoomId);
+
+    @Query("select crm from ChatRoomMember crm "
+        + "where crm.chatRoom.id in (:chatRoomIds) "
+        + "and crm.member.id = :memberId")
+    Optional<ChatRoomMember> findByChatRoomIdsAndMemberId(
+        @Param("chatRoomIds") List<Long> chatRoomIds, @Param("memberId") Long memberId);
 }
