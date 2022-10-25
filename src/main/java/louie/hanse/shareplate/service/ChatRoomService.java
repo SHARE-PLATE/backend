@@ -97,7 +97,7 @@ public class ChatRoomService {
         Optional<ChatRoomMember> optionalChatRoomMember = chatRoomMemberRepository
             .findByChatRoomIdsAndMemberId(questionChatRoomIds, memberId);
         if (optionalChatRoomMember.isPresent()) {
-            throw new GlobalException(ChatRoomExceptionType.QUESTION_CHAT_ROOM_ALREADY_EXIST);
+            return optionalChatRoomMember.get().getId();
         } else {
             ChatRoom chatRoom = new ChatRoom(member, share, ChatRoomType.QUESTION);
             return chatRoomRepository.save(chatRoom).getId();
