@@ -1,0 +1,195 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+=== 전체 목록 (/notifications/*)
+[cols=2*]
+|===
+| 기능 | API
+| <<활동 알림 조회>> | GET /notifications/activity
+| <<키워드 알림 조회>> | GET /notifications/keyword
+| <<알림 단건 삭제>> | DELETE /notifications/{id}
+| <<알림 선택 삭제>> | DELETE /notifications
+|===
+
+=== 활동 알림 조회
+
+API : `GET /notifications/activity`
+
+회원이 활동 알림 리스트 조회를 요청한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/notification-activity-list-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-activity-list-get/http-response.adoc[]
+
+==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
+
+===== Request
+include::{snippets}/notification-activity-list-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-activity-list-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 키워드 알림 조회
+
+API : `GET /notifications/keyword`
+
+회원이 키워드 알림 리스트 조회를 요청한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/notification-keyword-list-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-keyword-list-get/http-response.adoc[]
+
+==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
+
+===== Request
+include::{snippets}/notification-keyword-list-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-keyword-list-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 알림 단건 삭제
+
+API : `DELETE /notifications/{id}`
+
+회원이 알림을 단건 삭제한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/notification-activity-list-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-activity-list-get/http-response.adoc[]
+
+==== `400 NOTIFICATION005`
+
+알림 id가 null값인 경우
+
+===== Request
+include::{snippets}/notification-only-one-delete-failed-by-notification-id-null/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-only-one-delete-failed-by-notification-id-null/http-response.adoc[]
+
+==== `400 NOTIFICATION001`
+
+알림 id 값이 양수가 아닌 경우
+
+===== Request
+include::{snippets}/notification-only-one-delete-failed-by-notification-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-only-one-delete-failed-by-notification-id-not-positive/http-response.adoc[]
+
+==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
+
+===== Request
+include::{snippets}/notification-only-one-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-only-one-delete-failed-by-member-not-found/http-response.adoc[]
+
+==== `400 NOTIFICATION002`
+
+유효하지 않은 알림인 경우
+
+===== Request
+include::{snippets}/notification-only-one-delete-failed-by-notification-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-only-one-delete-failed-by-notification-not-found/http-response.adoc[]
+
+==== `403 NOTIFICATION003`
+
+다른 회원의 알림인 경우
+
+===== Request
+include::{snippets}/notification-only-one-delete-failed-by-other-member-can-not-delete-notification/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-only-one-delete-failed-by-other-member-can-not-delete-notification/http-response.adoc[]
+
+=== 알림 선택 삭제
+
+API : `DELETE /notifications`
+
+회원이 알림을 선택 삭제한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/notification-selection-delete/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-selection-delete/http-response.adoc[]
+
+==== `400 NOTIFICATION005`
+
+알림 id가 null값인 경우
+
+===== Request
+include::{snippets}/notification-selection-delete-failed-by-notification-id-null/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-selection-delete-failed-by-notification-id-null/http-response.adoc[]
+
+==== `400 NOTIFICATION001`
+
+알림 id 값이 양수가 아닌 경우
+
+===== Request
+include::{snippets}/notification-selection-delete-failed-by-notification-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-selection-delete-failed-by-notification-id-not-positive/http-response.adoc[]
+
+==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
+
+===== Request
+include::{snippets}/notification-selection-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-selection-delete-failed-by-member-not-found/http-response.adoc[]
+
+==== `400 NOTIFICATION002`
+
+유효하지 않은 알림인 경우
+
+===== Request
+include::{snippets}/notification-selection-delete-failed-by-notification-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-selection-delete-failed-by-notification-not-found/http-response.adoc[]
+
+==== `403 NOTIFICATION003`
+
+다른 회원의 알림인 경우
+
+===== Request
+include::{snippets}/notification-selection-delete-failed-by-other-member-can-not-delete-notification/http-request.adoc[]
+
+===== Response
+include::{snippets}/notification-selection-delete-failed-by-other-member-can-not-delete-notification/http-response.adoc[]

@@ -66,6 +66,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-register-post-failed-by-empty-share-info"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart(createMultiPartSpecification("title", "제목"))
@@ -98,6 +99,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-r원egister-post-failed-by-not-support-image-type"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.txt", "abc".getBytes(), TEXT_PLAIN_VALUE)
@@ -132,7 +134,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
-            .filter(document("share-register-post"))
+            .filter(document("share-register-post-failed-by-image-limit_exceeded"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc1".getBytes(), IMAGE_JPEG_VALUE)
@@ -171,6 +173,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-register-post-failed-by-out-of-scope-for-korea"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)
@@ -206,6 +209,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-register-post-failed-by-out-of-scope-for-korea"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)
@@ -241,6 +245,7 @@ class ShareRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-register-post-failed-by-past-closed-date-time"))
             .header(AUTHORIZATION, accessToken)
             .contentType(MULTIPART)
             .multiPart("images", "test1.jpg", "abc".getBytes(), IMAGE_JPEG_VALUE)

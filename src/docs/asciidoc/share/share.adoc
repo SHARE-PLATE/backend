@@ -1,0 +1,466 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+=== 전체 목록 (/shares/*)
+[cols=2*]
+|===
+| 기능 | API
+| <<쉐어 등록>> | POST /shares
+| <<쉐어 검색>> | GET /shares
+| <<내 쉐어 검색>> | GET /shares/mine
+| <<쉐어 상세 조회>> | GET /shares/{id}
+| <<쉐어 편집>> | PUT /shares/{id}
+| <<쉐어 취소>> | DELETE /shares/{id}
+| <<쉐어 추천>> | GET /shares/recommendation
+| <<특정 회원이 작성한 쉐어 조회>> | GET /shares/writer
+|===
+
+=== 쉐어 등록
+
+API : `POST /shares`
+
+음식 공유를 하기 위해 쉐어를 등록한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-register-post/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post/http-response.adoc[]
+
+==== `400 SHARE001`
+
+이미지를 입력하지 않은 경우
+
+===== Request
+include::{snippets}/share-register-post-failed-by-empty-share-info/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post-failed-by-empty-share-info/http-response.adoc[]
+
+==== `400 SHARE003`
+
+지원하지 않은 이미지 형식인 경우
+
+===== Request
+include::{snippets}/share-register-post-failed-by-not-support-image-type/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post-failed-by-not-support-image-type/http-response.adoc[]
+
+==== `400 SHARE002`
+
+이미지의 개수가 5개 이상인 경우
+
+===== Request
+include::{snippets}/share-register-post-failed-by-image-limit_exceeded/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post-failed-by-image-limit_exceeded/http-response.adoc[]
+
+==== `400 SHARE006`
+
+대한민국의 위도 범위를 벗어난 경우
+
+===== Request
+include::{snippets}/share-register-post-failed-by-out-of-scope-for-korea/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post-failed-by-out-of-scope-for-korea/http-response.adoc[]
+
+==== `400 SHARE006`
+
+대한민국의 경도 범위를 벗어난 경우
+
+===== Request
+include::{snippets}/share-register-post-failed-by-out-of-scope-for-korea/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post-failed-by-out-of-scope-for-korea/http-response.adoc[]
+
+==== `400 SHARE005`
+
+마감 시간이 과거인 경우
+
+===== Request
+include::{snippets}/share-register-post-failed-by-past-closed-date-time/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-register-post-failed-by-past-closed-date-time/http-response.adoc[]
+
+=== 쉐어 검색
+
+API : `GET /shares`
+
+검색한 키워드가 포함된 회원 주변의 쉐어를 검색한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-search-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-search-get/http-response.adoc[]
+
+==== `400 SHARE006`
+
+대한민국의 위도, 경도 범위를 벗어난 경우
+
+===== Request
+include::{snippets}/share-search-get-failed-by-out-of-scope-for-korea/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-search-get-failed-by-out-of-scope-for-korea/http-response.adoc[]
+
+=== 내 쉐어 검색
+
+API : `GET /shares/mine`
+
+내 쉐어를 조회한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-search-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-search-get/http-response.adoc[]
+
+==== `400 SHARE008`
+
+쉐어 타입이 유효하지 않을 경우
+
+===== Request
+include::{snippets}/share-search-mine-get-failed-by-incorrect-type-value/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-search-mine-get-failed-by-incorrect-type-value/http-response.adoc[]
+
+==== `400 SHARE009`
+
+mineType이 유효하지 않을 경우
+
+===== Request
+include::{snippets}/share-search-mine-get-failed-by-incorrect-mine-value/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-search-mine-get-failed-by-incorrect-mine-value/http-response.adoc[]
+
+==== `400 SHARE001`
+
+mineType이 null값인 경우
+
+===== Request
+include::{snippets}/share-search-mine-get-failed-by-empty-share-info/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-search-mine-get-failed-by-empty-share-info/http-response.adoc[]
+
+=== 쉐어 상세 조회
+
+API : `GET /shares/{id}`
+
+쉐어의 상세정보를 조회한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-detail-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-detail-get/http-response.adoc[]
+
+==== `400 SHARE013`
+
+쉐어 id가 null값인 경우
+
+===== Request
+include::{snippets}/share-detail-get-failed-by-share-id-null/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-detail-get-failed-by-share-id-null/http-response.adoc[]
+
+==== `400 SHARE010`
+
+쉐어 id가 양수가 아닌 경우
+
+===== Request
+include::{snippets}/share-detail-get-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-detail-get-failed-by-share-id-not-positive/http-response.adoc[]
+
+==== `400 SHARE011`
+
+유효하지 않는 쉐어인 경우
+
+===== Request
+include::{snippets}/share-detail-get-failed-by-share-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-detail-get-failed-by-share-not-found/http-response.adoc[]
+
+==== `400 SHARE015`
+
+쉐어가 취소된 경우
+
+===== Request
+include::{snippets}/share-detail-get-failed-by-already-share-is-canceled/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-detail-get-failed-by-already-share-is-canceled/http-response.adoc[]
+
+=== 쉐어 편집
+
+API : `PUT /shares/{id}`
+
+본인이 등록한 쉐어를 편집한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-edit-put/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put/http-response.adoc[]
+
+==== `400 SHARE001`
+
+이미지를 입력하지 않은 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-empty-share-info/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-empty-share-info/http-response.adoc[]
+
+==== `400 SHARE003`
+
+지원하지 않은 이미지 형식인 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-not-support-image-type/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-not-support-image-type/http-response.adoc[]
+
+==== `400 SHARE002`
+
+이미지의 개수가 5개가 넘는 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-image-limit-exceeded/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-image-limit-exceeded/http-response.adoc[]
+
+==== `400 SHARE006`
+
+대한민국의 위도, 경도 범위를 벗어난 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-out-of-scope-for-korea/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-out-of-scope-for-korea/http-response.adoc[]
+
+==== `400 SHARE005`
+
+마감 시간이 과거인 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-past-closed-date-time/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-past-closed-date-time/http-response.adoc[]
+
+==== `400 SHARE004`
+
+모집 인원이 양수가 아닌 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-share-info-is-negative/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-share-info-is-negative/http-response.adoc[]
+
+==== `400 SHARE013`
+
+쉐어 id가 null값인 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-share-id-null/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-share-id-null/http-response.adoc[]
+
+==== `400 SHARE010`
+
+쉐어 id가 양수가 아닌 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-share-id-not-positive/http-response.adoc[]
+
+==== `400 SHARE011`
+
+유효하지 않은 쉐어인 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-share-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-share-not-found/http-response.adoc[]
+
+==== `403 SHARE012`
+
+쉐어 작성자가 아닌 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-not-share-written-by-me/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-not-share-written-by-me/http-response.adoc[]
+
+==== `400 SHARE014`
+
+쉐어가 마감된 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-already-share-is-closed/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-already-share-is-closed/http-response.adoc[]
+
+==== `400 SHARE015`
+
+쉐어가 취소된 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-already-share-is-canceled/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-already-share-is-canceled/http-response.adoc[]
+
+==== `400 SHARE017`
+
+마감 시간이 한시간 미만으로 남은 쉐어인 경우
+
+===== Request
+include::{snippets}/share-edit-put-failed-by-close-to-the-closed-date-time/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-edit-put-failed-by-close-to-the-closed-date-time/http-response.adoc[]
+
+=== 쉐어 취소
+
+API : `DELETE /shares/{id}`
+
+본인이 등록한 쉐어를 삭제한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-delete/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-delete/http-response.adoc[]
+
+==== `400 SHARE010`
+
+쉐어 id 값이 양수가 아닌 경우
+
+===== Request
+include::{snippets}/share-delete-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-delete-failed-by-share-id-not-positive/http-response.adoc[]
+
+==== `400 SHARE011`
+
+유효하지 않는 쉐어인 경우
+
+===== Request
+include::{snippets}/share-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-delete-failed-by-member-not-found/http-response.adoc[]
+
+==== `403 SHARE012`
+
+쉐어 작성자가 아닌 경우
+
+===== Request
+include::{snippets}/share-delete-failed-by-not-share-written-by-me/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-delete-failed-by-not-share-written-by-me/http-response.adoc[]
+
+==== `400 SHARE016`
+
+마감 시간이 한시간 미만으로 남은 쉐어인 경우
+
+===== Request
+include::{snippets}/share-delete-failed-by-close-to-the-closed-date-time/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-delete-failed-by-close-to-the-closed-date-time/http-response.adoc[]
+
+=== 쉐어 추천
+
+API : `GET /shares/recommendation`
+
+회원 주변의 쉐어를 추천한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-recommendation-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-recommendation-get/http-response.adoc[]
+
+==== `400 SHARE001`
+
+longitude가 null값인 경우
+
+===== Request
+include::{snippets}/share-recommendation-get-failed-by-empty-share-info/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-recommendation-get-failed-by-empty-share-info/http-response.adoc[]
+
+==== `400 SHARE006`
+
+대한민국의 위도, 경도 범위를 벗어난 경우
+
+===== Request
+include::{snippets}/share-recommendation-get-failed-by-out-of-scope-for-korea/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-recommendation-get-failed-by-out-of-scope-for-korea/http-response.adoc[]
+
+=== 특정 회원이 작성한 쉐어 조회
+
+API : `GET /shares/writer`
+
+특정 회원이 작성한 쉐어를 조회한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/share-write-by-member-get/http-request.adoc[]
+
+===== Response
+include::{snippets}/share-write-by-member-get/http-response.adoc[]
+

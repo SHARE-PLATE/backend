@@ -3,12 +3,12 @@
 |===
 | 기능 | API
 
-| <<로그아웃>> | POST /api/logout
+| <<회원 로그아웃>> | POST /api/logout
 | <<회원 로그인 여부 확인>> | GET /api/login/verification
 
 |===
 
-=== 로그아웃
+=== 회원 로그아웃
 
 API : `POST /api/logout`
 
