@@ -54,6 +54,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         );
 
         given(documentationSpec)
+            .filter(document("keyword-register-post-failed-by-empty-keyword-info"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -79,6 +80,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         );
 
         given(documentationSpec)
+            .filter(document("keyword-register-post-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -104,6 +106,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         );
 
         given(documentationSpec)
+            .filter(document("keyword-register-post-failed-by-duplicate-keyword"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)
@@ -129,6 +132,7 @@ class KeywordRegisterIntegrationTest extends InitIntegrationTest {
         );
 
         given(documentationSpec)
+            .filter(document("keyword-register-post-failed-by-out-of-scope-for-korea"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(requestBody)

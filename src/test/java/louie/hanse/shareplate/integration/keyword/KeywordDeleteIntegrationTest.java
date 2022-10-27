@@ -4,7 +4,7 @@ import static io.restassured.RestAssured.given;
 import static louie.hanse.shareplate.exception.type.KeywordExceptionType.KEYWORD_ID_IS_NEGATIVE;
 import static louie.hanse.shareplate.exception.type.KeywordExceptionType.KEYWORD_NOT_FOUND;
 import static louie.hanse.shareplate.exception.type.KeywordExceptionType.OTHER_MEMBER_CAN_NOT_DELETE_KEYWORD;
-import static louie.hanse.shareplate.exception.type.KeywordExceptionType.PATH_VARIABLE_EMPTY_NOTIFICATION_ID;
+import static louie.hanse.shareplate.exception.type.KeywordExceptionType.PATH_VARIABLE_EMPTY_KEYWORD_ID;
 import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -36,10 +36,11 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 키워드_id가_null값일_경우_예외를_발생시킨다() {
+    void path_variable의_키워드_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-failed-by-path-variable-empty-keyword-id"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", " ")
@@ -48,9 +49,9 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
             .delete("/keywords/{id}")
 
             .then()
-            .statusCode(PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getStatusCode().value())
-            .body("errorCode", equalTo(PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getErrorCode()))
-            .body("message", equalTo(PATH_VARIABLE_EMPTY_NOTIFICATION_ID.getMessage()));
+            .statusCode(PATH_VARIABLE_EMPTY_KEYWORD_ID.getStatusCode().value())
+            .body("errorCode", equalTo(PATH_VARIABLE_EMPTY_KEYWORD_ID.getErrorCode()))
+            .body("message", equalTo(PATH_VARIABLE_EMPTY_KEYWORD_ID.getMessage()));
     }
 
 
@@ -59,6 +60,7 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-failed-by-keyword-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -1)
@@ -77,6 +79,7 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
@@ -95,6 +98,7 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-failed-by-keyword-id-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 999)
@@ -113,6 +117,7 @@ class KeywordDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-failed-by-other-member-delete-keyword"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 2)

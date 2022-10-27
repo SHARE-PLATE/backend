@@ -40,6 +40,7 @@ class MemberSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("member-info-get-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 

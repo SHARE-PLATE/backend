@@ -50,10 +50,11 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_id_null값일_경우_예외를_발생시킨다() {
+    void path_variable의_쉐어_id_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-path-variable-empty-share-id"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", " ")
@@ -72,6 +73,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-share-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", -2)
@@ -90,6 +92,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 2)
@@ -108,6 +111,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-share-id-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 2222)
@@ -126,6 +130,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-share-not-joined"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 4)
@@ -144,6 +149,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-already-share-is-canceled"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 6)
@@ -166,6 +172,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         Long shareId = shareService.register(request, 2355841047L).get("id");
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-close-to-tje-closed-date-time"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", shareId)
@@ -187,6 +194,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
         Long shareId = shareService.register(request, 2355841047L).get("id");
 
         given(documentationSpec)
+            .filter(document("entry-cancel-delete-failed-by-closed-date-time-was-passed-cancel"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", shareId)

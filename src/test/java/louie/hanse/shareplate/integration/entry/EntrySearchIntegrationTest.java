@@ -37,6 +37,7 @@ class EntrySearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("entry-search-id-get-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
 

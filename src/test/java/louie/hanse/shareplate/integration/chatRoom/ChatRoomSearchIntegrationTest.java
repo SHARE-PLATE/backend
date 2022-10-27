@@ -22,8 +22,8 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .contentType(ContentType.JSON)
             .filter(document("chatRoom-search-list-of-member-get"))
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .param("type", "entry")
 
@@ -49,6 +49,7 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-search-list-of-member-get-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .param("type", "entry")
@@ -67,6 +68,7 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-search-list-of-member-get-failed-by-incorrect-type-value"))
             .contentType(ContentType.JSON)
             .accept(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
@@ -86,6 +88,7 @@ class ChatRoomSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-search-list-of-member-get-failed-by-empty-chatroom-info"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .param("type", "")

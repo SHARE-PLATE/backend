@@ -24,8 +24,8 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
-            .contentType(ContentType.JSON)
             .filter(document("chatRoom-detail-get"))
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -53,10 +53,11 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 채팅방_id가_null값일_경우_예외를_발생시킨다() {
+    void path_variable이_null일_경우() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-detail-get-failed-by-path-variable-empty-chatroom-id"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", " ")
@@ -75,6 +76,7 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-detail-get-failed-by-chatroom-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -1)
@@ -93,6 +95,7 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-detail-get-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
@@ -111,6 +114,7 @@ public class ChatRoomDetailIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-detail-get-failed-by-chatroom-id-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 999)
