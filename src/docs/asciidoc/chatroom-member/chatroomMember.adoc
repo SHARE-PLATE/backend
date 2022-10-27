@@ -1,0 +1,185 @@
+=== 전체 목록 (/api/chatroom-members)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<채팅방 나가기>> | DELETE /api/chatroom-members
+| <<채팅방 회원 조회>> | GET /api/chatroom-members
+
+|===
+
+=== 채팅방 나가기
+
+API : `DELETE /api/chatroom-members`
+
+채팅방을 나간다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete/http-response.adoc[]
+
+=== 채팅방 id가 null인 경우
+
+==== `400 CHATROOM007`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-null/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-null/http-response.adoc[]
+
+=== 채팅방 id가 양수가 아닌 경우
+
+==== `400 CHATROOM004`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 채팅방 id인 경우
+
+==== `400 CHATROOM005`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-found/http-response.adoc[]
+
+=== 회원이 참가하지 않은 채팅방인 경우
+
+==== `400 CHATROOM006`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-joined/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-joined/http-response.adoc[]
+
+=== 쉐어 마감시간이 한시간 미만으로 남은 쉐어의 참가 채팅방일 경우
+
+==== `400 CHATROOM009`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-close-to-the-closed-date-time/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-close-to-the-closed-date-time/http-response.adoc[]
+
+=== 취소되지 않은 쉐어의 글쓴이가 요청한 경우
+
+==== `400 CHATROOM001`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-share-writer-leave/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-share-writer-leave/http-response.adoc[]
+
+=== 채팅방 회원 조회
+
+API : `GET /api/chatroom-members`
+
+참가한 채팅방의 모든 회원을 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chatRoomMember-list-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-list-get/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chatRoomMember-list-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-list-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 채팅방 id인 경우
+
+==== `400 CHATROOM005`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-found/http-response.adoc[]
+
+=== 회원이 참가하지 않은 채팅방인 경우
+
+==== `400 CHATROOM006`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-joined/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-joined/http-response.adoc[]
+
+=== 쉐어 마감시간이 한시간 미만으로 남은 쉐어의 참가 채팅방일 경우
+
+==== `400 CHATROOM009`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-close-to-the-closed-date-time/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-close-to-the-closed-date-time/http-response.adoc[]
+
+=== 취소되지 않은 쉐어의 글쓴이가 요청한 경우
+
+==== `400 CHATROOM001`
+
+===== Request
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-share-writer-leave/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-share-writer-leave/http-response.adoc[]

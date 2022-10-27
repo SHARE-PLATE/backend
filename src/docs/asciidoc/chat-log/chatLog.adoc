@@ -1,0 +1,84 @@
+=== 전체 목록 (/api/chat-logs/update-read-time)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<채팅 읽은 시간 업데이트>> | PUT /api/chat-logs/update-read-time
+
+|===
+
+=== 채팅 읽은 시간 업데이트
+
+API : `PUT /api/chat-logs/updat-read-time`
+
+채팅을 읽으면 읽은 시간으로 채팅읽은 시간을 갱신한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chatLog-recent-update-date-time-put/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatLog-recent-update-date-time-put/http-response.adoc[]
+
+=== 채팅방 id가 null인 경우
+
+==== `400 CHATROOM007`
+
+===== Request
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-null/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-null/http-response.adoc[]
+
+=== 채팅방 id가 양수가 아닌 경우
+
+==== `400 CHATROOM004`
+
+===== Request
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 채팅방 id인 경우
+
+==== `400 CHATROOM005`
+
+===== Request
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-found/http-response.adoc[]
+
+=== 참여하지 않은 채팅방인 경우
+
+==== `400 CHATROOM006`
+
+===== Request
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-not-joined/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-not-joined/http-response.adoc[]

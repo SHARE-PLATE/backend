@@ -1,0 +1,272 @@
+=== 전체 목록 (/api/keywords/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<키워드 삭제>> | DELETE /api/keywords/{id}
+| <<키워드 주소 삭제>> | DELTE /api/keywords
+| <<키워드 주소 조회>> | DELTE /api/keywords/location
+| <<키워드 등록>> | POST /api/keywords
+| <<키워드 조회>> | GET /api/keywords
+
+|===
+
+=== 키워드 삭제
+
+API : `DELETE /api/keywords/{id}`
+
+키워드를 삭제한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/keyword-delete/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete/http-response.adoc[]
+
+=== path_variable의 키워드 id가 null인 경우
+
+==== `400 KEYWORD004`
+
+===== Request
+
+include::{snippets}/keyword-delete-failed-by-path-variable-empty-keyword-id/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-failed-by-path-variable-empty-keyword-id/http-response.adoc[]
+
+=== 키워드 id가 양수가 아닌 경우
+
+==== `400 KEYWORD002`
+
+===== Request
+
+include::{snippets}/keyword-delete-failed-by-keyword-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-failed-by-keyword-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/keyword-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 키워드 id인 경우
+
+==== `400 KEYWORD003`
+
+===== Request
+
+include::{snippets}/keyword-delete-failed-by-keyword-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-failed-by-keyword-id-not-found/http-response.adoc[]
+
+=== 다른 회원의 키워드인 경우
+
+==== `400 KEYWORD005`
+
+===== Request
+
+include::{snippets}/keyword-delete-failed-by-other-member-delete-keyword/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-failed-by-other-member-delete-keyword/http-response.adoc[]
+
+=== 키워드주 삭제
+
+API : `DELETE /api/keywords`
+
+필요하지 않은 키워드의 주소를 삭제한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/keyword-delete-location-delete/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-location-delete/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/keyword-delete-location-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-location-delete-failed-by-member-not-found/http-response.adoc[]
+
+=== 필수 필드값이 null인 경우
+
+==== `400 KEYWORD001`
+
+===== Request
+
+include::{snippets}/keyword-delete-location-delete-failed-by-empty-keyword-info/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-location-delete-failed-by-empty-keyword-info/http-response.adoc[]
+
+=== 등록하지 않은 주소인 경우
+
+==== `400 KEYWORD003`
+
+===== Request
+
+include::{snippets}/keyword-delete-location-delete-failed-by-keyword-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-delete-location-delete-failed-by-keyword-not-found/http-response.adoc[]
+
+=== 키워드 주소 조회
+
+API : `GET /api/keywords/location"`
+
+키워드를 등록한 주소들을 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/keyword-search-location-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-search-location-get/http-response.adoc[]
+
+=== requestParam값이 null인 경우
+
+==== `400 KEYWORD001`
+
+===== Request
+
+include::{snippets}/keyword-search-location-get-failed-by-empty-keyword-info/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-search-location-get-failed-by-empty-keyword-info/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/keyword-search-location-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-search-location-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 키워드 등록
+
+API : `POST /api/keywords`
+
+원하는 지역에 원하는 키워드를 등록한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/keyword-register-post/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-register-post/http-response.adoc[]
+
+=== 필수 필드값이 null인 경우
+
+==== `400 KEYWORD001`
+
+===== Request
+
+include::{snippets}/keyword-register-post-failed-by-empty-keyword-info/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-register-post-failed-by-empty-keyword-info/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/keyword-register-post-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-register-post-failed-by-member-not-found/http-response.adoc[]
+
+=== 중복 키보드일 경우
+
+==== `400 KEYWORD006`
+
+===== Request
+
+include::{snippets}/keyword-register-post-failed-by-duplicate-keyword/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-register-post-failed-by-duplicate-keyword/http-response.adoc[]
+
+=== 대한민국 위/경도가 아닌 경우
+
+==== `400 SHARE006`
+
+===== Request
+
+include::{snippets}/keyword-register-post-failed-by-out-of-scope-for-korea/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-register-post-failed-by-out-of-scope-for-korea/http-response.adoc[]
+
+=== 키워드 조회
+
+API : `GET /api/keywords}`
+
+등록한 키워드를 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/keyword-search-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-search-get/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/keyword-search-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/keyword-search-get-failed-by-member-not-found/http-response.adoc[]
