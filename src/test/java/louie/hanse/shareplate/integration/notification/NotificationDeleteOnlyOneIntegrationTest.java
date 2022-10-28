@@ -50,6 +50,7 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("notification-only-one-delete-failed-by-notification-id-null"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", " ")
@@ -68,6 +69,7 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("notification-only-one-delete-failed-by-notification-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -5)
@@ -86,6 +88,7 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("notification-only-one-delete-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 5)
@@ -104,6 +107,7 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("notification-only-one-delete-failed-by-notification-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3444)
@@ -122,6 +126,7 @@ class NotificationDeleteOnlyOneIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("notification-only-one-delete-failed-by-other-member-can-not-delete-notification"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 2)

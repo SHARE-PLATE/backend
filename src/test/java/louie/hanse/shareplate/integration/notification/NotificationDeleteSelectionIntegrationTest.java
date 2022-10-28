@@ -32,7 +32,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
     MemberRepository memberRepository;
 
     @Test
-    void 회원이_알림을_선택_삭제_요청한다() {
+    void 회원이_알림을_선택_삭제한다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
@@ -57,6 +57,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         idList.add(1L);
 
         given(documentationSpec)
+            .filter(document("notification-selection-delete-failed-by-notification-id-null"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("idList", idList))
@@ -75,6 +76,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("notification-selection-delete-failed-by-notification-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("idList", List.of(3L, -4L)))
@@ -93,6 +95,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("notification-selection-delete-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("idList", List.of(1L, 3L)))
@@ -111,6 +114,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("notification-selection-delete-failed-by-notification-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("idList", List.of(3444444L, 433333L)))
@@ -129,6 +133,7 @@ class NotificationDeleteSelectionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("notification-selection-delete-failed-by-other-member-can-not-delete-notification"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("idList", List.of(3L, 4L)))

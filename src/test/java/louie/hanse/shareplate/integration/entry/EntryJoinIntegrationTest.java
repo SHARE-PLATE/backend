@@ -52,10 +52,11 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
 
 
     @Test
-    void 쉐어_id가_null값일_경우_예외를_발생시킨다() {
+    void path_variable의_쉐어_id가_null값일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-path-variable-empty-share-id"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", " ")
@@ -74,6 +75,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-share-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", -3)
@@ -93,6 +95,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 3)
@@ -111,6 +114,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-share-id-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 2222)
@@ -129,6 +133,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-share-already-joined"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 1)
@@ -147,6 +152,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-already-share-is-canceled"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 6)
@@ -165,6 +171,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-share-overcapacity"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", 1)
@@ -186,6 +193,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
         Long shareId = shareService.register(request, 2355841033L).get("id");
 
         given(documentationSpec)
+            .filter(document("entry-share-post-failed-by-closed-date-time-was-passed-join"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .pathParam("shareId", shareId)

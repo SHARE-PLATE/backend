@@ -38,10 +38,11 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 채팅방_id가_null값일_경우_예외를_발생시킨다() {
+    void 채팅방_id가_null일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatLog-recent-update-date-time-put-failed-by-chatroom-id-null"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", null))
@@ -60,6 +61,7 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", -1))
@@ -78,6 +80,7 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chatLog-recent-update-date-time-put-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 1))
@@ -97,6 +100,7 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
 
         given(documentationSpec)
             .contentType(ContentType.JSON)
+            .filter(document("chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-found"))
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 999))
 
@@ -114,6 +118,7 @@ public class ChatLogUpdateDateTimeIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatLog-recent-update-date-time-put-failed-by-chatroom-not-joined"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 4))

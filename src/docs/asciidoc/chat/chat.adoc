@@ -1,0 +1,36 @@
+=== 전체 목록 (/api/chats)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<읽지 않은 채팅의 개수 조회>> | GET /api/chats/unread
+
+|===
+
+=== 읽지 않은 채팅의 개수 조회
+
+API : `GET /api/chats/unread`
+
+개수를 아이콘으로 보여주기 위해 읽지 않은 채팅의 개수를 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chat-unread-count-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chat-unread-count-get/http-response.adoc[]
+
+=== 유효하지 않은 회원일 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chat-unread-count-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chat-unread-count-get-failed-by-member-not-found/http-response.adoc[]

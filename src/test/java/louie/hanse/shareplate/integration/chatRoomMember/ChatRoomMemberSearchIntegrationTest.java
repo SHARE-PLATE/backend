@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("채팅방의 회원 통합 테스트")
+@DisplayName("채팅방의 회원 조회 통합 테스트")
 class ChatRoomMemberSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
@@ -36,6 +36,7 @@ class ChatRoomMemberSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-list-get-failed-by-member-not-found"))
             .header(AUTHORIZATION, accessToken)
 
             .when()

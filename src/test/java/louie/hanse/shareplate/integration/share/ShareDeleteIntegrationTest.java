@@ -46,6 +46,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-delete-failed-by-share-id-not-positive"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -1)
 
@@ -63,6 +64,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-delete-failed-by-member-not-found"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1000000000)
 
@@ -80,6 +82,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-delete-failed-by-not-share-written-by-me"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 1)
 
@@ -102,6 +105,7 @@ class ShareDeleteIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(writerId);
 
         given(documentationSpec)
+            .filter(document("share-delete-failed-by-close-to-the-closed-date-time"))
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", shareId)
 

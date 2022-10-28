@@ -35,6 +35,7 @@ public class ChatUnreadCountIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chat-unread-count-get-failed-by-member-not-found"))
             .header(AUTHORIZATION, accessToken)
 
             .when()

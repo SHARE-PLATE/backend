@@ -10,7 +10,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import io.restassured.http.ContentType;
 import java.util.Collections;
-import java.util.Map;
 import louie.hanse.shareplate.integration.InitIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,6 +40,7 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-location-delete-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("location", "방이동"))
@@ -59,6 +59,7 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-location-delete-failed-by-empty-keyword-info"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("location", null))
@@ -77,6 +78,7 @@ class KeywordDeleteLocationIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-delete-location-delete-failed-by-keyword-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("location", "묵현리"))

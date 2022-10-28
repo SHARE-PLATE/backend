@@ -49,8 +49,8 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
-            .contentType(ContentType.JSON)
             .filter(document("chatRoomMember-chatRoom-exit-delete"))
+            .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 5))
 
@@ -73,6 +73,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
             .get(0).getId();
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-question-chatRoom-exit-delete"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", chatRoomId))
@@ -89,6 +90,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-canceled-share-of-writer-chatRoom-exit-delete"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 7))
@@ -105,6 +107,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-null"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", null))
@@ -123,6 +126,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", -1))
@@ -141,6 +145,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 1))
@@ -160,6 +165,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 999))
@@ -178,6 +184,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-joined"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 5))
@@ -203,6 +210,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
             .get(0).getId();
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-close-to-the-closed-date-time"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", chatRoomId))
@@ -221,6 +229,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoomMember-chatRoom-exit-delete-failed-by-share-writer-leave"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("chatRoomId", 1))

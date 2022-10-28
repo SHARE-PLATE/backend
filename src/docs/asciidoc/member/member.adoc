@@ -1,0 +1,77 @@
+=== 전체 목록 (/api/members)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<회원 편집>> | PATCH /api/members
+| <<회원 조회>> | GET /api/members
+
+|===
+
+=== 회원 편집
+
+API : `PATCH /api/members`
+
+회원이 정보를 편집한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/member-change-user-info-put/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/member-change-user-info-put/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/member-change-user-info-put-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/member-change-user-info-put-failed-by-member-not-found/http-response.adoc[]
+
+=== image가 유효하지 않은 이미지 확장자인 경우
+
+==== `400 MEMBER002`
+
+===== Request
+
+include::{snippets}/member-change-user-info-put-failed-by-not-support-image-type/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/member-change-user-info-put-failed-by-not-support-image-type/http-response.adoc[]
+
+=== 회원 조회
+
+API : `GET /api/members`
+
+회원의 정보를 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/member-info-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/member-info-get/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/member-info-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/member-info-get-failed-by-member-not-found/http-response.adoc[]

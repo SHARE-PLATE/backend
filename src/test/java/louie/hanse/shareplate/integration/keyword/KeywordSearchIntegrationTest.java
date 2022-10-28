@@ -39,6 +39,7 @@ class KeywordSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("keyword-search-get-failed-by-member-not-found"))
             .header(AUTHORIZATION, accessToken)
             .accept(ContentType.JSON)
 

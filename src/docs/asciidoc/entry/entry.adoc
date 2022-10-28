@@ -1,0 +1,262 @@
+=== 전체 목록 (/api/shares/{shareId}/entry, /api/entries)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<쉐여 참여 취소>> | DELETE /api/shares/{shareId}/entry
+| <<쉐어 참여>> | POST /api/shares/{shareId}/entry
+| <<쉐어 참여 회원 조회>> | GET /api/entries
+
+|===
+
+=== 쉐여 참여 취소
+
+API : `DELETE /api/shares/{shareId}/entry`
+
+참여한 쉐어에 참여 취소를 한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete/http-response.adoc[]
+
+=== path_variable의 쉐어 id가 null인 경우
+
+==== `400 SHARE013`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-path-variable-empty-share-id/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-path-variable-empty-share-id/http-response.adoc[]
+
+=== 쉐어 id가 양수가 아닌 경우
+
+==== `400 SHARE010`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-share-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 쉐어 id인 경우
+
+==== `400 SHARE011`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-share-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-share-id-not-found/http-response.adoc[]
+
+=== 회원이 참가하지 않은 쉐어인 경우
+
+==== `400 ENTRY002`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-share-not-joined/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-share-not-joined/http-response.adoc[]
+
+=== 취소된 쉐어에 요청할 경우
+
+==== `400 SHARE015`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-already-share-is-canceled/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-already-share-is-canceled/http-response.adoc[]
+
+=== 한시간 미만 남은 쉐어인 경우
+
+==== `400 ENTRY004`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-close-to-tje-closed-date-time/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-close-to-tje-closed-date-time/http-response.adoc[]
+
+=== 모집시간이 지난 쉐어인 경우
+
+==== `400 ENTRY005`
+
+===== Request
+
+include::{snippets}/entry-cancel-delete-failed-by-closed-date-time-was-passed-cancel/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-cancel-delete-failed-by-closed-date-time-was-passed-cancel/http-response.adoc[]
+
+=== 쉐어 참여
+
+API : `POST /api/shares/{shareId}/entry`
+
+마음에 드는 쉐어에 참여 신청을 한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/entry-share-post/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post/http-response.adoc[]
+
+=== path_variable의 쉐어 id가 null인 경우
+
+==== `400 SHARE013`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-path-variable-empty-share-id/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-path-variable-empty-share-id/http-response.adoc[]
+
+=== 쉐어 id가 양수가 아닌 경우
+
+==== `400 SHARE010`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-share-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 쉐어 id인 경우
+
+==== `400 SHARE011`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-share-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-share-id-not-found/http-response.adoc[]
+
+=== 이미 참가한 쉐어인 경우
+
+==== `400 ENTRY001`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-share-already-joined/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-share-already-joined/http-response.adoc[]
+
+=== 취소된 쉐어에 요청할 경우
+
+==== `400 SHARE015`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-already-share-is-canceled/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-already-share-is-canceled/http-response.adoc[]
+
+=== 모집정원이 초과된 경우
+
+==== `400 ENTRY003`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-share-overcapacity/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-share-overcapacity/http-response.adoc[]
+
+=== 마감시간이 지난 쉐어인 경우
+
+==== `400 ENTRY006`
+
+===== Request
+
+include::{snippets}/entry-share-post-failed-by-closed-date-time-was-passed-join/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-share-post-failed-by-closed-date-time-was-passed-join/http-response.adoc[]
+
+=== 쉐어 참여 회원 조회
+
+API : `GET /api/entries`
+
+쉐어에 참여한 모든 회읜들을 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/entry-search-id-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-search-id-get/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/entry-search-id-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/entry-search-id-get-failed-by-member-not-found/http-response.adoc[]

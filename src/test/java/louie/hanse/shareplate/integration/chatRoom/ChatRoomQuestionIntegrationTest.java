@@ -1,10 +1,10 @@
 package louie.hanse.shareplate.integration.chatRoom;
 
 import static io.restassured.RestAssured.given;
-import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.CHATROOM_ID_IS_NEGATIVE;
-import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.EMPTY_CHATROOM_INFO;
 import static louie.hanse.shareplate.exception.type.ChatRoomExceptionType.WRITER_CAN_NOT_QUESTION_CHAT;
 import static louie.hanse.shareplate.exception.type.MemberExceptionType.MEMBER_NOT_FOUND;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.EMPTY_SHARE_INFO;
+import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_ID_IS_NEGATIVE;
 import static louie.hanse.shareplate.exception.type.ShareExceptionType.SHARE_NOT_FOUND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -42,6 +42,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-joined-question-chatroom-id-post"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 2))
@@ -58,6 +59,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-question-chat-post-failed-by-share-id-null"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", null))
@@ -66,9 +68,9 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .post("/chatrooms")
 
             .then()
-            .statusCode(EMPTY_CHATROOM_INFO.getStatusCode().value())
-            .body("errorCode", equalTo(EMPTY_CHATROOM_INFO.getErrorCode()))
-            .body("message", equalTo(EMPTY_CHATROOM_INFO.getMessage()));
+            .statusCode(EMPTY_SHARE_INFO.getStatusCode().value())
+            .body("errorCode", equalTo(EMPTY_SHARE_INFO.getErrorCode()))
+            .body("message", equalTo(EMPTY_SHARE_INFO.getMessage()));
     }
 
     @Test
@@ -76,6 +78,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-question-chat-post-failed-by-share-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", -1))
@@ -84,9 +87,9 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
             .post("/chatrooms")
 
             .then()
-            .statusCode(CHATROOM_ID_IS_NEGATIVE.getStatusCode().value())
-            .body("errorCode", equalTo(CHATROOM_ID_IS_NEGATIVE.getErrorCode()))
-            .body("message", equalTo(CHATROOM_ID_IS_NEGATIVE.getMessage()));
+            .statusCode(SHARE_ID_IS_NEGATIVE.getStatusCode().value())
+            .body("errorCode", equalTo(SHARE_ID_IS_NEGATIVE.getErrorCode()))
+            .body("message", equalTo(SHARE_ID_IS_NEGATIVE.getMessage()));
     }
 
     @Test
@@ -94,6 +97,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-question-chat-post-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 1))
@@ -112,6 +116,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-question-chat-post-failed-by-share-id-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 999))
@@ -130,6 +135,7 @@ public class ChatRoomQuestionIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("chatRoom-question-chat-post-failed-by-writer-own-question-chat"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 1))

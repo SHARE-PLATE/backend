@@ -1,0 +1,41 @@
+=== 전체 목록 (/api/logout, /api/login/verification)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<회원 로그아웃>> | POST /api/logout
+| <<회원 로그인 여부 확인>> | GET /api/login/verification
+
+|===
+
+=== 회원 로그아웃
+
+API : `POST /api/logout`
+
+로그인한 회원을 로그아웃 시킨다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/oauth-logout-post/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/oauth-logout-post/http-response.adoc[]
+
+=== 회원 로그인 여부 확인
+
+API : `GET /api/login/verification`
+
+회원의 로그인 여부를 확인한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/oauth-login-verification-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/oauth-login-verification-get/http-response.adoc[]

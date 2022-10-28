@@ -44,6 +44,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-share-id-null"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", null))
@@ -62,6 +63,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-share-id-not-positive"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", -3))
@@ -81,6 +83,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 3))
@@ -99,6 +102,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-share-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 3333333))
@@ -117,6 +121,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-already-wish-is-registered"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 1))
@@ -135,6 +140,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-share-written-by-me"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 2))
@@ -153,6 +159,7 @@ class WishRegisterIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
+            .filter(document("wish-register-post-failed-by-already-share-is-canceled"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .body(Collections.singletonMap("shareId", 6))

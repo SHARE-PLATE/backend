@@ -1,0 +1,203 @@
+=== 전체 목록 (/api/chatrooms/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<채팅방 상세조회>> | GET /api/chatrooms/{id}
+| <<1:1 채팅방 개설>> | POST /api/chatrooms
+| <<채팅방 리스트 조회>> | GET /api/chatrooms
+
+|===
+
+=== 채팅방 상세조회
+
+API : `GET /api/chatrooms/{id}`
+
+채팅방 내역을 상세조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get/http-response.adoc[]
+
+=== path_variable이_null일_경우
+
+==== `400 CHATROOM003`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get-failed-by-path-variable-empty-chatroom-id/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get-failed-by-path-variable-empty-chatroom-id/http-response.adoc[]
+
+=== 채팅방 id가 양수가 아닌 경우
+
+==== `400 CHATROOM004`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get-failed-by-chatroom-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get-failed-by-chatroom-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 채팅방 id인 경우
+
+==== `400 CHATROOM005`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get-failed-by-chatroom-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get-failed-by-chatroom-id-not-found/http-response.adoc[]
+
+=== 1:1 채팅방 개설
+
+API : `POST /api/chatrooms`
+
+1:1 문의 채팅을 요청한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chatRoom-question-chat-post/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-question-chat-post/http-response.adoc[]
+
+=== 쉐어 id가 null인 경우
+
+==== `400 SHARE001`
+
+===== Request
+
+include::{snippets}/chatRoom-question-chat-post-failed-by-share-id-null/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-question-chat-post-failed-by-share-id-null/http-response.adoc[]
+
+=== 쉐어 id가 양수가 아닌 경우
+
+==== `400 SHARE010`
+
+===== Request
+
+include::{snippets}/chatRoom-question-chat-post-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-question-chat-post-failed-by-share-id-not-positive/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 존재하지 않은 채팅방 id인 경우
+
+==== `400 SHARE011`
+
+===== Request
+
+include::{snippets}/chatRoom-detail-get-failed-by-chatroom-id-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-detail-get-failed-by-chatroom-id-not-found/http-response.adoc[]
+
+=== 내가 등록한 쉐어인 경우
+
+==== `400 CHATROOM008`
+
+===== Request
+
+include::{snippets}/chatRoom-question-chat-post-failed-by-writer-own-question-chat/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-question-chat-post-failed-by-writer-own-question-chat/http-response.adoc[]
+
+=== 채팅방 리스트 조회
+
+API : `GET /api/chatrooms`
+
+회원의 채팅방 리스트를 조회한다.
+
+==== `200 OK`
+
+===== Request
+
+include::{snippets}/chatRoom-search-list-of-member-get/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-search-list-of-member-get/http-response.adoc[]
+
+=== 유효하지 않은 회원인 경우
+
+==== `400 MEMBER001`
+
+===== Request
+
+include::{snippets}/chatRoom-search-list-of-member-get-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-search-list-of-member-get-failed-by-member-not-found/http-response.adoc[]
+
+=== 유효하지 않은 type인 경우
+
+==== `400 CHATROOM002`
+
+===== Request
+
+include::{snippets}/chatRoom-search-list-of-member-get-failed-by-incorrect-type-value/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-search-list-of-member-get-failed-by-incorrect-type-value/http-response.adoc[]
+
+=== null값 type일 경우
+
+==== `400 CHATROOM007`
+
+===== Request
+
+include::{snippets}/chatRoom-search-list-of-member-get-failed-by-empty-chatroom-info/http-request.adoc[]
+
+===== Response
+
+include::{snippets}/chatRoom-search-list-of-member-get-failed-by-empty-chatroom-info/http-response.adoc[]
+

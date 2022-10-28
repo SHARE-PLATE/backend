@@ -114,6 +114,7 @@ class ShareMineSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("share-search-mine-get-failed-by-incorrect-type-value"))
             .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "wish")
@@ -134,6 +135,7 @@ class ShareMineSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("share-search-mine-get-failed-by-incorrect-mine-value"))
             .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("mineType", "abcd")
@@ -154,6 +156,7 @@ class ShareMineSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("share-search-mine-get-failed-by-empty-share-info"))
             .accept(APPLICATION_JSON_VALUE)
             .header(AUTHORIZATION, accessToken)
             .param("shareType", "delivery")

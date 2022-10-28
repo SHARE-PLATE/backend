@@ -78,6 +78,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-empty-share-info"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -111,6 +112,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-not-support-image-type"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -146,6 +148,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-image-limit-exceeded"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -185,6 +188,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-out-of-scope-for-korea"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -221,6 +225,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-out-of-scope-for-korea"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -257,6 +262,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-past-closed-date-time"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -293,6 +299,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-share-info-is-negative"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -328,6 +335,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-share-info-is-negative"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -363,6 +371,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-share-info-is-negative"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -398,6 +407,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-share-id-null"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", "  ")
@@ -433,6 +443,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-share-id-not-positive"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", -3)
@@ -468,6 +479,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-share-not-found"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 33333333333L)
@@ -503,6 +515,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-not-share-written-by-me"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 3)
@@ -538,6 +551,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-already-share-is-closed"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 5)
@@ -573,6 +587,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-already-share-is-canceled"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", 6)
@@ -613,6 +628,7 @@ class ShareEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(writerId);
 
         given(documentationSpec)
+            .filter(document("share-edit-put-failed-by-close-to-the-closed-date-time"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .pathParam("id", shareId)

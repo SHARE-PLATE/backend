@@ -50,6 +50,7 @@ class ShareSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void 대한민국의_위도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-search-get-failed-by-out-of-scope-for-korea"))
             .accept(APPLICATION_JSON_VALUE)
             .param("type", "ingredient")
             .param("keyword", "햄버거")
@@ -68,6 +69,7 @@ class ShareSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void 대한민국의_경도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-search-get-failed-by-out-of-scope-for-korea"))
             .accept(APPLICATION_JSON_VALUE)
             .param("type", "delivery")
             .param("keyword", "햄버거")

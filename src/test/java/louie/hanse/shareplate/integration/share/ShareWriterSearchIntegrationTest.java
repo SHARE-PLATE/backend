@@ -19,8 +19,8 @@ class ShareWriterSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void 특정_회원이_작성한_쉐어를_조회한다() {
         given(documentationSpec)
-            .param("writerId", 2370842997L)
             .filter(document("share-write-by-member-get"))
+            .param("writerId", 2370842997L)
 
             .when()
             .get("/shares/writer")
@@ -43,6 +43,7 @@ class ShareWriterSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void writerId가_null값인_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-write-by-member-get-failed-by-empty-share-info"))
             .param("writerId", " ")
 
             .when()
@@ -57,6 +58,7 @@ class ShareWriterSearchIntegrationTest extends InitIntegrationTest {
     @Test
     void 유효하지_않은_회원인_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-write-by-member-get-failed-by-member-not-found"))
             .param("writerId", "12345")
 
             .when()

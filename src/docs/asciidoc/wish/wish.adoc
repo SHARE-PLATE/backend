@@ -1,0 +1,175 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+=== 전체 목록 (/wish-list/*)
+[cols=2*]
+|===
+| 기능 | API
+| <<찜 등록>> | POST /wish-list
+| <<찜 취소>> | DELETE /wish-list
+|===
+
+=== 찜 등록
+
+API : `POST /wish-list`
+
+회원이 쉐어를 위시 등록을 요청한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/wish-register-post/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post/http-response.adoc[]
+
+==== `400 WISH005`
+
+쉐어 id가 null값인 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-share-id-null/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-share-id-null/http-response.adoc[]
+
+==== `400 SHARE010`
+
+쉐어 id가 양수가 아닌 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-share-id-not-positive/http-response.adoc[]
+
+==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-member-not-found/http-response.adoc[]
+
+==== `400 SHARE011`
+
+유효하지 않은 쉐어인 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-share-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-share-not-found/http-response.adoc[]
+
+==== `400 WISH001`
+
+이미 위시를 등록한 쉐어인 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-already-wish-is-registered/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-already-wish-is-registered/http-response.adoc[]
+
+==== `400 WISH003`
+
+작성한 쉐어인 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-share-written-by-me/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-share-written-by-me/http-response.adoc[]
+
+==== `400 SHARE015`
+
+취소된 쉐어인 경우
+
+===== Request
+include::{snippets}/wish-register-post-failed-by-already-share-is-canceled/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-register-post-failed-by-already-share-is-canceled/http-response.adoc[]
+
+=== 찜 취소
+
+API : `DELETE /wish-list`
+
+회원이 쉐어의 위시를 취소를 요청한다.
+
+==== `200 OK`
+
+===== Request
+include::{snippets}/wish-cancel-delete/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete/http-response.adoc[]
+
+==== `400 WISH005`
+
+쉐어 id가 null값인 경우
+
+===== Request
+include::{snippets}/wish-cancel-delete-failed-by-share-id-null/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete-failed-by-share-id-null/http-response.adoc[]
+
+==== `400 SHARE010`
+
+쉐어 id가 양수가 아닌 경우
+
+===== Request
+include::{snippets}/wish-cancel-delete-failed-by-share-id-not-positive/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete-failed-by-share-id-not-positive/http-response.adoc[]
+
+==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
+
+===== Request
+include::{snippets}/wish-cancel-delete-failed-by-member-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete-failed-by-member-not-found/http-response.adoc[]
+
+==== `400 SHARE011`
+
+유효하지 않은 쉐어인 경우
+
+===== Request
+include::{snippets}/wish-cancel-delete-failed-by-share-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete-failed-by-share-not-found/http-response.adoc[]
+
+==== `400 WISH002`
+
+유효하지 않은 위시인 경우
+
+===== Request
+include::{snippets}/wish-cancel-delete-failed-by-wish-not-found/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete-failed-by-wish-not-found/http-response.adoc[]
+
+==== `400 SHARE015`
+
+취소된 쉐어인 경우
+
+===== Request
+include::{snippets}/wish-cancel-delete-failed-by-already-share-is-canceled/http-request.adoc[]
+
+===== Response
+include::{snippets}/wish-cancel-delete-failed-by-already-share-is-canceled/http-response.adoc[]

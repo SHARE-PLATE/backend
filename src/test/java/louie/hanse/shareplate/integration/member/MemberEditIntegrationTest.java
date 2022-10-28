@@ -42,6 +42,7 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("member-change-user-info-put-failed-by-member-not-found"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart("image", "수정된 test1.jpg", "abcde".getBytes(), IMAGE_JPEG_VALUE)
@@ -61,6 +62,7 @@ public class MemberEditIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
+            .filter(document("member-change-user-info-put-failed-by-not-support-image-type"))
             .contentType(MULTIPART)
             .header(AUTHORIZATION, accessToken)
             .multiPart("image", "수정된 test1.txt", "abcde".getBytes(), TEXT_PLAIN_VALUE)

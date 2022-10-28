@@ -63,6 +63,7 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
+            .filter(document("keyword-search-location-get-failed-by-empty-keyword-info"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .param("location", " ")
@@ -81,6 +82,7 @@ public class KeywordLocationSearchIntegrationTest extends InitIntegrationTest {
         String accessToken = jwtProvider.createAccessToken(1L);
 
         given(documentationSpec)
+            .filter(document("keyword-search-location-get-failed-by-member-not-found"))
             .contentType(ContentType.JSON)
             .header(AUTHORIZATION, accessToken)
             .param("location", "목동")

@@ -33,6 +33,7 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
     @Test
     void longitude가_null값인_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-recommendation-get-failed-by-empty-share-info"))
             .accept(APPLICATION_JSON_VALUE)
             .param("longitude", 128.3007637)
 
@@ -48,6 +49,7 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
     @Test
     void 대한민국의_위도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-recommendation-get-failed-by-out-of-scope-for-korea"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 39)
             .param("longitude", 128.3007637)
@@ -64,6 +66,7 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
     @Test
     void 대한민국의_경도_범위를_벗어난_경우_예외를_발생시킨다() {
         given(documentationSpec)
+            .filter(document("share-recommendation-get-failed-by-out-of-scope-for-korea"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 36.6576769)
             .param("longitude", 123)
