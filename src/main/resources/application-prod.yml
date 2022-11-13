@@ -2,3 +2,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+logging:
+  config: classpath:logback-prod.xml

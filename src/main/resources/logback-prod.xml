@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration>
+
+  <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>
+        /Users/share-plate-log/test1-%d{yyyy-MM-dd}_%i.log
+      </fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>
+        %d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>error</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>
+        /Users/share-plate-log/test2-%d{yyyy-MM-dd}_%i.log
+      </fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>
+        %d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %C %M %n %msg %n%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE_SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator>
+        <expression>
+          if ( logger.startsWith("org.hibernate.SQL") ) {
+          return true;
+          }
+          return false;
+        </expression>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>ACCEPT</OnMatch>
+    </filter>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>
+        /Users/share-plate-log/test3-%d{yyyy-MM-dd}_%i.log
+      </fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>
+        %d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %C %M %n %msg %n%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        %d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE_INFO"/>
+    <appender-ref ref="FILE_ERROR"/>
+    <appender-ref ref="FILE_SQL"/>
+  </root>
+
+  <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+    <appender-ref ref="FILE_SQL"/>
+  </logger>
+
+  <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR" additivity="false">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE_INFO"/>
+    <appender-ref ref="FILE_ERROR"/>
+    <appender-ref ref="FILE_SQL"/>
+  </logger>
+</configuration>
