@@ -9,6 +9,7 @@ import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.LoginService;
+import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,6 +23,10 @@ public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) {
 
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            return true;
+        }
+
         String accessToken = request.getHeader("Access-Token");
         String refreshToken = request.getHeader("Refresh-Token");
 
@@ -29,8 +34,7 @@ public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
             throw new GlobalException(AuthExceptionType.EMPTY_TOKEN);
         }
 
-        Long accessTokenMemberId = jwtProvider.decodeMemberId(accessToken);
-        Long refreshTokenMemberId = jwtProvider.decodeMemberId(refreshToken);
+        Long refreshTokenMemberId;
 
         try {
             jwtProvider.verifyAccessToken(accessToken);
@@ -44,6 +48,9 @@ public class ReissueAccessTokenInterceptor implements HandlerInterceptor {
             } catch (JWTVerificationException exception) {
                 throw new GlobalException(AuthExceptionType.TAMPERING_REFRESH_TOKEN);
             }
+
+            Long accessTokenMemberId = jwtProvider.decodeMemberId(accessToken);
+            refreshTokenMemberId = jwtProvider.decodeMemberId(refreshToken);
 
             if (!refreshTokenMemberId.equals(accessTokenMemberId)) {
                 throw new GlobalException(AuthExceptionType.NOT_EQUAL_MEMBER_ID_IN_TOKEN);

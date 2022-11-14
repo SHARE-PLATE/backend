@@ -22,6 +22,11 @@ public class MemberVerificationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) {
+
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            return true;
+        }
+
         String requestUrlPattern = (String) request.getAttribute(
             HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         String method = request.getMethod();

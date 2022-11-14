@@ -9,6 +9,7 @@ import louie.hanse.shareplate.exception.GlobalException;
 import louie.hanse.shareplate.exception.type.AuthExceptionType;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import louie.hanse.shareplate.service.LoginService;
+import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,6 +22,11 @@ public class LogoutInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) {
+
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            return true;
+        }
+
         String accessToken = request.getHeader("Access-Token");
         String refreshToken = request.getHeader("Refresh-Token");
 
