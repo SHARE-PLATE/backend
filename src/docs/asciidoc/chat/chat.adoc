@@ -23,9 +23,9 @@ include::{snippets}/chat-unread-count-get/http-request.adoc[]
 
 include::{snippets}/chat-unread-count-get/http-response.adoc[]
 
-=== 유효하지 않은 회원일 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원일 경우
 
 ===== Request
 

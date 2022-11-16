@@ -27,9 +27,9 @@ include::{snippets}/keyword-delete/http-request.adoc[]
 
 include::{snippets}/keyword-delete/http-response.adoc[]
 
-=== path_variable의 키워드 id가 null인 경우
-
 ==== `400 KEYWORD004`
+
+path_variable의 키워드 id가 null인 경우
 
 ===== Request
 
@@ -39,9 +39,9 @@ include::{snippets}/keyword-delete-failed-by-path-variable-empty-keyword-id/http
 
 include::{snippets}/keyword-delete-failed-by-path-variable-empty-keyword-id/http-response.adoc[]
 
-=== 키워드 id가 양수가 아닌 경우
-
 ==== `400 KEYWORD002`
+
+키워드 id가 양수가 아닌 경우
 
 ===== Request
 
@@ -51,9 +51,9 @@ include::{snippets}/keyword-delete-failed-by-keyword-id-not-positive/http-reques
 
 include::{snippets}/keyword-delete-failed-by-keyword-id-not-positive/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -63,9 +63,9 @@ include::{snippets}/keyword-delete-failed-by-member-not-found/http-request.adoc[
 
 include::{snippets}/keyword-delete-failed-by-member-not-found/http-response.adoc[]
 
-=== 존재하지 않은 키워드 id인 경우
-
 ==== `400 KEYWORD003`
+
+존재하지 않은 키워드 id인 경우
 
 ===== Request
 
@@ -75,9 +75,9 @@ include::{snippets}/keyword-delete-failed-by-keyword-id-not-found/http-request.a
 
 include::{snippets}/keyword-delete-failed-by-keyword-id-not-found/http-response.adoc[]
 
-=== 다른 회원의 키워드인 경우
-
 ==== `400 KEYWORD005`
+
+다른 회원의 키워드인 경우
 
 ===== Request
 
@@ -87,7 +87,7 @@ include::{snippets}/keyword-delete-failed-by-other-member-delete-keyword/http-re
 
 include::{snippets}/keyword-delete-failed-by-other-member-delete-keyword/http-response.adoc[]
 
-=== 키워드주 삭제
+=== 키워드 주소 삭제
 
 API : `DELETE /api/keywords`
 
@@ -103,9 +103,9 @@ include::{snippets}/keyword-delete-location-delete/http-request.adoc[]
 
 include::{snippets}/keyword-delete-location-delete/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -115,9 +115,9 @@ include::{snippets}/keyword-delete-location-delete-failed-by-member-not-found/ht
 
 include::{snippets}/keyword-delete-location-delete-failed-by-member-not-found/http-response.adoc[]
 
-=== 필수 필드값이 null인 경우
-
 ==== `400 KEYWORD001`
+
+필수 필드값이 null인 경우
 
 ===== Request
 
@@ -127,9 +127,9 @@ include::{snippets}/keyword-delete-location-delete-failed-by-empty-keyword-info/
 
 include::{snippets}/keyword-delete-location-delete-failed-by-empty-keyword-info/http-response.adoc[]
 
-=== 등록하지 않은 주소인 경우
-
 ==== `400 KEYWORD003`
+
+등록하지 않은 주소인 경우
 
 ===== Request
 
@@ -155,9 +155,9 @@ include::{snippets}/keyword-search-location-get/http-request.adoc[]
 
 include::{snippets}/keyword-search-location-get/http-response.adoc[]
 
-=== requestParam값이 null인 경우
-
 ==== `400 KEYWORD001`
+
+requestParam값이 null인 경우
 
 ===== Request
 
@@ -167,9 +167,9 @@ include::{snippets}/keyword-search-location-get-failed-by-empty-keyword-info/htt
 
 include::{snippets}/keyword-search-location-get-failed-by-empty-keyword-info/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -195,9 +195,9 @@ include::{snippets}/keyword-register-post/http-request.adoc[]
 
 include::{snippets}/keyword-register-post/http-response.adoc[]
 
-=== 필수 필드값이 null인 경우
-
 ==== `400 KEYWORD001`
+
+필수 필드값이 null인 경우
 
 ===== Request
 
@@ -207,9 +207,9 @@ include::{snippets}/keyword-register-post-failed-by-empty-keyword-info/http-requ
 
 include::{snippets}/keyword-register-post-failed-by-empty-keyword-info/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -219,9 +219,9 @@ include::{snippets}/keyword-register-post-failed-by-member-not-found/http-reques
 
 include::{snippets}/keyword-register-post-failed-by-member-not-found/http-response.adoc[]
 
-=== 중복 키보드일 경우
-
 ==== `400 KEYWORD006`
+
+중복 키보드일 경우
 
 ===== Request
 
@@ -231,9 +231,9 @@ include::{snippets}/keyword-register-post-failed-by-duplicate-keyword/http-reque
 
 include::{snippets}/keyword-register-post-failed-by-duplicate-keyword/http-response.adoc[]
 
-=== 대한민국 위/경도가 아닌 경우
-
 ==== `400 SHARE006`
+
+대한민국 위/경도가 아닌 경우
 
 ===== Request
 
@@ -259,9 +259,9 @@ include::{snippets}/keyword-search-get/http-request.adoc[]
 
 include::{snippets}/keyword-search-get/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 

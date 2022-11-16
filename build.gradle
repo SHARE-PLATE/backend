@@ -90,6 +90,14 @@ tasks.named('test') {
 asciidoctor {
 	dependsOn test
 	inputs.dir snippetsDir
+//	configurations 'asciidoctorExtensions'
+
+	sources{
+		include("**/index.adoc")
+	}
+
+	baseDirFollowsSourceFile()
+
 }
 
 asciidoctor.doFirst {
