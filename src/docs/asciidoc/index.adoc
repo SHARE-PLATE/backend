@@ -1,13 +1,13 @@
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
-
+= Share Plate API
+:doctype: book
+:icons: font
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 2
 :sectlinks:
-
-= Share Plate API
 
 == 쉐어 API
 include::{docdir}/share/share.adoc[]
