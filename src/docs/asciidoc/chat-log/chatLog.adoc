@@ -23,9 +23,9 @@ include::{snippets}/chatLog-recent-update-date-time-put/http-request.adoc[]
 
 include::{snippets}/chatLog-recent-update-date-time-put/http-response.adoc[]
 
-=== 채팅방 id가 null인 경우
-
 ==== `400 CHATROOM007`
+
+채팅방 id가 null인 경우
 
 ===== Request
 
@@ -35,9 +35,9 @@ include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-nu
 
 include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-null/http-response.adoc[]
 
-=== 채팅방 id가 양수가 아닌 경우
-
 ==== `400 CHATROOM004`
+
+채팅방 id가 양수가 아닌 경우
 
 ===== Request
 
@@ -47,9 +47,9 @@ include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-no
 
 include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-positive/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -59,9 +59,9 @@ include::{snippets}/chatLog-recent-update-date-time-put-failed-by-member-not-fou
 
 include::{snippets}/chatLog-recent-update-date-time-put-failed-by-member-not-found/http-response.adoc[]
 
-=== 존재하지 않은 채팅방 id인 경우
-
 ==== `400 CHATROOM005`
+
+존재하지 않은 채팅방 id인 경우
 
 ===== Request
 
@@ -71,9 +71,9 @@ include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-no
 
 include::{snippets}/chatLog-recent-update-date-time-put-failed-by-chatroom-id-not-found/http-response.adoc[]
 
-=== 참여하지 않은 채팅방인 경우
-
 ==== `400 CHATROOM006`
+
+참여하지 않은 채팅방인 경우
 
 ===== Request
 

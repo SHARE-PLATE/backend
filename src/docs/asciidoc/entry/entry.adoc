@@ -25,9 +25,9 @@ include::{snippets}/entry-cancel-delete/http-request.adoc[]
 
 include::{snippets}/entry-cancel-delete/http-response.adoc[]
 
-=== path_variable의 쉐어 id가 null인 경우
-
 ==== `400 SHARE013`
+
+PathVariable의 쉐어 id가 null인 경우
 
 ===== Request
 
@@ -37,9 +37,9 @@ include::{snippets}/entry-cancel-delete-failed-by-path-variable-empty-share-id/h
 
 include::{snippets}/entry-cancel-delete-failed-by-path-variable-empty-share-id/http-response.adoc[]
 
-=== 쉐어 id가 양수가 아닌 경우
-
 ==== `400 SHARE010`
+
+쉐어 id가 양수가 아닌 경우
 
 ===== Request
 
@@ -49,9 +49,9 @@ include::{snippets}/entry-cancel-delete-failed-by-share-id-not-positive/http-req
 
 include::{snippets}/entry-cancel-delete-failed-by-share-id-not-positive/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -61,9 +61,9 @@ include::{snippets}/entry-cancel-delete-failed-by-member-not-found/http-request.
 
 include::{snippets}/entry-cancel-delete-failed-by-member-not-found/http-response.adoc[]
 
-=== 존재하지 않은 쉐어 id인 경우
-
 ==== `400 SHARE011`
+
+존재하지 않은 쉐어 id인 경우
 
 ===== Request
 
@@ -73,9 +73,9 @@ include::{snippets}/entry-cancel-delete-failed-by-share-id-not-found/http-reques
 
 include::{snippets}/entry-cancel-delete-failed-by-share-id-not-found/http-response.adoc[]
 
-=== 회원이 참가하지 않은 쉐어인 경우
-
 ==== `400 ENTRY002`
+
+회원이 참가하지 않은 쉐어인 경우
 
 ===== Request
 
@@ -85,9 +85,9 @@ include::{snippets}/entry-cancel-delete-failed-by-share-not-joined/http-request.
 
 include::{snippets}/entry-cancel-delete-failed-by-share-not-joined/http-response.adoc[]
 
-=== 취소된 쉐어에 요청할 경우
-
 ==== `400 SHARE015`
+
+취소된 쉐어에 요청할 경우
 
 ===== Request
 
@@ -97,9 +97,9 @@ include::{snippets}/entry-cancel-delete-failed-by-already-share-is-canceled/http
 
 include::{snippets}/entry-cancel-delete-failed-by-already-share-is-canceled/http-response.adoc[]
 
-=== 한시간 미만 남은 쉐어인 경우
-
 ==== `400 ENTRY004`
+
+한시간 미만 남은 쉐어인 경우
 
 ===== Request
 
@@ -109,9 +109,9 @@ include::{snippets}/entry-cancel-delete-failed-by-close-to-tje-closed-date-time/
 
 include::{snippets}/entry-cancel-delete-failed-by-close-to-tje-closed-date-time/http-response.adoc[]
 
-=== 모집시간이 지난 쉐어인 경우
-
 ==== `400 ENTRY005`
+
+모집시간이 지난 쉐어인 경우
 
 ===== Request
 
@@ -137,9 +137,9 @@ include::{snippets}/entry-share-post/http-request.adoc[]
 
 include::{snippets}/entry-share-post/http-response.adoc[]
 
-=== path_variable의 쉐어 id가 null인 경우
-
 ==== `400 SHARE013`
+
+PathVariable의 쉐어 id가 null인 경우
 
 ===== Request
 
@@ -149,9 +149,9 @@ include::{snippets}/entry-share-post-failed-by-path-variable-empty-share-id/http
 
 include::{snippets}/entry-share-post-failed-by-path-variable-empty-share-id/http-response.adoc[]
 
-=== 쉐어 id가 양수가 아닌 경우
-
 ==== `400 SHARE010`
+
+쉐어 id가 양수가 아닌 경우
 
 ===== Request
 
@@ -161,9 +161,9 @@ include::{snippets}/entry-share-post-failed-by-share-id-not-positive/http-reques
 
 include::{snippets}/entry-share-post-failed-by-share-id-not-positive/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
@@ -173,9 +173,9 @@ include::{snippets}/entry-share-post-failed-by-member-not-found/http-request.ado
 
 include::{snippets}/entry-share-post-failed-by-member-not-found/http-response.adoc[]
 
-=== 존재하지 않은 쉐어 id인 경우
-
 ==== `400 SHARE011`
+
+존재하지 않은 쉐어 id인 경우
 
 ===== Request
 
@@ -185,9 +185,9 @@ include::{snippets}/entry-share-post-failed-by-share-id-not-found/http-request.a
 
 include::{snippets}/entry-share-post-failed-by-share-id-not-found/http-response.adoc[]
 
-=== 이미 참가한 쉐어인 경우
-
 ==== `400 ENTRY001`
+
+이미 참가한 쉐어인 경우
 
 ===== Request
 
@@ -197,9 +197,9 @@ include::{snippets}/entry-share-post-failed-by-share-already-joined/http-request
 
 include::{snippets}/entry-share-post-failed-by-share-already-joined/http-response.adoc[]
 
-=== 취소된 쉐어에 요청할 경우
-
 ==== `400 SHARE015`
+
+취소된 쉐어에 요청할 경우
 
 ===== Request
 
@@ -209,9 +209,9 @@ include::{snippets}/entry-share-post-failed-by-already-share-is-canceled/http-re
 
 include::{snippets}/entry-share-post-failed-by-already-share-is-canceled/http-response.adoc[]
 
-=== 모집정원이 초과된 경우
-
 ==== `400 ENTRY003`
+
+모집정원이 초과된 경우
 
 ===== Request
 
@@ -221,9 +221,9 @@ include::{snippets}/entry-share-post-failed-by-share-overcapacity/http-request.a
 
 include::{snippets}/entry-share-post-failed-by-share-overcapacity/http-response.adoc[]
 
-=== 마감시간이 지난 쉐어인 경우
-
 ==== `400 ENTRY006`
+
+마감시간이 지난 쉐어인 경우
 
 ===== Request
 
@@ -249,9 +249,9 @@ include::{snippets}/entry-search-id-get/http-request.adoc[]
 
 include::{snippets}/entry-search-id-get/http-response.adoc[]
 
-=== 유효하지 않은 회원인 경우
-
 ==== `400 MEMBER001`
+
+유효하지 않은 회원인 경우
 
 ===== Request
 
