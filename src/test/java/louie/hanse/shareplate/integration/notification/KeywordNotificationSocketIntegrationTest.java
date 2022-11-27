@@ -25,7 +25,7 @@ class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest
     @Test
     void 키워드에_등록한_내용이_포함된_쉐어가_등록된_경우_실시간으로_키워드_알림을_전송한다()
         throws ExecutionException, InterruptedException, TimeoutException {
-        Long keywordId = 9L;
+        Long keywordId = 10L;
 
         stompSession.subscribe("/queue/notifications/keywords/" + keywordId,
             getStompSessionHandlerAdapter(KeywordNotificationResponse.class));
@@ -52,8 +52,8 @@ class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest
             .formParam("recruitment", 3)
             .formParam("locationNegotiation", true)
             .formParam("priceNegotiation", true)
-            .formParam("latitude", 37.524159)
-            .formParam("longitude", 126.872879)
+            .formParam("latitude", 37.499237)
+            .formParam("longitude", 127.026364)
             .formParam("closedDateTime", "2022-12-30 14:00")
 
             .when()
