@@ -34,34 +34,10 @@ public class GlobalExceptionHandler {
         return new GlobalExceptionResponse(globalException);
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<GlobalExceptionResponse> validationExceptionResponse(
-        ValidationException validationException) {
-        String message = getMessage(validationException);
-        ExceptionType exceptionType = findExceptionType(message);
-        return ResponseEntity.status(exceptionType.getStatusCode())
-            .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
-    }
-
-    @ExceptionHandler(BindException.class)
-    public ResponseEntity<Object> handleBindException(BindException ex) {
-        String message = getMessage(ex);
-        ExceptionType exceptionType = findExceptionType(message);
-        return ResponseEntity.status(exceptionType.getStatusCode())
-            .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValid(
-        MethodArgumentNotValidException ex) {
-        ExceptionType exceptionType = findExceptionType(getMessage(ex));
-        return ResponseEntity.status(exceptionType.getStatusCode())
-            .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
-    }
-
-    @ExceptionHandler(TypeMismatchException.class)
-    public ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex) {
-        String message = getMessage(ex);
+    @ExceptionHandler({ValidationException.class, BindException.class,
+        MethodArgumentNotValidException.class, TypeMismatchException.class})
+    public ResponseEntity<GlobalExceptionResponse> exceptionResponse(Exception exception) {
+        String message = getMessage(exception);
         ExceptionType exceptionType = findExceptionType(message);
         return ResponseEntity.status(exceptionType.getStatusCode())
             .body(new GlobalExceptionResponse(new GlobalException(exceptionType)));
@@ -78,7 +54,7 @@ public class GlobalExceptionHandler {
         return null;
     }
 
-    private static String getMessage(Exception ex) {
+    private String getMessage(Exception ex) {
         return ex.getMessage();
     }
 
