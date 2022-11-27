@@ -82,11 +82,8 @@ public class NotificationService {
     @Transactional
     public void saveKeywordNotificationAndSend(Long shareId, Long memberId) {
         Share share = shareService.findByIdOrElseThrow(shareId);
-        double longitude = share.getLongitude();
-        double latitude = share.getLatitude();
         List<Keyword> keywords = keywordRepository.findAllByContainsContentsAndNotMemberIdAndAroundShare(
-            memberId, share.getTitle(), longitude - 2, longitude + 2,
-            latitude - 2, latitude + 2);
+            memberId, share.getTitle(), share.getLongitude(), share.getLatitude());
 
         List<Notification> notifications = new ArrayList<>();
         for (Keyword keyword : keywords) {

@@ -21,7 +21,7 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
             .filter(document("share-recommendation-get"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 36.6576769)
-            .param("longitude", 128.3007637)
+            .param("longitude", 127.026364)
 
             .when()
             .get("/shares/recommendation")
@@ -35,7 +35,7 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
         given(documentationSpec)
             .filter(document("share-recommendation-get-failed-by-empty-share-info"))
             .accept(APPLICATION_JSON_VALUE)
-            .param("longitude", 128.3007637)
+            .param("longitude", 127.026364)
 
             .when()
             .get("/shares/recommendation")
@@ -52,7 +52,7 @@ class ShareRecommendationIntegrationTest extends InitIntegrationTest {
             .filter(document("share-recommendation-get-failed-by-out-of-scope-for-korea"))
             .accept(APPLICATION_JSON_VALUE)
             .param("latitude", 39)
-            .param("longitude", 128.3007637)
+            .param("longitude", 127.026364)
 
             .when()
             .get("/shares/recommendation")

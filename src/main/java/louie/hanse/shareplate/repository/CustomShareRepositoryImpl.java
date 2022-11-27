@@ -1,5 +1,10 @@
 package louie.hanse.shareplate.repository;
 
+import static com.querydsl.core.types.dsl.Expressions.constant;
+import static com.querydsl.core.types.dsl.MathExpressions.acos;
+import static com.querydsl.core.types.dsl.MathExpressions.cos;
+import static com.querydsl.core.types.dsl.MathExpressions.radians;
+import static com.querydsl.core.types.dsl.MathExpressions.sin;
 import static louie.hanse.shareplate.domain.QEntry.entry;
 import static louie.hanse.shareplate.domain.QShare.share;
 import static louie.hanse.shareplate.domain.QWish.wish;
@@ -21,8 +26,6 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class CustomShareRepositoryImpl implements CustomShareRepository {
 
-    private static final int SEARCH_RANGE = 2;
-
     private final JPAQueryFactory queryFactory;
 
     @Override
@@ -36,10 +39,12 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
                 titleContains(request.getKeyword()),
                 share.cancel.eq(false),
                 share.closedDateTime.gt(LocalDateTime.now()),
-                share.latitude.between(calculateStartLatitude(latitude),
-                    calculateEndLatitude(latitude)),
-                share.longitude.between(calculateStartLongitude(longitude),
-                    calculateEndLongitude(longitude))
+                acos(cos(radians(constant(latitude)))
+                    .multiply(cos(radians(share.latitude)))
+                    .multiply(cos(radians(share.longitude).subtract(radians(constant(longitude)))))
+                    .add(sin(radians(constant(latitude))).multiply(sin(radians(share.latitude)))))
+                    .multiply(constant(6371))
+                    .loe(2)
             ).fetch();
     }
 
@@ -54,10 +59,12 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
                 titleContains(request.getKeyword()),
                 share.cancel.eq(false),
                 share.closedDateTime.gt(LocalDateTime.now()),
-                share.latitude.between(calculateStartLatitude(latitude),
-                    calculateEndLatitude(latitude)),
-                share.longitude.between(calculateStartLongitude(longitude),
-                    calculateEndLongitude(longitude))
+                acos(cos(radians(constant(latitude)))
+                    .multiply(cos(radians(share.latitude)))
+                    .multiply(cos(radians(share.longitude).subtract(radians(constant(longitude)))))
+                    .add(sin(radians(constant(latitude))).multiply(sin(radians(share.latitude)))))
+                    .multiply(constant(6371))
+                    .loe(2)
             )
             .fetch();
     }
@@ -114,19 +121,4 @@ public class CustomShareRepositoryImpl implements CustomShareRepository {
         return StringUtils.hasText(keyword) ? share.title.contains(keyword) : null;
     }
 
-    private double calculateStartLatitude(double latitude) {
-        return latitude - SEARCH_RANGE;
-    }
-
-    private double calculateEndLatitude(double latitude) {
-        return latitude + SEARCH_RANGE;
-    }
-
-    private double calculateStartLongitude(double longitude) {
-        return longitude - SEARCH_RANGE;
-    }
-
-    private double calculateEndLongitude(double longitude) {
-        return longitude + SEARCH_RANGE;
-    }
 }
