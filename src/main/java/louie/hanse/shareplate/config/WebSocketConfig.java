@@ -1,7 +1,9 @@
 package louie.hanse.shareplate.config;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import louie.hanse.shareplate.exception.handler.StompErrorHandler;
 import louie.hanse.shareplate.interceptor.MemberVerificationSocketInterceptor;
 import louie.hanse.shareplate.jwt.JwtProvider;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +19,15 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final JwtProvider jwtProvider;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/websocket")
             .setAllowedOriginPatterns("*")
             .withSockJS();
+
+        registry.setErrorHandler(new StompErrorHandler(objectMapper));
     }
 
     @Override
