@@ -33,7 +33,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
     ShareService shareService;
 
     @Test
-    void 회원이_쉐어에_참가한다() {
+    void 회원이_쉐어에_참여한다() {
         String accessToken = jwtProvider.createAccessToken(2355841033L);
 
         given(documentationSpec)
@@ -129,7 +129,7 @@ class EntryJoinIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 이미_참가한_쉐어일_경우_예외를_발생시킨다() {
+    void 이미_참여한_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)

@@ -75,7 +75,7 @@ include::{snippets}/entry-cancel-delete-failed-by-share-id-not-found/http-respon
 
 ==== `400 ENTRY002`
 
-회원이 참가하지 않은 쉐어인 경우
+회원이 참여하지 않은 쉐어인 경우
 
 ===== Request
 
@@ -187,7 +187,7 @@ include::{snippets}/entry-share-post-failed-by-share-id-not-found/http-response.
 
 ==== `400 ENTRY001`
 
-이미 참가한 쉐어인 경우
+이미 참여한 쉐어인 경우
 
 ===== Request
 

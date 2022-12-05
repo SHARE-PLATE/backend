@@ -45,7 +45,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
     ChatRoomRepository chatRoomRepository;
 
     @Test
-    void 쉐어에_참가한_회원이_채팅방을_나간다() {
+    void 쉐어에_참여한_회원이_채팅방을_나간다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
@@ -180,7 +180,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_참가하지_않은_채팅방일_경우_예외를_발생시킨다() {
+    void 회원이_참여하지_않은_채팅방일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
@@ -199,7 +199,7 @@ class ChatRoomMemberChatRoomExitIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 쉐어_마감시간이_한시간_미만으로_남은_쉐어의_참가_채팅방일_경우_예외를_발생시킨다() throws IOException {
+    void 쉐어_마감시간이_한시간_미만으로_남은_쉐어의_참여_채팅방일_경우_예외를_발생시킨다() throws IOException {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         ShareRegisterRequest request = getShareRegisterRequest(LocalDateTime.now().plusMinutes(30));

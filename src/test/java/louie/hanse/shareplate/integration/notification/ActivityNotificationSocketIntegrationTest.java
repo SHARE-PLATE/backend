@@ -30,7 +30,7 @@ class ActivityNotificationSocketIntegrationTest extends InitSocketIntegrationTes
     ShareService shareService;
 
     @Test
-    void 쉐어에_새로운_참가자가_생긴다면_쉐어를_참여하고_있던_사람들에게_알림을_전송한다()
+    void 쉐어에_새로운_참여자가_생긴다면_쉐어를_참여하고_있던_사람들에게_알림을_전송한다()
         throws ExecutionException, InterruptedException, TimeoutException {
         stompSession.subscribe("/queue/notifications/entries/" + 6,
             getStompSessionHandlerAdapter(ActivityNotificationResponse.class));

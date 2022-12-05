@@ -12,7 +12,7 @@ endif::[]
 == 쉐어 API
 include::{docdir}/share/share.adoc[]
 
-== 참가 API
+== 참여 API
 include::{docdir}/entry/entry.adoc[]
 
 == OAuth API

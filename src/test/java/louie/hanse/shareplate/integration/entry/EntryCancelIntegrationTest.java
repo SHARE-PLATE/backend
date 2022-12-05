@@ -33,7 +33,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
 
 
     @Test
-    void 회원이_쉐어_참가를_취소한다() {
+    void 회원이_쉐어_참여를_취소한다() {
         String accessToken = jwtProvider.createAccessToken(2398606895L);
 
         given(documentationSpec)
@@ -126,7 +126,7 @@ class EntryCancelIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    void 회원이_참가되어_있지_않은_쉐어일_경우_예외를_발생시킨다() {
+    void 회원이_참여되어_있지_않은_쉐어일_경우_예외를_발생시킨다() {
         String accessToken = jwtProvider.createAccessToken(2355841047L);
 
         given(documentationSpec)
