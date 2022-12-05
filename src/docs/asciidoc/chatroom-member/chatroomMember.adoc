@@ -74,7 +74,7 @@ include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-no
 
 ==== `400 CHATROOM006`
 
-회원이 참가하지 않은 채팅방인 경우
+회원이 참여하지 않은 채팅방인 경우
 
 ===== Request
 
@@ -86,7 +86,7 @@ include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-j
 
 ==== `400 CHATROOM009`
 
-쉐어 마감시간이 한시간 미만으로 남은 쉐어의 참가 채팅방일 경우
+쉐어 마감시간이 한시간 미만으로 남은 쉐어의 참여 채팅방일 경우
 
 ===== Request
 
@@ -112,7 +112,7 @@ include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-share-writer-l
 
 API : `GET /api/chatroom-members`
 
-참가한 채팅방의 모든 회원을 조회한다.
+참여한 채팅방의 모든 회원을 조회한다.
 
 ==== `200 OK`
 
@@ -150,7 +150,7 @@ include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-id-no
 
 ==== `400 CHATROOM006`
 
-회원이 참가하지 않은 채팅방인 경우
+회원이 참여하지 않은 채팅방인 경우
 
 ===== Request
 
@@ -162,7 +162,7 @@ include::{snippets}/chatRoomMember-chatRoom-exit-delete-failed-by-chatroom-not-j
 
 ==== `400 CHATROOM009`
 
-쉐어 마감시간이 한시간 미만으로 남은 쉐어의 참가 채팅방일 경우
+쉐어 마감시간이 한시간 미만으로 남은 쉐어의 참여 채팅방일 경우
 
 ===== Request
 

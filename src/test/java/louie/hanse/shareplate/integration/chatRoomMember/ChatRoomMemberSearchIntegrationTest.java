@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 class ChatRoomMemberSearchIntegrationTest extends InitIntegrationTest {
 
     @Test
-    void 참가한_모든_채팅방에_대한_회원_정보를_조회한다() {
+    void 참여한_모든_채팅방에_대한_회원_정보를_조회한다() {
         String accessToken = jwtProvider.createAccessToken(2370842997L);
 
         given(documentationSpec)
