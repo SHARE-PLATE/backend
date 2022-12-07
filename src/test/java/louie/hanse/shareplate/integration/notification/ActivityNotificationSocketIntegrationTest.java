@@ -32,7 +32,10 @@ class ActivityNotificationSocketIntegrationTest extends InitSocketIntegrationTes
     @Test
     void 쉐어에_새로운_참여자가_생긴다면_쉐어를_참여하고_있던_사람들에게_알림을_전송한다()
         throws ExecutionException, InterruptedException, TimeoutException {
-        stompSession.subscribe("/queue/notifications/entries/" + 6,
+        String destination = "/queue/notifications/entries/" + 6;
+        String subscribeAccessToken = jwtProvider.createAccessToken(2370842997L);
+
+        stompSession.subscribe(createStompHeaders(subscribeAccessToken, destination),
             getStompSessionHandlerAdapter(ActivityNotificationResponse.class));
 
         Long shareId = 2L;
@@ -69,7 +72,10 @@ class ActivityNotificationSocketIntegrationTest extends InitSocketIntegrationTes
     @Test
     void 쉐어_참여를_취소한다면_해당_쉐어를_참여하고있던_사람들에게_알림을_전송한다()
         throws ExecutionException, InterruptedException, TimeoutException {
-        stompSession.subscribe("/queue/notifications/entries/" + 1,
+        String destination = "/queue/notifications/entries/" + 1;
+        String subscribeAccessToken = jwtProvider.createAccessToken(2370842997L);
+
+        stompSession.subscribe(createStompHeaders(subscribeAccessToken, destination),
             getStompSessionHandlerAdapter(ActivityNotificationResponse.class));
 
         Long memberId = 2355841047L;
@@ -106,7 +112,10 @@ class ActivityNotificationSocketIntegrationTest extends InitSocketIntegrationTes
     @Test
     void 쉐어를_취소한다면_해당_쉐어를_참여하고_있던_사람들에게_알림이_전송된다()
         throws ExecutionException, InterruptedException, TimeoutException {
-        stompSession.subscribe("/queue/notifications/entries/" + 2,
+        String destination = "/queue/notifications/entries/" + 2;
+        String subscribeAccessToken = jwtProvider.createAccessToken(2355841047L);
+
+        stompSession.subscribe(createStompHeaders(subscribeAccessToken, destination),
             getStompSessionHandlerAdapter(ActivityNotificationResponse.class));
 
         Long memberId = 2370842997L;

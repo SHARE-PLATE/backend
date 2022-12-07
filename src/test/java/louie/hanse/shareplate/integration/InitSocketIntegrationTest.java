@@ -6,9 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -17,12 +21,14 @@ import louie.hanse.shareplate.config.WebConfig;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
@@ -50,9 +56,34 @@ public class InitSocketIntegrationTest extends InitIntegrationTest {
         List<Transport> transports = List.of(new WebSocketTransport(new StandardWebSocketClient()));
         WebSocketStompClient stompClient = new WebSocketStompClient(new SockJsClient(transports));
 
+        String accessToken = jwtProvider.createAccessToken(2370842997L);
+        StompHeaders stompHeaders = createStompHeaders(accessToken);
         stompSession = stompClient.connect("ws://localhost:" + port + "/websocket",
-            getStompSessionHandlerAdapter(String.class))
+                (WebSocketHttpHeaders) null, stompHeaders,
+                getStompSessionHandlerAdapter(String.class))
             .get(3, TimeUnit.SECONDS);
+    }
+
+    protected static StompHeaders createStompHeaders(String accessToken) {
+        return createStompHeaders(accessToken, null);
+    }
+
+    protected static StompHeaders createStompHeaders(String accessToken, String destination) {
+        Map<String, List<String>> headers = new HashMap<>();
+        List<String> accessTokenValues = new ArrayList<>(1);
+        accessTokenValues.add(accessToken);
+        List<String> destinationValues = new ArrayList<>(1);
+        destinationValues.add(destination);
+        headers.put(HttpHeaders.AUTHORIZATION, accessTokenValues);
+        headers.put(StompHeaders.DESTINATION, destinationValues);
+        try {
+            Constructor<StompHeaders> constructor = StompHeaders.class
+                .getDeclaredConstructor(Map.class, boolean.class);
+            constructor.setAccessible(true);
+            return constructor.newInstance(headers, false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void initLocalDateTimeSerializerAndDeserializerFormatter()
