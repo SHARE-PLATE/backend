@@ -26,8 +26,10 @@ class KeywordNotificationSocketIntegrationTest extends InitSocketIntegrationTest
     void 키워드에_등록한_내용이_포함된_쉐어가_등록된_경우_실시간으로_키워드_알림을_전송한다()
         throws ExecutionException, InterruptedException, TimeoutException {
         Long keywordId = 10L;
+        String destination = "/queue/notifications/keywords/" + keywordId;
+        String subscribeAccessToken = jwtProvider.createAccessToken(2355841047L);
 
-        stompSession.subscribe("/queue/notifications/keywords/" + keywordId,
+        stompSession.subscribe(createStompHeaders(subscribeAccessToken, destination),
             getStompSessionHandlerAdapter(KeywordNotificationResponse.class));
 
         String accessToken = jwtProvider.createAccessToken(2370842997L);

@@ -29,7 +29,7 @@ public class MemberVerificationSocketInterceptor implements ChannelInterceptor {
         StompCommand command = headerAccessor.getCommand();
         System.out.println(command);
         if (stompCommands.contains(command)) {
-            if (headerAccessor.containsNativeHeader(HttpHeaders.AUTHORIZATION)) {
+            if (!headerAccessor.containsNativeHeader(HttpHeaders.AUTHORIZATION)) {
                 throw new GlobalException(AuthExceptionType.EMPTY_ACCESS_TOKEN);
             }
 
