@@ -68,12 +68,13 @@ public class ChatRoomService {
             Optional<Chat> optionalChat = chatRepository
                 .findTopByChatRoomIdOrderByWrittenDateTimeDesc(chatRoom.getId());
 
-            optionalChat.ifPresentOrElse(
-                chat -> chatRoomListResponses.add(
-                    new ChatRoomListResponse(chatRoomMember, chat, unreadCount, memberId)),
-                () -> chatRoomListResponses.add(
-                    new ChatRoomListResponse(chatRoomMember, unreadCount, memberId))
-            );
+            if (chatRoom.getChatRoomMembers().size() == 1) {
+                chatRoomListResponses.add(
+                    new ChatRoomListResponse(chatRoomMember, unreadCount, optionalChat));
+            } else {
+                chatRoomListResponses.add(
+                    new ChatRoomListResponse(chatRoomMember, unreadCount, memberId, optionalChat));
+            }
         }
         return chatRoomListResponses;
     }
