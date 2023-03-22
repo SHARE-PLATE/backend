@@ -4,7 +4,7 @@
 
 ### **혼자 사기에는 너무 많은 음식 재료**
 
-### **[SHARE PLATE](https://d3ew6nkgwjgkva.cloudfront.net)로 배달음식과 재료를 다른 사람들과 나눠보세요!**
+### **[SHARE PLATE](https://d2uyt41klanc0b.cloudfront.net)로 배달음식과 재료를 다른 사람들과 나눠보세요!**
 
 # **INTRODUCE**
 
@@ -16,7 +16,7 @@
 
 사람들은 다른 사이트 ∙ 앱에서 재료 공구 ∙ 배달 공구와 같은 게시물들을 올리지만, 이를 적극적으로 안내해줄 플랫폼은 없었죠.
 
-이러한 상황 속에서, 많은 사람들이 편하게 서로의 배달 음식 ∙ 음식 재료를 원하는 장소에서 나눠 가질 수 있도록 하고자, 우리는 [SHARE PLATE](https://d3ew6nkgwjgkva.cloudfront.net)를 만들었습니다.
+이러한 상황 속에서, 많은 사람들이 편하게 서로의 배달 음식 ∙ 음식 재료를 원하는 장소에서 나눠 가질 수 있도록 하고자, 우리는 [SHARE PLATE](https://d2uyt41klanc0b.cloudfront.net)를 만들었습니다.
 
 ### **기간**
 
@@ -27,9 +27,9 @@
 - **[GITHUB](https://github.com/HJKL2022)**
 - **[PORTFOLIO](https://gusty-art-6de.notion.site/SHARE-PLATE-71a75ce4965344f3b3a46be4fb9f9411)**
 - **[NOTION](https://www.notion.so/c5352a8d177346aeb36f49e26e59cac1)**
-- **[API DOCS](https://louie-03.com/docs/index.html)**
-- **[SERVER(BACKEND)](http://louie-03.com)**
-- **[SERVER(FRONTEND)](https://d3ew6nkgwjgkva.cloudfront.net/)**
+- **[API DOCS](https://share-plate.click/docs/index.html)**
+- **[SERVER(BACKEND)](http://share-plate.click)**
+- **[SERVER(FRONTEND)](https://d2uyt41klanc0b.cloudfront.net/)**
 
 # **MEMBERS**
 
