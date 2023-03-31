@@ -3,7 +3,7 @@ cloud:
     region:
       static: ap-northeast-2
     s3:
-      bucket: share-plate-file-upload
+      bucket: share-plate-file
       mock.port: 8001
     credentials:
       access-key: ${S3_ACCESS_KEY}
